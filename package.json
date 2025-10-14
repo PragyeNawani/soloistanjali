@@ -1,0 +1,29 @@
+{
+  "name": "chords-music-studio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
+    "@supabase/supabase-js": "^2.74.0",
+    "lucide-react": "^0.545.0",
+    "next": "14.2.1",
+    "next-auth": "^4.24.11",
+    "razorpay": "^2.9.6",
+    "react": "^18",
+    "react-dom": "^18",
+    "recharts": "^3.2.1",
+    "resend": "^6.1.2"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.2.1",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
+  }
+}
