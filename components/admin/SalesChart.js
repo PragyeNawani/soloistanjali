@@ -23,20 +23,20 @@ const CustomTooltip = ({ active, payload, label }) => {
     const percentage = totalSales > 0 ? ((totalRevenue / totalSales) * 100).toFixed(2) : 0;
 
     return (
-      <div className="bg-white border border-gray-300 rounded-lg shadow-lg p-4 min-w-[200px]">
-        <p className="font-bold text-gray-800 mb-2">{label}</p>
+      <div className="bg-gradient-to-br from-[#0B1C3E] to-[#061831] border border-blue-800/50 rounded-lg shadow-2xl p-4 min-w-[200px]">
+        <p className="font-bold text-white mb-2">{label}</p>
         <div className="space-y-1">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">● Total Sales:</span>
-            <span className="font-semibold text-blue-600">₹{totalSales.toLocaleString()}</span>
+            <span className="text-sm text-blue-300">● Total Sales:</span>
+            <span className="font-semibold text-blue-400">₹{totalSales.toLocaleString()}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">● Revenue:</span>
-            <span className="font-semibold text-teal-600">₹{totalRevenue.toLocaleString()}</span>
+            <span className="text-sm text-blue-300">● Revenue:</span>
+            <span className="font-semibold text-teal-400">₹{totalRevenue.toLocaleString()}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">● Percentage:</span>
-            <span className="font-semibold text-green-600">{percentage}%</span>
+            <span className="text-sm text-blue-300">● Percentage:</span>
+            <span className="font-semibold text-green-400">{percentage}%</span>
           </div>
         </div>
       </div>
@@ -50,16 +50,16 @@ const CustomLegend = () => {
   return (
     <div className="flex justify-center gap-6 mt-4 text-sm">
       <div className="flex items-center gap-2">
-        <div className="w-4 h-4 bg-blue-600 rounded"></div>
-        <span className="text-gray-700">Total Sales</span>
+        <div className="w-4 h-4 bg-blue-500 rounded"></div>
+        <span className="text-blue-200">Total Sales</span>
       </div>
       <div className="flex items-center gap-2">
         <div className="w-4 h-4 bg-teal-500 rounded"></div>
-        <span className="text-gray-700">Revenue (₹)</span>
+        <span className="text-blue-200">Revenue (₹)</span>
       </div>
       <div className="flex items-center gap-2">
         <div className="w-4 h-4 bg-green-500 rounded-full"></div>
-        <span className="text-gray-700">Growth (%)</span>
+        <span className="text-blue-200">Growth (%)</span>
       </div>
     </div>
   );
@@ -195,21 +195,21 @@ export default function SalesChart({ data: initialData }) {
     : 0;
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-gradient-to-br from-[#0B1C3E] to-[#061831] rounded-lg shadow-2xl p-6 border border-blue-900/30">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <TrendingUp className="w-6 h-6 text-blue-600" />
-          <h3 className="text-2xl font-serif text-gray-800">Sales History</h3>
+          <TrendingUp className="w-6 h-6 text-blue-400" />
+          <h3 className="text-2xl font-serif text-white">Sales History</h3>
           {loading && (
-            <RefreshCw className="w-5 h-5 text-blue-600 animate-spin" />
+            <RefreshCw className="w-5 h-5 text-blue-400 animate-spin" />
           )}
         </div>
         
         <div className="flex items-center gap-4">
           {/* View Mode Toggle */}
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-gray-600">By:</span>
+            <span className="text-blue-300">By:</span>
             <label className="flex items-center gap-1 cursor-pointer">
               <input
                 type="radio"
@@ -217,10 +217,10 @@ export default function SalesChart({ data: initialData }) {
                 value="week"
                 checked={viewMode === 'week'}
                 onChange={(e) => setViewMode(e.target.value)}
-                className="text-blue-600"
+                className="text-blue-500 accent-blue-500"
                 disabled={loading}
               />
-              <span className="text-gray-700">Week</span>
+              <span className="text-blue-200">Week</span>
             </label>
             <label className="flex items-center gap-1 cursor-pointer">
               <input
@@ -229,21 +229,21 @@ export default function SalesChart({ data: initialData }) {
                 value="month"
                 checked={viewMode === 'month'}
                 onChange={(e) => setViewMode(e.target.value)}
-                className="text-blue-600"
+                className="text-blue-500 accent-blue-500"
                 disabled={loading}
               />
-              <span className="text-gray-700">Month</span>
+              <span className="text-blue-200">Month</span>
             </label>
           </div>
 
           {/* Period Selector */}
           <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-600">Period:</span>
+            <span className="text-sm text-blue-300">Period:</span>
             <select
               value={period}
               onChange={(e) => setPeriod(e.target.value)}
               disabled={loading}
-              className="px-3 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-1 bg-[#11244A] border border-blue-800/50 rounded text-sm text-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <option value="1month">1 month</option>
               <option value="3months">3 months</option>
@@ -256,51 +256,50 @@ export default function SalesChart({ data: initialData }) {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border border-blue-200">
+        <div className="bg-gradient-to-br from-blue-900/40 to-blue-950/40 rounded-lg p-4 border border-blue-800/50">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-blue-700 font-medium">Total Sales</span>
-            <DollarSign className="w-5 h-5 text-blue-600" />
+            <span className="text-sm text-blue-300 font-medium">Total Sales</span>
+            <DollarSign className="w-5 h-5 text-blue-400" />
           </div>
-          <p className="text-2xl font-bold text-blue-900">{totalSales.toLocaleString()}</p>
-          {/* <p className="text-xs text-blue-600 mt-1">{chartData.length} transactions</p> */}
-          <p className="text-xs text-blue-600 mt-1">{totalSales.toLocaleString()} transactions</p>
+          <p className="text-2xl font-bold text-white">{totalSales.toLocaleString()}</p>
+          <p className="text-xs text-blue-400 mt-1">{totalSales.toLocaleString()} transactions</p>
         </div>
 
-        <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-lg p-4 border border-teal-200">
+        <div className="bg-gradient-to-br from-teal-900/40 to-teal-950/40 rounded-lg p-4 border border-teal-800/50">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-teal-700 font-medium">Revenue</span>
-            <TrendingUp className="w-5 h-5 text-teal-600" />
+            <span className="text-sm text-teal-300 font-medium">Revenue</span>
+            <TrendingUp className="w-5 h-5 text-teal-400" />
           </div>
-          <p className="text-2xl font-bold text-teal-900">₹{totalRevenue.toLocaleString()}</p>
-          <p className="text-xs text-teal-600 mt-1">
+          <p className="text-2xl font-bold text-white">₹{totalRevenue.toLocaleString()}</p>
+          <p className="text-xs text-teal-400 mt-1">
             {totalSales > 0 ? `${((totalRevenue / totalSales) * 100).toFixed(1)}% of sales` : 'N/A'}
           </p>
         </div>
 
-        <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4 border border-green-200">
+        <div className="bg-gradient-to-br from-green-900/40 to-green-950/40 rounded-lg p-4 border border-green-800/50">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-green-700 font-medium">Avg Growth</span>
-            <Calendar className="w-5 h-5 text-green-600" />
+            <span className="text-sm text-green-300 font-medium">Avg Growth</span>
+            <Calendar className="w-5 h-5 text-green-400" />
           </div>
-          <p className="text-2xl font-bold text-green-900">{avgPercentage}%</p>
-          <p className="text-xs text-green-600 mt-1">Per {viewMode === 'week' ? 'week' : 'month'}</p>
+          <p className="text-2xl font-bold text-white">{avgPercentage}%</p>
+          <p className="text-xs text-green-400 mt-1">Per {viewMode === 'week' ? 'week' : 'month'}</p>
         </div>
       </div>
 
       {/* Chart */}
-      <div className="border-t border-gray-200 pt-6">
+      <div className="border-t border-blue-900/30 pt-6">
         {loading ? (
           <div className="h-[400px] flex items-center justify-center">
             <div className="text-center">
-              <RefreshCw className="w-8 h-8 text-blue-600 animate-spin mx-auto mb-2" />
-              <p className="text-gray-600">Loading data...</p>
+              <RefreshCw className="w-8 h-8 text-blue-400 animate-spin mx-auto mb-2" />
+              <p className="text-blue-300">Loading data...</p>
             </div>
           </div>
         ) : chartData.length === 0 ? (
           <div className="h-[400px] flex items-center justify-center">
             <div className="text-center">
-              <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-              <p className="text-gray-600">No sales data available for this period</p>
+              <Calendar className="w-12 h-12 text-blue-400 mx-auto mb-2" />
+              <p className="text-blue-300">No sales data available for this period</p>
             </div>
           </div>
         ) : (
@@ -311,8 +310,8 @@ export default function SalesChart({ data: initialData }) {
             >
               <defs>
                 <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#2563eb" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#2563eb" stopOpacity={0.3} />
+                  <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.3} />
                 </linearGradient>
                 <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#14b8a6" stopOpacity={0.8} />
@@ -320,11 +319,11 @@ export default function SalesChart({ data: initialData }) {
                 </linearGradient>
               </defs>
               
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#1e3a8a" opacity={0.3} />
               
               <XAxis
                 dataKey="period"
-                stroke="#6b7280"
+                stroke="#93c5fd"
                 style={{ fontSize: '12px' }}
                 tickMargin={10}
                 angle={viewMode === 'week' ? -45 : 0}
@@ -334,7 +333,7 @@ export default function SalesChart({ data: initialData }) {
               
               <YAxis
                 yAxisId="left"
-                stroke="#6b7280"
+                stroke="#93c5fd"
                 style={{ fontSize: '12px' }}
                 tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}k`}
               />
@@ -342,7 +341,7 @@ export default function SalesChart({ data: initialData }) {
               <YAxis
                 yAxisId="right"
                 orientation="right"
-                stroke="#10b981"
+                stroke="#4ade80"
                 style={{ fontSize: '12px' }}
                 tickFormatter={(value) => `${value}%`}
                 domain={[0, 100]}
@@ -370,9 +369,9 @@ export default function SalesChart({ data: initialData }) {
                 yAxisId="right"
                 type="monotone"
                 dataKey="percentage"
-                stroke="#10b981"
+                stroke="#4ade80"
                 strokeWidth={3}
-                dot={{ fill: '#10b981', r: 6 }}
+                dot={{ fill: '#4ade80', r: 6 }}
                 activeDot={{ r: 8 }}
               />
             </ComposedChart>
@@ -384,7 +383,7 @@ export default function SalesChart({ data: initialData }) {
 
       {/* Footer Stats */}
       {chartData.length > 0 && (
-        <div className="mt-6 pt-4 border-t border-gray-200 flex justify-between text-sm text-gray-600">
+        <div className="mt-6 pt-4 border-t border-blue-900/30 flex justify-between text-sm text-blue-300">
           <div>
             <span className="font-medium">Data Points:</span> {chartData.length}
           </div>

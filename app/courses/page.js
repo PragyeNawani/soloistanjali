@@ -131,19 +131,19 @@ export default function CoursesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-stone-100 py-16 flex items-center justify-center">
-        <div className="text-amber-900 text-xl">Loading courses...</div>
+      <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16 flex items-center justify-center">
+        <div className="text-blue-300 text-xl">Loading courses...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-stone-100 py-16">
+    <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl font-serif text-amber-900 text-center mb-4">
+        <h1 className="text-5xl font-serif text-white text-center mb-4">
           Available Courses
         </h1>
-        <p className="text-amber-700 text-center mb-12 max-w-2xl mx-auto">
+        <p className="text-blue-300 text-center mb-12 max-w-2xl mx-auto">
           Explore our comprehensive collection of music courses. Purchase and
           download course materials instantly.
         </p>
@@ -156,15 +156,15 @@ export default function CoursesPage() {
             return (
               <div
                 key={course.id}
-                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition relative"
+                className="bg-gradient-to-br from-[#0B1C3E] to-[#061831] rounded-lg shadow-2xl overflow-hidden hover:shadow-blue-900/50 hover:scale-105 transition-all duration-300 relative border border-blue-900/30"
               >
                 {/* Wishlist Button */}
                 <button
                   onClick={() => handleWishlistToggle(course.id)}
                   className={`absolute top-4 right-4 z-10 p-2 rounded-full transition-all ${
                     isInWishlist
-                      ? 'bg-red-500 text-white shadow-lg scale-110'
-                      : 'bg-white text-gray-400 hover:text-red-500 hover:bg-red-50'
+                      ? 'bg-red-500 text-white shadow-lg shadow-red-500/50 scale-110'
+                      : 'bg-[#11244A] text-gray-400 hover:text-red-400 hover:bg-red-950/30 border border-blue-800/50'
                   }`}
                   title={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
                 >
@@ -173,39 +173,39 @@ export default function CoursesPage() {
                   />
                 </button>
 
-                <div className="bg-amber-100 h-48 flex items-center justify-center text-8xl">
+                <div className="bg-gradient-to-br from-[#11244A] to-[#0B1C3E] h-48 flex items-center justify-center text-8xl border-b border-blue-900/30">
                   {getInstrumentEmoji(course.instrument)}
                 </div>
                 <div className="p-6 space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-medium text-amber-700 bg-amber-100 px-3 py-1 rounded">
+                    <span className="text-xs font-medium text-blue-300 bg-blue-900/30 px-3 py-1 rounded border border-blue-800/50">
                       {course.level}
                     </span>
                     {isPurchased ? (
-                      <Unlock className="text-green-600 w-5 h-5" />
+                      <Unlock className="text-green-400 w-5 h-5" />
                     ) : (
-                      <Lock className="text-amber-400 w-5 h-5" />
+                      <Lock className="text-blue-400 w-5 h-5" />
                     )}
                   </div>
-                  <h3 className="text-2xl font-serif text-amber-900">
+                  <h3 className="text-2xl font-serif text-white">
                     {course.title}
                   </h3>
-                  <p className="text-amber-700 text-sm">{course.description}</p>
-                  <div className="flex items-center justify-between pt-4 border-t border-amber-100">
-                    <span className="text-2xl font-bold text-amber-900">
+                  <p className="text-blue-200 text-sm">{course.description}</p>
+                  <div className="flex items-center justify-between pt-4 border-t border-blue-900/30">
+                    <span className="text-2xl font-bold text-white">
                       ₹{course.price}
                     </span>
                     {isPurchased ? (
                       <button
                         onClick={() => router.push('/dashboard')}
-                        className="bg-green-600 text-white px-6 py-2 text-sm font-medium rounded hover:bg-green-700 transition"
+                        className="bg-green-600 text-white px-6 py-2 text-sm font-medium rounded hover:bg-green-700 transition shadow-lg shadow-green-600/30"
                       >
                         View in Dashboard
                       </button>
                     ) : (
                       <button
                         onClick={() => handlePurchase(course)}
-                        className="bg-amber-900 text-white px-6 py-2 text-sm font-medium rounded hover:bg-amber-800 transition"
+                        className="bg-blue-600 text-white px-6 py-2 text-sm font-medium rounded hover:bg-blue-700 transition shadow-lg shadow-blue-600/30 border border-blue-500"
                       >
                         Purchase
                       </button>

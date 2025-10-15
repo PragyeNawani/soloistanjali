@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Music, Play, Check } from 'lucide-react';
+import { Music, Play, Check, Youtube, Instagram, Facebook } from 'lucide-react';
 
 export default function HomePage() {
   const [email, setEmail] = useState('');
@@ -56,10 +56,10 @@ export default function HomePage() {
             </div>
 
             <div className="text-gray-50 text-lg max-w-2xl mx-auto leading-relaxed flex justify-between">
-                <div className='flex items-center gap-1'><Check className='text-red-600' /><span>Great Teaching</span></div>
-                <div className='flex items-center gap-1'><Check className='text-red-600' /><span>Downloadable PDFs</span></div>
-                <div className='flex items-center gap-1'><Check className='text-red-600' /><span>Workshops</span></div>
-                <div className='flex items-center gap-1'><Check className='text-red-600' /><span>Blogs</span></div>
+              <div className='flex items-center gap-1'><Check className='text-red-600' /><span>Great Teaching</span></div>
+              <div className='flex items-center gap-1'><Check className='text-red-600' /><span>Downloadable PDFs</span></div>
+              <div className='flex items-center gap-1'><Check className='text-red-600' /><span>Workshops</span></div>
+              <div className='flex items-center gap-1'><Check className='text-red-600' /><span>Blogs</span></div>
             </div>
             <div className="flex justify-center">
               <button className="group flex items-center space-x-3 bg-transparent border-2 border-blue-400 text-blue-400 px-8 py-4 text-sm font-medium hover:bg-blue-400 hover:text-gray-950 transition duration-300 rounded-xl">
@@ -71,18 +71,18 @@ export default function HomePage() {
         </div>
 
         {/* Decorative elements */}
-        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-gray-800 to-transparent z-30"></div>
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-950 to-transparent z-30"></div>
       </div>
 
       {/* Band Members Section */}
       <div className="bg-gray-950 py-20 border-t border-blue-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-serif text-white text-center mb-16">
+          <h1 className="text-6xl font-bold font-serif text-white text-center mb-16">
             About Us
           </h1>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
+          <div className='text-blue-200'>
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"> */}
+            {/* {[
               { name: 'Дмитрий Кулешов', role: 'Гитара', description: 'Лидер группы и основатель' },
               { name: 'Артем Морозовский', role: 'Бас', description: 'Ритм-секция группы' },
               { name: 'Александр Кулинский', role: 'Скрипка', description: 'Драма, красота и мелодия' },
@@ -96,7 +96,13 @@ export default function HomePage() {
                 <p className="text-blue-400 text-sm font-medium mb-2">{member.role}</p>
                 <p className="text-gray-400 text-sm">{member.description}</p>
               </div>
-            ))}
+            ))} */}
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto commodi quam quaerat minus, cum nam in, veritatis architecto temporibus optio reiciendis dignissimos provident, sint quo. Blanditiis, quidem quas, consectetur exercitationem quibusdam incidunt cum aperiam debitis architecto fugiat quisquam perspiciatis ipsa natus distinctio tempore corporis voluptatem! Quos excepturi temporibus id veniam?Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod ipsa iste modi eius nihil blanditiis molestias est officiis error aperiam eaque numquam quas ipsum, dolorum doloribus sequi expedita voluptas eum officia id voluptates, vel doloremque, accusamus dolorem! Doloribus dolores culpa incidunt aperiam dicta corrupti aliquid voluptatum mollitia hic ratione enim, rerum dignissimos at similique aliquam magnam architecto, neque consequatur sed eius reiciendis ea eligendi qui! Voluptatum debitis eum iste enim est modi vero dolorum omnis nam veritatis delectus pariatur ut iusto cumque, dolorem, et dolores officiis soluta quibusdam accusamus assumenda rerum! Libero doloremque numquam quod ullam ipsam repudiandae voluptas distinctio.
+          </div>
+          <div className='flex gap-5 items-center mt-6'>
+            <Instagram className='text-pink-500' />
+            <Youtube className='text-red-500'/>
+            <Facebook className='text-blue-500'/>
           </div>
         </div>
       </div>

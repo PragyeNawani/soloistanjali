@@ -15,10 +15,10 @@ export default function BlogCard({ blog }) {
 
   return (
     <Link href={`/blog/${blog.slug}`}>
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer h-full flex flex-col">
+      <div className="bg-gradient-to-br from-[#0B1C3E] to-[#061831] rounded-lg shadow-2xl overflow-hidden hover:shadow-blue-900/50 transition-all duration-300 hover:-translate-y-1 hover:scale-105 cursor-pointer h-full flex flex-col border border-blue-900/30">
         {/* Featured Image */}
         {blog.featured_image ? (
-          <div className="h-48 bg-gradient-to-br from-amber-100 to-orange-100 overflow-hidden">
+          <div className="h-48 bg-gradient-to-br from-[#11244A] to-[#0B1C3E] overflow-hidden border-b border-blue-900/30">
             <img
               src={blog.featured_image}
               alt={blog.title}
@@ -26,7 +26,7 @@ export default function BlogCard({ blog }) {
             />
           </div>
         ) : (
-          <div className="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-6xl">
+          <div className="h-48 bg-gradient-to-br from-[#11244A] to-[#0B1C3E] flex items-center justify-center text-6xl border-b border-blue-900/30">
             📝
           </div>
         )}
@@ -34,43 +34,43 @@ export default function BlogCard({ blog }) {
         <div className="p-6 flex-1 flex flex-col">
           {/* Category Badge */}
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-medium text-amber-700 bg-amber-100 px-3 py-1 rounded-full uppercase">
+            <span className="text-xs font-medium text-blue-300 bg-blue-900/40 px-3 py-1 rounded-full uppercase border border-blue-800/50">
               {blog.category}
             </span>
-            <div className="flex items-center gap-2 text-xs text-gray-500">
+            <div className="flex items-center gap-2 text-xs text-blue-400">
               <Eye className="w-4 h-4" />
               {blog.views || 0}
             </div>
           </div>
 
           {/* Title */}
-          <h3 className="text-xl font-serif text-amber-900 mb-3 line-clamp-2 hover:text-amber-700 transition">
+          <h3 className="text-xl font-serif text-white mb-3 line-clamp-2 hover:text-blue-300 transition">
             {blog.title}
           </h3>
 
           {/* Excerpt */}
-          <p className="text-amber-700 text-sm line-clamp-3 mb-4 flex-1">
+          <p className="text-blue-200 text-sm line-clamp-3 mb-4 flex-1">
             {blog.excerpt || blog.content?.substring(0, 150) + '...'}
           </p>
 
           {/* Footer */}
-          <div className="flex items-center justify-between pt-4 border-t border-amber-100">
-            <div className="flex items-center gap-4 text-xs text-gray-600">
+          <div className="flex items-center justify-between pt-4 border-t border-blue-900/30">
+            <div className="flex items-center gap-4 text-xs text-blue-300">
               <div className="flex items-center gap-1">
-                <Calendar className="w-4 h-4" />
+                <Calendar className="w-4 h-4 text-blue-400" />
                 {formatDate(blog.created_at)}
               </div>
               <div className="flex items-center gap-1">
-                <Heart className="w-4 h-4" />
+                <Heart className="w-4 h-4 text-blue-400" />
                 {blog.total_reactions || 0}
               </div>
               <div className="flex items-center gap-1">
-                <MessageCircle className="w-4 h-4" />
+                <MessageCircle className="w-4 h-4 text-blue-400" />
                 {blog.total_comments || 0}
               </div>
             </div>
             
-            <ArrowRight className="w-5 h-5 text-amber-900" />
+            <ArrowRight className="w-5 h-5 text-blue-400" />
           </div>
         </div>
       </div>

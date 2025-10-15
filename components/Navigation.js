@@ -9,6 +9,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 export default function Navigation({ user }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClientComponentClient();
@@ -19,6 +20,11 @@ export default function Navigation({ user }) {
     router.push('/');
     router.refresh();
   };
+
+  // Trigger animation on mount
+  useEffect(() => {
+    setTimeout(() => setHasAnimated(true), 100);
+  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -65,7 +71,14 @@ export default function Navigation({ user }) {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-gray-950 via-blue-950 to-gray-950 shadow-lg sticky top-0 z-50 border-b border-blue-900">
+    <nav
+      className={`shadow-lg fixed top-0 left-0 right-0 z-50 bg-transparent transition-all duration-700 ease-out ${
+        hasAnimated ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+      }`}
+      style={{
+        backdropFilter: 'blur(8px)',
+      }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <Link href="/" className="flex items-center cursor-pointer">
@@ -141,7 +154,7 @@ export default function Navigation({ user }) {
 
                 {/* User Dropdown Menu */}
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-gray-900 rounded-lg shadow-2xl border border-blue-800 overflow-hidden z-50">
+                  <div className="absolute right-0 mt-2 w-48 bg-gray-900 rounded-lg shadow-2xl border border-blue-800 overflow-hidden z-50 animate-slideDown">
                     <div className="px-4 py-3 border-b border-blue-800/50 bg-gradient-to-r from-blue-900/30 to-gray-900/30">
                       <p className="text-sm font-medium text-white">
                         {getUserDisplayName()}
@@ -199,7 +212,7 @@ export default function Navigation({ user }) {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden pb-4 space-y-2 bg-gradient-to-b from-gray-900 to-blue-950 border-t border-blue-800">
+          <div className="md:hidden pb-4 space-y-2 bg-gradient-to-b from-gray-900 to-blue-950 border-t border-blue-800 animate-slideDown">
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
@@ -275,6 +288,23 @@ export default function Navigation({ user }) {
           </div>
         )}
       </div>
+
+      <style jsx>{`
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-slideDown {
+          animation: slideDown 0.3s ease-out;
+        }
+      `}</style>
     </nav>
   );
 }

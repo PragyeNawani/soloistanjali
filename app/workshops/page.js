@@ -166,7 +166,7 @@ export default function WorkshopsPage() {
         contact: registrationData.phone,
       },
       theme: {
-        color: '#78350f',
+        color: '#2563eb',
       },
     };
 
@@ -192,20 +192,20 @@ export default function WorkshopsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-stone-100 py-16 flex items-center justify-center">
-        <div className="text-amber-900 text-xl">Loading workshops...</div>
+      <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16 flex items-center justify-center">
+        <div className="text-blue-300 text-xl">Loading workshops...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-stone-100 py-16">
+    <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-serif text-amber-900 mb-4">
+          <h1 className="text-5xl font-serif text-white mb-4">
             Upcoming Workshops
           </h1>
-          <p className="text-amber-700 max-w-2xl mx-auto">
+          <p className="text-blue-300 max-w-2xl mx-auto">
             Join our expert instructors for intensive hands-on workshops. Learn
             new techniques, connect with fellow musicians, and take your skills
             to the next level.
@@ -213,12 +213,12 @@ export default function WorkshopsPage() {
         </div>
 
         {workshops.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-lg p-12 text-center">
+          <div className="bg-gradient-to-br from-[#0B1C3E] to-[#061831] rounded-lg shadow-2xl p-12 text-center border border-blue-900/30">
             <div className="text-6xl mb-4">📅</div>
-            <h3 className="text-2xl font-serif text-amber-900 mb-4">
+            <h3 className="text-2xl font-serif text-white mb-4">
               No Upcoming Workshops
             </h3>
-            <p className="text-amber-700">
+            <p className="text-blue-300">
               Check back soon for new workshop announcements!
             </p>
           </div>

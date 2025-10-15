@@ -80,10 +80,10 @@ export default function BlogDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-stone-100 py-16 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16 flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4">📝</div>
-          <div className="text-amber-900 text-xl">Loading blog...</div>
+          <div className="text-blue-300 text-xl">Loading blog...</div>
         </div>
       </div>
     );
@@ -91,14 +91,14 @@ export default function BlogDetailPage() {
 
   if (error || !blog) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-stone-100 py-16 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16 flex items-center justify-center">
         <div className="text-center max-w-md">
           <div className="text-6xl mb-4">😕</div>
-          <h2 className="text-2xl font-serif text-amber-900 mb-4">Blog Not Found</h2>
-          <p className="text-amber-700 mb-6">{error || 'The blog you\'re looking for doesn\'t exist or has been removed.'}</p>
+          <h2 className="text-2xl font-serif text-white mb-4">Blog Not Found</h2>
+          <p className="text-blue-300 mb-6">{error || 'The blog you\'re looking for doesn\'t exist or has been removed.'}</p>
           <button
             onClick={() => router.push('/blog')}
-            className="bg-amber-900 text-white px-6 py-3 rounded-lg hover:bg-amber-800 transition"
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition shadow-lg shadow-blue-600/30 border border-blue-500"
           >
             Back to Blogs
           </button>
@@ -108,22 +108,22 @@ export default function BlogDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-stone-100 py-16">
+    <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <button
           onClick={() => router.push('/blog')}
-          className="flex items-center gap-2 text-amber-900 hover:text-amber-700 mb-8 transition"
+          className="flex items-center gap-2 text-blue-400 hover:text-blue-300 mb-8 transition"
         >
           <ArrowLeft className="w-5 h-5" />
           Back to Blogs
         </button>
 
         {/* Blog Content */}
-        <article className="bg-white rounded-lg shadow-xl overflow-hidden">
+        <article className="bg-gradient-to-br from-[#0B1C3E] to-[#061831] rounded-lg shadow-2xl overflow-hidden border border-blue-900/30">
           {/* Featured Image */}
           {blog.featured_image ? (
-            <div className="h-96 overflow-hidden">
+            <div className="h-96 overflow-hidden border-b border-blue-900/30">
               <img
                 src={blog.featured_image}
                 alt={blog.title}
@@ -131,7 +131,7 @@ export default function BlogDetailPage() {
               />
             </div>
           ) : (
-            <div className="h-96 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center">
+            <div className="h-96 bg-gradient-to-br from-[#11244A] to-[#0B1C3E] flex items-center justify-center border-b border-blue-900/30">
               <div className="text-9xl">{getInstrumentEmoji(blog.category)}</div>
             </div>
           )}
@@ -139,10 +139,10 @@ export default function BlogDetailPage() {
           <div className="p-8 md:p-12">
             {/* Category Badge */}
             <div className="flex items-center justify-between mb-6">
-              <span className="text-sm font-medium text-amber-700 bg-amber-100 px-4 py-2 rounded-full uppercase">
+              <span className="text-sm font-medium text-blue-300 bg-blue-900/40 px-4 py-2 rounded-full uppercase border border-blue-800/50">
                 {blog.category}
               </span>
-              <div className="flex items-center gap-4 text-sm text-gray-500">
+              <div className="flex items-center gap-4 text-sm text-blue-400">
                 <div className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
                   {new Date(blog.published_at || blog.created_at).toLocaleDateString('en-US', {
@@ -159,7 +159,7 @@ export default function BlogDetailPage() {
             </div>
 
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl font-serif text-amber-900 mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-serif text-white mb-6 leading-tight">
               {blog.title}
             </h1>
 
@@ -169,7 +169,7 @@ export default function BlogDetailPage() {
                 {blog.tags.map((tag, index) => (
                   <span
                     key={index}
-                    className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full"
+                    className="text-xs bg-blue-900/30 text-blue-300 px-3 py-1 rounded-full border border-blue-800/50"
                   >
                     #{tag}
                   </span>
@@ -179,7 +179,7 @@ export default function BlogDetailPage() {
 
             {/* Excerpt */}
             {blog.excerpt && (
-              <div className="text-lg text-amber-700 italic mb-8 pb-8 border-b border-amber-100">
+              <div className="text-lg text-blue-200 italic mb-8 pb-8 border-b border-blue-900/30">
                 {blog.excerpt}
               </div>
             )}
@@ -188,7 +188,7 @@ export default function BlogDetailPage() {
             <div className="prose prose-lg max-w-none mb-8">
               {blog.content.split('\n').map((paragraph, index) => (
                 paragraph.trim() && (
-                  <p key={index} className="mb-4 text-amber-800 leading-relaxed">
+                  <p key={index} className="mb-4 text-blue-100 leading-relaxed">
                     {paragraph}
                   </p>
                 )
@@ -197,9 +197,9 @@ export default function BlogDetailPage() {
 
             {/* Attachments */}
             {blog.blog_attachments && blog.blog_attachments.length > 0 && (
-              <div className="border-t border-amber-100 pt-8 mb-8">
-                <h3 className="text-xl font-serif text-amber-900 mb-4 flex items-center gap-2">
-                  <Download className="w-5 h-5" />
+              <div className="border-t border-blue-900/30 pt-8 mb-8">
+                <h3 className="text-xl font-serif text-white mb-4 flex items-center gap-2">
+                  <Download className="w-5 h-5 text-blue-400" />
                   Attachments
                 </h3>
                 <div className="space-y-3">
@@ -209,22 +209,22 @@ export default function BlogDetailPage() {
                       href={attachment.file_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 p-4 bg-amber-50 rounded-lg hover:bg-amber-100 transition border border-amber-200"
+                      className="flex items-center gap-3 p-4 bg-[#11244A] rounded-lg hover:bg-blue-900/40 transition border border-blue-800/50"
                     >
                       {attachment.file_type === 'pdf' ? (
-                        <FileText className="w-6 h-6 text-red-600" />
+                        <FileText className="w-6 h-6 text-red-400" />
                       ) : (
-                        <ImageIcon className="w-6 h-6 text-blue-600" />
+                        <ImageIcon className="w-6 h-6 text-blue-400" />
                       )}
                       <div className="flex-1">
-                        <p className="font-medium text-amber-900">
+                        <p className="font-medium text-white">
                           {attachment.file_name}
                         </p>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-blue-300">
                           {attachment.file_size ? `${(attachment.file_size / 1024).toFixed(2)} KB` : 'Download'}
                         </p>
                       </div>
-                      <Download className="w-5 h-5 text-amber-700" />
+                      <Download className="w-5 h-5 text-blue-400" />
                     </a>
                   ))}
                 </div>
@@ -232,8 +232,8 @@ export default function BlogDetailPage() {
             )}
 
             {/* Reactions */}
-            <div className="border-t border-amber-100 pt-8 mb-8">
-              <h3 className="text-xl font-serif text-amber-900 mb-4">
+            <div className="border-t border-blue-900/30 pt-8 mb-8">
+              <h3 className="text-xl font-serif text-white mb-4">
                 How do you feel about this?
               </h3>
               <BlogReactions
@@ -243,23 +243,23 @@ export default function BlogDetailPage() {
             </div>
 
             {/* Comments */}
-            <div className="border-t border-amber-100 pt-8">
+            <div className="border-t border-blue-900/30 pt-8">
               <BlogComments slug={params.slug} initialComments={comments} />
             </div>
           </div>
         </article>
 
         {/* Related Blogs CTA */}
-        <div className="mt-8 bg-amber-100 rounded-lg p-6 text-center">
-          <h3 className="text-xl font-serif text-amber-900 mb-2">
+        <div className="mt-8 bg-gradient-to-br from-blue-900/40 to-blue-950/40 rounded-lg p-6 text-center border border-blue-800/50">
+          <h3 className="text-xl font-serif text-white mb-2">
             Enjoyed this article?
           </h3>
-          <p className="text-amber-700 mb-4">
+          <p className="text-blue-300 mb-4">
             Check out more blogs from CHORDS Studio
           </p>
           <button
             onClick={() => router.push('/blog')}
-            className="bg-amber-900 text-white px-6 py-3 rounded-lg hover:bg-amber-800 transition"
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition shadow-lg shadow-blue-600/30 border border-blue-500"
           >
             Browse All Blogs
           </button>

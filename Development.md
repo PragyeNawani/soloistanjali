@@ -13,3 +13,8 @@ One in GET, One in PUT
 
 Names: Oxford blue, Navy, Midnight, Black pearl, Rich black
 Hex Codes: #11244A, #0B1C3E, #061831, #051024, #030A1C
+
+
+git remote add origin git@github.com:PragyeNawani/musicacademy.git
+git branch -M main
+git push -u origin main
