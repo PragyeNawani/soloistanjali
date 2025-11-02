@@ -108,7 +108,7 @@ export default function BlogDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16">
+    <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16 pt-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <button

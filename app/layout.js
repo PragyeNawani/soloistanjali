@@ -8,7 +8,7 @@ import { cookies } from 'next/headers';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'CHORDS Studio - Music Lessons for All Ages',
+  title: 'SOLOISTANJALI',
   description: 'Professional music lessons for guitar, piano, cello, and more',
 };
 

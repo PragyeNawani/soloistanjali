@@ -20,6 +20,15 @@ export async function POST(request) {
       .digest('hex');
 
     if (expectedSignature !== razorpay_signature) {
+      // Mark payment as failed in database
+      await supabaseAdmin
+        .from('purchases')
+        .update({
+          status: 'failed',
+          razorpay_payment_id: razorpay_payment_id,
+        })
+        .eq('razorpay_order_id', razorpay_order_id);
+
       return NextResponse.json(
         { error: 'Invalid signature' },
         { status: 400 }
@@ -37,7 +46,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Update purchase status
+    // Update purchase status to completed
     const { error: updateError } = await supabaseAdmin
       .from('purchases')
       .update({
@@ -48,6 +57,7 @@ export async function POST(request) {
       .eq('user_id', session.user.id);
 
     if (updateError) {
+      console.error('Error updating purchase:', updateError);
       return NextResponse.json(
         { error: updateError.message },
         { status: 400 }

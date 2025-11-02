@@ -29,10 +29,17 @@ module.exports = {
         oxblu3: "rgba(6, 24, 49,0.2)",    // #061831
         oxblu4: "rgba(5, 16, 36,0.2)",    // #051024
         oxblu5: "rgba(3, 10, 28,0.2)",    // #030A1C
+        primarycontainer:"#091425",
+        primarytext:"#00194B",
+        primaryhighlight: "#4272D4",
       },
+      borderImage: {
+      'gradient-blue-purple': 'linear-gradient(to right, #3b82f6, #a855f7, #3b82f6) 1',
+    },
       fontFamily: {
         serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
       },
+      
     },
   },
   plugins: [],

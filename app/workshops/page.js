@@ -5,16 +5,17 @@ import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import WorkshopCard from '@/components/WorkshopCard';
 import WorkshopRegistrationModal from '@/components/WorkshopRegistrationModal';
+import { Progressbar } from '@/components/ProgressBar';
 
 export default function WorkshopsPage() {
   const [workshops, setWorkshops] = useState([]);
   const [registeredWorkshopIds, setRegisteredWorkshopIds] = useState([]);
   const [selectedWorkshop, setSelectedWorkshop] = useState(null);
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [registrationData, setRegistrationData] = useState(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [paymentTrigger, setPaymentTrigger] = useState(0); // New state to trigger payment
   const router = useRouter();
   const supabase = createClientComponentClient();
 
@@ -30,7 +31,10 @@ export default function WorkshopsPage() {
       } = await supabase.auth.getSession();
       setUser(session?.user || null);
 
-      // Fetch workshops
+      // Get current date and time
+      const now = new Date();
+
+      // Fetch workshops that are upcoming
       const { data: workshopsData, error: workshopsError } = await supabase
         .from('workshops')
         .select('*')
@@ -38,7 +42,19 @@ export default function WorkshopsPage() {
         .order('date', { ascending: true });
 
       if (workshopsError) throw workshopsError;
-      setWorkshops(workshopsData || []);
+
+      // Filter out workshops that have already passed
+      const filteredWorkshops = (workshopsData || []).filter((workshop) => {
+        // Parse the workshop date (which should be a full ISO timestamp)
+        const workshopDateTime = new Date(workshop.date);
+        
+        // Only show workshops where datetime is in the future
+        return workshopDateTime > now;
+      });
+
+      console.log('Filtered workshops:', filteredWorkshops); // Debug log
+
+      setWorkshops(filteredWorkshops);
 
       // Fetch user's registrations if logged in
       if (session?.user) {
@@ -73,11 +89,13 @@ export default function WorkshopsPage() {
   const handleRegistrationSubmit = async (formData) => {
     setRegistrationData(formData);
     setShowRegistrationModal(false);
-    setShowPaymentModal(true);
+    // Trigger payment by incrementing counter
+    setPaymentTrigger(prev => prev + 1);
   };
   
   const handlePaymentSuccess = () => {
-    setShowPaymentModal(false);
+    setRegistrationData(null);
+    setSelectedWorkshop(null);
     alert(
       'Registration successful! Check your email for workshop details and link.'
     );
@@ -95,111 +113,133 @@ export default function WorkshopsPage() {
   };
 
   const handlePayment = async () => {
-  try {
-    const loaded = await loadRazorpayScript();
-    if (!loaded) {
-      alert('Razorpay SDK failed to load. Please refresh and try again.');
-      return;
-    }
+    try {
+      const loaded = await loadRazorpayScript();
+      if (!loaded) {
+        alert('Razorpay SDK failed to load. Please refresh and try again.');
+        setRegistrationData(null);
+        setSelectedWorkshop(null);
+        return;
+      }
 
-    // Create order
-    const response = await fetch('/api/workshops/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        workshopId: selectedWorkshop.id,
-        phone: registrationData.phone,
-        additionalInfo: registrationData.additionalInfo,
-      }),
-    });
+      // Create order
+      const response = await fetch('/api/workshops/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          workshopId: selectedWorkshop.id,
+          phone: registrationData.phone,
+          additionalInfo: registrationData.additionalInfo,
+        }),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error(data.error || 'Failed to create order');
-    }
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to create order');
+      }
 
-    console.log('Order created:', data.orderId);
+      console.log('Order created:', data.orderId);
 
-    // Razorpay options
-    const options = {
-      key: data.keyId,
-      amount: data.amount,
-      currency: data.currency,
-      order_id: data.orderId,
-      name: 'CHORDS Studio',
-      description: `Workshop: ${selectedWorkshop.title}`,
-      handler: async function (response) {
-        console.log('Payment successful:', response);
-        
-        try {
-          const verifyResponse = await fetch(
-            '/api/workshops/verify-payment',
-            {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-              }),
+      // Razorpay options
+      const options = {
+        key: data.keyId,
+        amount: data.amount,
+        currency: data.currency,
+        order_id: data.orderId,
+        name: 'CHORDS Studio',
+        description: `Workshop: ${selectedWorkshop.title}`,
+        handler: async function (response) {
+          console.log('Payment successful:', response);
+          
+          try {
+            const verifyResponse = await fetch(
+              '/api/workshops/verify-payment',
+              {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                }),
+              }
+            );
+
+            const verifyData = await verifyResponse.json();
+            console.log('Verification response:', verifyData);
+
+            if (verifyResponse.ok) {
+              handlePaymentSuccess();
+            } else {
+              alert('Payment verification failed: ' + verifyData.error);
+              console.error('Verification failed:', verifyData);
+              // Reset states so user can retry
+              setRegistrationData(null);
+              setSelectedWorkshop(null);
             }
-          );
-
-          const verifyData = await verifyResponse.json();
-          console.log('Verification response:', verifyData);
-
-          if (verifyResponse.ok) {
-            handlePaymentSuccess();
-          } else {
-            alert('Payment verification failed: ' + verifyData.error);
-            console.error('Verification failed:', verifyData);
+          } catch (error) {
+            console.error('Payment verification error:', error);
+            alert('Payment verification error: ' + error.message);
+            // Reset states so user can retry
+            setRegistrationData(null);
+            setSelectedWorkshop(null);
           }
-        } catch (error) {
-          console.error('Payment verification error:', error);
-          alert('Payment verification error: ' + error.message);
-        }
-      },
-      prefill: {
-        name: user?.user_metadata?.name || '',
-        email: user?.email || '',
-        contact: registrationData.phone,
-      },
-      theme: {
-        color: '#2563eb',
-      },
-    };
+        },
+        modal: {
+          ondismiss: function () {
+            console.log('Payment modal closed by user');
+            // Reset states when user closes the modal
+            setRegistrationData(null);
+            setSelectedWorkshop(null);
+          }
+        },
+        prefill: {
+          name: user?.user_metadata?.name || '',
+          email: user?.email || '',
+          contact: registrationData.phone,
+        },
+        theme: {
+          color: '#2563eb',
+        },
+      };
 
-    const razorpay = new window.Razorpay(options);
-    razorpay.open();
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
 
-    razorpay.on('payment.failed', function (response) {
-      console.error('Payment failed:', response.error);
-      alert('Payment failed: ' + response.error.description);
-    });
-  } catch (error) {
-    console.error('Error:', error);
-    alert('Error: ' + error.message);
-    setShowPaymentModal(false);
-  }
-};
+      razorpay.on('payment.failed', function (response) {
+        console.error('Payment failed:', response.error);
+        alert('Payment failed: ' + response.error.description);
+        // Reset states so user can retry
+        setRegistrationData(null);
+        setSelectedWorkshop(null);
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error: ' + error.message);
+      // Reset states on error
+      setRegistrationData(null);
+      setSelectedWorkshop(null);
+    }
+  };
 
+  // Trigger payment when paymentTrigger changes
   useEffect(() => {
-    if (showPaymentModal) {
+    if (paymentTrigger > 0 && registrationData && selectedWorkshop) {
       handlePayment();
     }
-  }, [showPaymentModal]);
+  }, [paymentTrigger]);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16 flex items-center justify-center">
-        <div className="text-blue-300 text-xl">Loading workshops...</div>
-      </div>
+      <>
+        <Progressbar/>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16">
+    <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16 pt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-5xl font-serif text-white mb-4">

@@ -20,23 +20,18 @@ const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     const totalSales = payload.find(p => p.dataKey === 'sales')?.value || 0;
     const totalRevenue = payload.find(p => p.dataKey === 'revenue')?.value || 0;
-    const percentage = totalSales > 0 ? ((totalRevenue / totalSales) * 100).toFixed(2) : 0;
 
     return (
       <div className="bg-gradient-to-br from-[#0B1C3E] to-[#061831] border border-blue-800/50 rounded-lg shadow-2xl p-4 min-w-[200px]">
         <p className="font-bold text-white mb-2">{label}</p>
         <div className="space-y-1">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-blue-300">● Total Sales:</span>
-            <span className="font-semibold text-blue-400">₹{totalSales.toLocaleString()}</span>
+            <span className="text-sm text-blue-300">● Sales Count:</span>
+            <span className="font-semibold text-blue-400">{totalSales}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-blue-300">● Revenue:</span>
+            <span className="text-sm text-teal-300">● Revenue:</span>
             <span className="font-semibold text-teal-400">₹{totalRevenue.toLocaleString()}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-blue-300">● Percentage:</span>
-            <span className="font-semibold text-green-400">{percentage}%</span>
           </div>
         </div>
       </div>
@@ -51,23 +46,19 @@ const CustomLegend = () => {
     <div className="flex justify-center gap-6 mt-4 text-sm">
       <div className="flex items-center gap-2">
         <div className="w-4 h-4 bg-blue-500 rounded"></div>
-        <span className="text-blue-200">Total Sales</span>
+        <span className="text-blue-200">Sales Count</span>
       </div>
       <div className="flex items-center gap-2">
         <div className="w-4 h-4 bg-teal-500 rounded"></div>
         <span className="text-blue-200">Revenue (₹)</span>
-      </div>
-      <div className="flex items-center gap-2">
-        <div className="w-4 h-4 bg-green-500 rounded-full"></div>
-        <span className="text-blue-200">Growth (%)</span>
       </div>
     </div>
   );
 };
 
 export default function SalesChart({ data: initialData }) {
-  const [viewMode, setViewMode] = useState('month');
-  const [period, setPeriod] = useState('1year');
+  const [viewMode, setViewMode] = useState('day');
+  const [period, setPeriod] = useState('30days');
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -82,116 +73,29 @@ export default function SalesChart({ data: initialData }) {
       const response = await fetch(`/api/admin/sales-analytics?viewMode=${viewMode}&period=${period}`);
       const data = await response.json();
       
-      if (data.chartData) {
-        const processed = processData(data.chartData);
-        setChartData(processed);
+      if (data.chartData && Array.isArray(data.chartData)) {
+        setChartData(data.chartData);
+      } else {
+        setChartData([]);
       }
     } catch (error) {
       console.error('Error fetching sales data:', error);
       // Fallback to initial data if fetch fails
-      if (initialData) {
-        setChartData(processData(initialData));
+      if (initialData && Array.isArray(initialData)) {
+        setChartData(initialData);
+      } else {
+        setChartData([]);
       }
     } finally {
       setLoading(false);
     }
   };
 
-  const processData = (rawData) => {
-    if (!rawData || rawData.length === 0) return [];
-
-    // Filter data based on period
-    const now = new Date();
-    let startDate;
-
-    switch (period) {
-      case '1month':
-        startDate = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
-        break;
-      case '3months':
-        startDate = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate());
-        break;
-      case '6months':
-        startDate = new Date(now.getFullYear(), now.getMonth() - 6, now.getDate());
-        break;
-      case '1year':
-      default:
-        startDate = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
-        break;
-    }
-
-    // Group data by view mode (week or month)
-    const groupedData = groupDataByViewMode(rawData, viewMode, startDate);
-
-    // Calculate percentages
-    return groupedData.map(item => ({
-      ...item,
-      percentage: item.sales > 0 ? ((item.revenue / item.sales) * 100).toFixed(2) : 0,
-    }));
-  };
-
-  const groupDataByViewMode = (data, mode, startDate) => {
-    const grouped = {};
-
-    data.forEach(item => {
-      const itemDate = new Date(item.sale_date || item.period);
-      
-      // Skip if before start date
-      if (itemDate < startDate) return;
-
-      let key;
-      if (mode === 'week') {
-        // Group by week
-        const weekStart = getWeekStart(itemDate);
-        key = formatWeek(weekStart);
-      } else {
-        // Group by month
-        key = formatMonth(itemDate);
-      }
-
-      if (!grouped[key]) {
-        grouped[key] = {
-          period: key,
-          sales: 0,
-          revenue: 0,
-          count: 0,
-        };
-      }
-
-      grouped[key].sales += item.sales || item.amount || 0;
-      grouped[key].revenue += item.revenue || item.amount || 0;
-      grouped[key].count += 1;
-    });
-
-    // Convert to array and sort
-    return Object.values(grouped).sort((a, b) => {
-      return new Date(a.period) - new Date(b.period);
-    });
-  };
-
-  const getWeekStart = (date) => {
-    const d = new Date(date);
-    const day = d.getDay();
-    const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust for Sunday
-    return new Date(d.setDate(diff));
-  };
-
-  const formatWeek = (date) => {
-    const endDate = new Date(date);
-    endDate.setDate(endDate.getDate() + 6);
-    return `Week ${date.getDate()}/${date.getMonth() + 1}`;
-  };
-
-  const formatMonth = (date) => {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    return `${months[date.getMonth()]} ${date.getFullYear()}`;
-  };
-
   // Calculate summary stats
   const totalSales = chartData.reduce((sum, item) => sum + (item.sales || 0), 0);
   const totalRevenue = chartData.reduce((sum, item) => sum + (item.revenue || 0), 0);
-  const avgPercentage = chartData.length > 0 
-    ? (chartData.reduce((sum, item) => sum + parseFloat(item.percentage || 0), 0) / chartData.length).toFixed(2)
+  const avgRevenue = chartData.length > 0 
+    ? (totalRevenue / chartData.length).toFixed(0)
     : 0;
 
   return (
@@ -210,6 +114,18 @@ export default function SalesChart({ data: initialData }) {
           {/* View Mode Toggle */}
           <div className="flex items-center gap-2 text-sm">
             <span className="text-blue-300">By:</span>
+            <label className="flex items-center gap-1 cursor-pointer">
+              <input
+                type="radio"
+                name="viewMode"
+                value="day"
+                checked={viewMode === 'day'}
+                onChange={(e) => setViewMode(e.target.value)}
+                className="text-blue-500 accent-blue-500"
+                disabled={loading}
+              />
+              <span className="text-blue-200">Day</span>
+            </label>
             <label className="flex items-center gap-1 cursor-pointer">
               <input
                 type="radio"
@@ -245,7 +161,8 @@ export default function SalesChart({ data: initialData }) {
               disabled={loading}
               className="px-3 py-1 bg-[#11244A] border border-blue-800/50 rounded text-sm text-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <option value="1month">1 month</option>
+              <option value="7days">7 days</option>
+              <option value="30days">30 days</option>
               <option value="3months">3 months</option>
               <option value="6months">6 months</option>
               <option value="1year">1 year</option>
@@ -261,28 +178,28 @@ export default function SalesChart({ data: initialData }) {
             <span className="text-sm text-blue-300 font-medium">Total Sales</span>
             <DollarSign className="w-5 h-5 text-blue-400" />
           </div>
-          <p className="text-2xl font-bold text-white">{totalSales.toLocaleString()}</p>
-          <p className="text-xs text-blue-400 mt-1">{totalSales.toLocaleString()} transactions</p>
+          <p className="text-2xl font-bold text-white">{totalSales}</p>
+          <p className="text-xs text-blue-400 mt-1">{totalSales} transactions</p>
         </div>
 
         <div className="bg-gradient-to-br from-teal-900/40 to-teal-950/40 rounded-lg p-4 border border-teal-800/50">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-teal-300 font-medium">Revenue</span>
+            <span className="text-sm text-teal-300 font-medium">Total Revenue</span>
             <TrendingUp className="w-5 h-5 text-teal-400" />
           </div>
           <p className="text-2xl font-bold text-white">₹{totalRevenue.toLocaleString()}</p>
           <p className="text-xs text-teal-400 mt-1">
-            {totalSales > 0 ? `${((totalRevenue / totalSales) * 100).toFixed(1)}% of sales` : 'N/A'}
+            {totalSales > 0 ? `₹${(totalRevenue / totalSales).toFixed(0)} per sale` : 'N/A'}
           </p>
         </div>
 
         <div className="bg-gradient-to-br from-green-900/40 to-green-950/40 rounded-lg p-4 border border-green-800/50">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-green-300 font-medium">Avg Growth</span>
+            <span className="text-sm text-green-300 font-medium">Avg Revenue</span>
             <Calendar className="w-5 h-5 text-green-400" />
           </div>
-          <p className="text-2xl font-bold text-white">{avgPercentage}%</p>
-          <p className="text-xs text-green-400 mt-1">Per {viewMode === 'week' ? 'week' : 'month'}</p>
+          <p className="text-2xl font-bold text-white">₹{avgRevenue}</p>
+          <p className="text-xs text-green-400 mt-1">Per {viewMode === 'day' ? 'day' : viewMode === 'week' ? 'week' : 'month'}</p>
         </div>
       </div>
 
@@ -335,16 +252,16 @@ export default function SalesChart({ data: initialData }) {
                 yAxisId="left"
                 stroke="#93c5fd"
                 style={{ fontSize: '12px' }}
-                tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}k`}
+                label={{ value: 'Sales Count', angle: -90, position: 'insideLeft', style: { fill: '#93c5fd' } }}
               />
               
               <YAxis
                 yAxisId="right"
                 orientation="right"
-                stroke="#4ade80"
+                stroke="#5eead4"
                 style={{ fontSize: '12px' }}
-                tickFormatter={(value) => `${value}%`}
-                domain={[0, 100]}
+                tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}k`}
+                label={{ value: 'Revenue (₹)', angle: 90, position: 'insideRight', style: { fill: '#5eead4' } }}
               />
               
               <Tooltip content={<CustomTooltip />} />
@@ -354,25 +271,18 @@ export default function SalesChart({ data: initialData }) {
                 dataKey="sales"
                 fill="url(#colorSales)"
                 radius={[8, 8, 0, 0]}
-                barSize={viewMode === 'week' ? 30 : 40}
-              />
-              
-              <Bar
-                yAxisId="left"
-                dataKey="revenue"
-                fill="url(#colorRevenue)"
-                radius={[8, 8, 0, 0]}
-                barSize={viewMode === 'week' ? 30 : 40}
+                name="Sales Count"
               />
               
               <Line
                 yAxisId="right"
                 type="monotone"
-                dataKey="percentage"
-                stroke="#4ade80"
+                dataKey="revenue"
+                stroke="#14b8a6"
                 strokeWidth={3}
-                dot={{ fill: '#4ade80', r: 6 }}
-                activeDot={{ r: 8 }}
+                dot={{ fill: '#14b8a6', r: 4 }}
+                activeDot={{ r: 6 }}
+                name="Revenue"
               />
             </ComposedChart>
           </ResponsiveContainer>
@@ -388,13 +298,13 @@ export default function SalesChart({ data: initialData }) {
             <span className="font-medium">Data Points:</span> {chartData.length}
           </div>
           <div>
-            <span className="font-medium">View:</span> {viewMode === 'week' ? 'Weekly' : 'Monthly'}
+            <span className="font-medium">View:</span> {viewMode === 'day' ? 'Daily' : viewMode === 'week' ? 'Weekly' : 'Monthly'}
           </div>
           <div>
-            <span className="font-medium">Period:</span> {period.replace('1', '').replace('months', ' months').replace('month', ' month').replace('year', ' year')}
+            <span className="font-medium">Period:</span> {period.replace('days', ' days').replace('months', ' months').replace('year', ' year')}
           </div>
           <div>
-            <span className="font-medium">Last Updated:</span> {new Date().toLocaleDateString()}
+            <span className="font-medium">Last Updated:</span> {new Date().toLocaleString()}
           </div>
         </div>
       )}

@@ -8,10 +8,28 @@ export default function PaymentModal({ course, onClose, onSuccess }) {
 
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
+      // Suppress Razorpay SVG console errors
+      const originalConsoleError = console.error;
+      console.error = (...args) => {
+        if (args[0]?.includes?.('attribute height') || args[0]?.includes?.('Expected length')) {
+          return; // Suppress SVG attribute errors from Razorpay
+        }
+        originalConsoleError.apply(console, args);
+      };
+
       const script = document.createElement('script');
       script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-      script.onload = () => resolve(true);
-      script.onerror = () => resolve(false);
+      script.onload = () => {
+        // Restore original console.error after a delay
+        setTimeout(() => {
+          console.error = originalConsoleError;
+        }, 1000);
+        resolve(true);
+      };
+      script.onerror = () => {
+        console.error = originalConsoleError;
+        resolve(false);
+      };
       document.body.appendChild(script);
     });
   };
@@ -40,6 +58,9 @@ export default function PaymentModal({ course, onClose, onSuccess }) {
       if (!response.ok) {
         throw new Error(data.error || 'Failed to create order');
       }
+
+      // Store order ID for failure handling
+      const currentOrderId = data.orderId;
 
       // Razorpay options
       const options = {
@@ -71,7 +92,27 @@ export default function PaymentModal({ course, onClose, onSuccess }) {
             }
           } catch (error) {
             alert('Payment verification error: ' + error.message);
+          } finally {
+            setProcessing(false);
           }
+        },
+        modal: {
+          ondismiss: async function () {
+            // User closed the payment modal without completing payment
+            setProcessing(false);
+            try {
+              await fetch('/api/payment/failure', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  razorpay_order_id: currentOrderId,
+                  error_description: 'Payment cancelled by user',
+                }),
+              });
+            } catch (error) {
+              console.error('Error recording payment cancellation:', error);
+            }
+          },
         },
         prefill: {
           name: '',
@@ -85,12 +126,26 @@ export default function PaymentModal({ course, onClose, onSuccess }) {
       const razorpay = new window.Razorpay(options);
       razorpay.open();
 
-      razorpay.on('payment.failed', function (response) {
+      razorpay.on('payment.failed', async function (response) {
+        setProcessing(false);
         alert('Payment failed: ' + response.error.description);
+        
+        // Record payment failure
+        try {
+          await fetch('/api/payment/failure', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              razorpay_order_id: currentOrderId,
+              error_description: response.error.description,
+            }),
+          });
+        } catch (error) {
+          console.error('Error recording payment failure:', error);
+        }
       });
     } catch (error) {
       alert('Error: ' + error.message);
-    } finally {
       setProcessing(false);
     }
   };

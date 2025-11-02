@@ -39,6 +39,19 @@ export async function PUT(request, { params }) {
       updateData.pdf_url = fileName;
     }
 
+    const imageFile = formData.get('image');
+
+    // Upload new Image if provided
+    if (imageFile && imageFile.size > 0) {
+      const fileName = `${Date.now()}-${imageFile.name}`;
+      const { data: uploadData, error: uploadError } = await supabaseAdmin.storage
+        .from('courses')
+        .upload(fileName, imageFile);
+
+      if (uploadError) throw uploadError;
+      updateData.image_url = fileName;
+    }
+
     const { data: course, error } = await supabaseAdmin
       .from('courses')
       .update(updateData)

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Filter } from 'lucide-react';
 import BlogCard from '@/components/blog/BlogCard';
+import { Progressbar } from '@/components/ProgressBar';
 
 export default function BlogPage() {
   const [blogs, setBlogs] = useState([]);
@@ -63,14 +64,14 @@ export default function BlogPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16 flex items-center justify-center">
-        <div className="text-blue-300 text-xl">Loading blogs...</div>
-      </div>
+      <>
+      <Progressbar/>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16">
+    <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16 pt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">

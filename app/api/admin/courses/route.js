@@ -46,7 +46,8 @@ export async function POST(request) {
     const instrument = formData.get('instrument');
     const level = formData.get('level');
     const pdfFile = formData.get('pdf');
-
+    const imageFile = formData.get('image')
+    let imageUrl = null;
     let pdfUrl = null;
 
     // Upload PDF if provided
@@ -58,6 +59,16 @@ export async function POST(request) {
 
       if (uploadError) throw uploadError;
       pdfUrl = fileName;
+    }
+    // Upload Image if provided
+    if (imageFile) {
+      const fileName = `${Date.now()}-${imageFile.name}`;
+      const { data: uploadData, error: uploadError } = await supabaseAdmin.storage
+        .from('courses')
+        .upload(fileName, imageFile);
+
+      if (uploadError) throw uploadError;
+      imageUrl = fileName;
     }
 
     // Insert course
@@ -71,6 +82,7 @@ export async function POST(request) {
           instrument,
           level,
           pdf_url: pdfUrl,
+          image_url: imageUrl,
         },
       ])
       .select()

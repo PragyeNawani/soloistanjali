@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
-import { X, Upload } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, Upload, Image as ImageIcon, FileText } from 'lucide-react';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function CourseForm({ course, onSubmit, onClose }) {
   const [formData, setFormData] = useState({
@@ -12,18 +13,111 @@ export default function CourseForm({ course, onSubmit, onClose }) {
     level: course?.level || 'Beginner',
   });
   const [pdfFile, setPdfFile] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    // Load existing image if course exists
+    if (course?.id) {
+      loadCourseImage(course.id);
+    }
+  }, [course]);
+
+  const loadCourseImage = async (courseId) => {
+    try {
+      const { data, error } = await supabase.storage
+        .from('courses')
+        .list('course-images', {
+          search: `${courseId}.`
+        });
+
+      if (!error && data && data.length > 0) {
+        const { data: { publicUrl } } = supabase.storage
+          .from('courses')
+          .getPublicUrl(`course-images/${data[0].name}`);
+
+        setImagePreview(publicUrl);
+      }
+    } catch (error) {
+      console.error('Error loading course image:', error);
+    }
+  };
+
+  // Handle image file selection
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      setImageFile(file);
+      // Create preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert('Please select a valid image file');
+    }
+  };
+
+  // Upload image to Supabase Storage
+  const uploadImage = async (courseId) => {
+    if (!imageFile) return null;
+
+    const fileExt = imageFile.name.split('.').pop();
+    const fileName = `${courseId}.${fileExt}`;
+    const filePath = `course-images/${fileName}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from('courses')
+      .upload(filePath, imageFile, {
+        upsert: true // Overwrite if exists
+      });
+
+    if (uploadError) {
+      throw uploadError;
+    }
+
+    // Get public URL
+    const { data } = supabase.storage
+      .from('courses')
+      .getPublicUrl(filePath);
+
+    return data.publicUrl;
+  };
+
+  const removeImage = () => {
+    setImageFile(null);
+    setImagePreview('');
+  };
+
+  // Form submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await onSubmit({ ...formData, pdfFile });
-    setLoading(false);
+
+    try {
+      // Pass data to parent component's onSubmit
+      // The parent will handle the actual database operations
+      await onSubmit({ 
+        ...formData, 
+        pdfFile, 
+        imageFile 
+      });
+
+      alert('Course saved successfully!');
+      onClose();
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error saving course: ' + error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
-      <div className="bg-white rounded-lg p-8 max-w-2xl w-full my-8">
+      <div className="bg-white rounded-lg p-8 max-w-2xl w-full my-8 max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-3xl font-serif text-amber-900">
             {course ? 'Edit Course' : 'Add New Course'}
@@ -111,11 +205,65 @@ export default function CourseForm({ course, onSubmit, onClose }) {
             </div>
           </div>
 
+          {/* Course Image Upload */}
+          <div>
+            <label className="block text-sm font-medium text-amber-900 mb-2">
+              Course Image {!course && '*'}
+            </label>
+            {imagePreview ? (
+              <div className="relative">
+                <div className="border-2 border-amber-200 rounded-lg overflow-hidden">
+                  <img
+                    src={imagePreview}
+                    alt="Course preview"
+                    className="w-full h-48 object-cover"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={removeImage}
+                  className="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full hover:bg-red-700 shadow-lg"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+                <p className="text-sm text-amber-600 mt-2">
+                  {imageFile ? imageFile.name : 'Current course image'}
+                </p>
+              </div>
+            ) : (
+              <div className="border-2 border-dashed border-amber-200 rounded-lg p-6 text-center">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                  id="image-upload"
+                  required={!course}
+                />
+                <label htmlFor="image-upload" className="cursor-pointer">
+                  <ImageIcon className="w-12 h-12 text-amber-400 mx-auto mb-2" />
+                  <p className="text-amber-700">
+                    Click to upload course image
+                  </p>
+                  <p className="text-sm text-amber-600 mt-1">
+                    PNG, JPG, WEBP up to 5MB
+                  </p>
+                  {course && (
+                    <p className="text-sm text-amber-600 mt-1">
+                      Leave empty to keep existing image
+                    </p>
+                  )}
+                </label>
+              </div>
+            )}
+          </div>
+
+          {/* Course PDF Upload */}
           <div>
             <label className="block text-sm font-medium text-amber-900 mb-2">
               Course PDF {!course && '*'}
             </label>
-            <div className="border-2 border-dashed border-amber-200 rounded p-6 text-center">
+            <div className="border-2 border-dashed border-amber-200 rounded-lg p-6 text-center">
               <input
                 type="file"
                 accept=".pdf"
@@ -125,7 +273,7 @@ export default function CourseForm({ course, onSubmit, onClose }) {
                 required={!course}
               />
               <label htmlFor="pdf-upload" className="cursor-pointer">
-                <Upload className="w-12 h-12 text-amber-400 mx-auto mb-2" />
+                <FileText className="w-12 h-12 text-amber-400 mx-auto mb-2" />
                 <p className="text-amber-700">
                   {pdfFile ? pdfFile.name : 'Click to upload PDF'}
                 </p>

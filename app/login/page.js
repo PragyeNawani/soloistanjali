@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Music } from 'lucide-react';
@@ -14,50 +14,84 @@ export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const supabase = createClientComponentClient();
+  
+  // Prevent multiple simultaneous submissions
+  const isSubmitting = useRef(false);
+  const lastSubmitTime = useRef(0);
 
   useEffect(() => {
     if (searchParams.get('registered') === 'true') {
       setSuccessMessage('Account created successfully! Please log in.');
     }
+    if (searchParams.get('reset') === 'true') {
+      setSuccessMessage('Password reset email sent! Please check your inbox.');
+    }
+    if (searchParams.get('password-updated') === 'true') {
+      setSuccessMessage('Password updated successfully! Please log in with your new password.');
+    }
   }, [searchParams]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Prevent double submission
+    if (isSubmitting.current) {
+      console.log('Already submitting, ignoring duplicate request');
+      return;
+    }
+
+    // Rate limiting: prevent submissions within 2 seconds of each other
+    const now = Date.now();
+    if (now - lastSubmitTime.current < 2000) {
+      setError('Please wait a moment before trying again.');
+      return;
+    }
+
     setError('');
     setLoading(true);
+    isSubmitting.current = true;
+    lastSubmitTime.current = now;
 
     try {
-      console.log('Attempting login...'); // Debug log
+      console.log('Attempting login...');
 
       const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
       });
 
-      console.log('Login response:', { data, error: signInError }); // Debug log
+      console.log('Login response:', { data, error: signInError });
 
       if (signInError) {
         throw signInError;
       }
 
       if (data.session) {
-        console.log('Login successful, redirecting...'); // Debug log
-        // Redirect to dashboard
+        console.log('Login successful, redirecting...');
         router.push('/dashboard');
         router.refresh();
       } else {
         throw new Error('No session returned');
       }
     } catch (err) {
-      console.error('Login error:', err); // Debug log
-      setError(err.message || 'Login failed. Please check your credentials.');
+      console.error('Login error:', err);
+      
+      // Handle rate limit errors specifically
+      if (err.message?.includes('rate limit')) {
+        setError('Too many login attempts. Please wait a few minutes before trying again.');
+      } else if (err.message?.includes('Invalid login credentials')) {
+        setError('Invalid email or password. Please try again.');
+      } else {
+        setError(err.message || 'Login failed. Please check your credentials.');
+      }
     } finally {
       setLoading(false);
+      isSubmitting.current = false;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-stone-100 py-16 flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-stone-100 py-16 flex items-center justify-center pt-24">
       <div className="max-w-md w-full mx-4">
         <div className="bg-white rounded-lg shadow-xl p-8">
           <div className="text-center mb-8">
@@ -86,13 +120,22 @@ export default function LoginPage() {
                 }
                 className="w-full px-4 py-3 border border-amber-200 rounded focus:outline-none focus:ring-2 focus:ring-amber-500"
                 placeholder="Enter your email"
+                disabled={loading}
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
-                Password
-              </label>
+              <div className="flex justify-between items-center mb-2">
+                <label className="block text-sm font-medium text-amber-900">
+                  Password
+                </label>
+                <Link
+                  href="/auth/reset-password"
+                  className="text-sm text-amber-900 hover:text-amber-700 hover:underline"
+                >
+                  Forgot Password?
+                </Link>
+              </div>
               <input
                 type="password"
                 required
@@ -102,6 +145,7 @@ export default function LoginPage() {
                 }
                 className="w-full px-4 py-3 border border-amber-200 rounded focus:outline-none focus:ring-2 focus:ring-amber-500"
                 placeholder="Enter your password"
+                disabled={loading}
               />
             </div>
 

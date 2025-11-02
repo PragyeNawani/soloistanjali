@@ -83,7 +83,7 @@ export default function Navigation({ user }) {
         <div className="flex justify-between items-center h-20">
           <Link href="/" className="flex items-center cursor-pointer">
             <Music className="text-blue-400 w-8 h-8 mr-2" />
-            <span className="text-2xl font-serif text-white">CHORDS</span>
+            <span className="text-2xl font-serif text-white">SOLOISTANJALI</span>
             <span className="text-sm text-blue-300 ml-1">STUDIO</span>
           </Link>
 
@@ -107,7 +107,7 @@ export default function Navigation({ user }) {
                   : 'text-gray-400 hover:text-blue-300'
               }`}
             >
-              COURSES
+              MARKETPLACE
             </Link>
             <Link
               href="/workshops"

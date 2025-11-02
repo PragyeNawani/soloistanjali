@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Lock, Unlock, Heart } from 'lucide-react';
 import PaymentModal from '@/components/PaymentModal';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { Progressbar } from '@/components/ProgressBar';
 
 export default function CoursesPage() {
   const [courses, setCourses] = useState([]);
@@ -16,55 +17,89 @@ export default function CoursesPage() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const supabase = createClientComponentClient();
-
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    try {
-      // Get current user
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setUser(session?.user || null);
+  try {
+    // Get current user
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    setUser(session?.user || null);
 
-      // Fetch courses
-      const { data: coursesData, error: coursesError } = await supabase
-        .from('courses')
-        .select('*')
-        .order('id');
+    // Fetch courses
+    const { data: coursesData, error: coursesError } = await supabase
+      .from('courses')
+      .select('*')
+      .order('id');
 
-      if (coursesError) throw coursesError;
-      setCourses(coursesData || []);
+    if (coursesError) throw coursesError;
 
-      // Fetch purchased courses if logged in
-      if (session?.user) {
-        const { data: purchasesData, error: purchasesError } = await supabase
-          .from('purchases')
-          .select('course_id')
-          .eq('user_id', session.user.id)
-          .eq('status', 'completed');
-
-        if (purchasesError) throw purchasesError;
-        setPurchasedCourseIds(purchasesData.map((p) => p.course_id) || []);
-
-        // Fetch wishlist
-        const wishlistResponse = await fetch('/api/wishlist');
-        const wishlistData = await wishlistResponse.json();
-        
-        if (wishlistResponse.ok) {
-          setWishlistCourseIds(
-            wishlistData.wishlist.map((w) => w.course_id) || []
-          );
-        }
+    // Add image URLs directly from the stored image_url
+    const coursesWithImages = (coursesData || []).map((course) => {
+      let imageUrl = null;
+      
+      if (course.image_url) {
+        const { data: { publicUrl } } = supabase.storage
+          .from('courses')
+          .getPublicUrl(course.image_url);
+        imageUrl = publicUrl;
       }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      setLoading(false);
+      
+      return { ...course, imageUrl };
+    });
+
+    setCourses(coursesWithImages);
+
+    // Fetch purchased courses if logged in
+    if (session?.user) {
+      const { data: purchasesData, error: purchasesError } = await supabase
+        .from('purchases')
+        .select('course_id')
+        .eq('user_id', session.user.id)
+        .eq('status', 'completed');
+
+      if (purchasesError) throw purchasesError;
+      setPurchasedCourseIds(purchasesData.map((p) => p.course_id) || []);
+
+      // Fetch wishlist
+      const wishlistResponse = await fetch('/api/wishlist');
+      const wishlistData = await wishlistResponse.json();
+      
+      if (wishlistResponse.ok) {
+        setWishlistCourseIds(
+          wishlistData.wishlist.map((w) => w.course_id) || []
+        );
+      }
     }
-  };
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  } finally {
+    setLoading(false);
+  }
+};
+
+//   const getCourseImage = async (courseId) => {
+//   try {
+//     // First, get the image_url from the course data (which is already available)
+//     const course = courses.find(c => c.id === courseId);
+//     if (!course?.image_url) {
+//       return null;
+//     }
+
+//     // Get public URL for the image using the stored image_url
+//     const { data: { publicUrl } } = supabase.storage
+//       .from('courses')
+//       .getPublicUrl(course.image_url);
+
+//     return publicUrl;
+//   } catch (error) {
+//     console.error('Error fetching course image:', error);
+//     return null;
+//   }
+// };
 
   const handlePurchase = (course) => {
     if (!user) {
@@ -125,23 +160,24 @@ export default function CoursesPage() {
       Piano: '🎹',
       Cello: '🎻',
       Violin: '🎻',
+      Drums: '🥁',
+      Vocals: '🎤',
     };
     return emojiMap[instrument] || '🎵';
   };
-
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16 flex items-center justify-center">
-        <div className="text-blue-300 text-xl">Loading courses...</div>
-      </div>
+      <>
+      <Progressbar/>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16">
+    <div className="min-h-screen bg-primarycontainer py-16 pt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-5xl font-serif text-white text-center mb-4">
-          Available Courses
+          Available Course PDFs
         </h1>
         <p className="text-blue-300 text-center mb-12 max-w-2xl mx-auto">
           Explore our comprehensive collection of music courses. Purchase and
@@ -173,9 +209,29 @@ export default function CoursesPage() {
                   />
                 </button>
 
-                <div className="bg-gradient-to-br from-[#11244A] to-[#0B1C3E] h-48 flex items-center justify-center text-8xl border-b border-blue-900/30">
-                  {getInstrumentEmoji(course.instrument)}
+                {/* Course Image or Emoji */}
+                <div className="relative h-48 overflow-hidden border-b border-blue-900/30">
+                  {course.imageUrl ? (
+                    <img
+                      src={course.imageUrl}
+                      alt={course.title}
+                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                      onError={(e) => {
+                        // Fallback to emoji if image fails to load
+                        e.target.style.display = 'none';
+                        e.target.nextElementSibling.style.display = 'flex';
+                      }}
+                    />
+                  ) : null}
+                  <div 
+                    className={`absolute inset-0 bg-gradient-to-br from-[#11244A] to-[#0B1C3E] flex items-center justify-center text-8xl ${
+                      course.imageUrl ? 'hidden' : 'flex'
+                    }`}
+                  >
+                    {getInstrumentEmoji(course.instrument)}
+                  </div>
                 </div>
+
                 <div className="p-6 space-y-4">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-medium text-blue-300 bg-blue-900/30 px-3 py-1 rounded border border-blue-800/50">
