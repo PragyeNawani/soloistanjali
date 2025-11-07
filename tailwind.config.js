@@ -32,6 +32,8 @@ module.exports = {
         primarycontainer:"#091425",
         primarytext:"#00194B",
         primaryhighlight: "#4272D4",
+        primarytextlight: "#4272D4",
+        hometext: "#00FFFF",
       },
       borderImage: {
       'gradient-blue-purple': 'linear-gradient(to right, #3b82f6, #a855f7, #3b82f6) 1',
@@ -39,7 +41,9 @@ module.exports = {
       fontFamily: {
         serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
       },
-      
+      backgroundImage: {
+        'loginbg': "url('/p2.jpeg')",
+      },
     },
   },
   plugins: [],

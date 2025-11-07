@@ -95,10 +95,10 @@ export default function BlogForm({ blog }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-stone-100 py-8">
+    <div className="min-h-screen bg-white to-stone-100 py-8 pt-24">
       <div className="max-w-5xl mx-auto px-4">
-        <div className="bg-white rounded-lg shadow-xl p-8">
-          <h1 className="text-3xl font-serif text-amber-900 mb-8">
+        <div className="bg-blue-950 rounded-lg shadow-xl p-8">
+          <h1 className="text-3xl font-serif text-blue-300 mb-8">
             {blog ? 'Edit Blog Post' : 'Create New Blog Post'}
           </h1>
 
@@ -118,7 +118,7 @@ export default function BlogForm({ blog }) {
               />
             </div> */}
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-blue-500 mb-2">
                 Blog Title *
               </label>
               <input
@@ -134,20 +134,20 @@ export default function BlogForm({ blog }) {
                     console.log("Title must start with a letter");
                   }
                 }}
-                className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter a compelling title (must start with a letter)..."
               />
             </div>
             {/* Category and Tags */}
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-amber-900 mb-2">
+                <label className="block text-sm font-medium text-blue-500 mb-2">
                   Category *
                 </label>
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   {categories.map((cat) => (
                     <option key={cat.value} value={cat.value}>
@@ -158,14 +158,14 @@ export default function BlogForm({ blog }) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-amber-900 mb-2">
+                <label className="block text-sm font-medium text-blue-500 mb-2">
                   Tags (comma-separated)
                 </label>
                 <input
                   type="text"
                   value={formData.tags}
                   onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
-                  className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="music, guitar, workshop..."
                 />
               </div>
@@ -173,13 +173,13 @@ export default function BlogForm({ blog }) {
 
             {/* Excerpt */}
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-blue-500 mb-2">
                 Excerpt (Short Summary)
               </label>
               <textarea
                 value={formData.excerpt}
                 onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-                className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 rows="3"
                 placeholder="Brief description of the blog post..."
               />
@@ -190,14 +190,14 @@ export default function BlogForm({ blog }) {
 
             {/* Content */}
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-blue-500 mb-2">
                 Blog Content *
               </label>
               <textarea
                 required
                 value={formData.content}
                 onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 font-mono"
+                className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
                 rows="20"
                 placeholder="Write your blog content here..."
               />
@@ -208,7 +208,7 @@ export default function BlogForm({ blog }) {
 
             {/* Featured Image */}
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-blue-500 mb-2">
                 Featured Image
               </label>
 
@@ -225,13 +225,13 @@ export default function BlogForm({ blog }) {
                       setFeaturedImage(null);
                       setFeaturedImagePreview(null);
                     }}
-                    className="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full hover:bg-red-700"
+                    className="absolute top-2 right-2 bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700"
                   >
                     <X className="w-4 h-4" />
                   </button>
                 </div>
               ) : (
-                <div className="border-2 border-dashed border-amber-200 rounded-lg p-8 text-center">
+                <div className="border-2 border-dashed border-blue-200 rounded-lg p-8 text-center">
                   <input
                     type="file"
                     accept="image/*"
@@ -240,8 +240,8 @@ export default function BlogForm({ blog }) {
                     id="featured-image"
                   />
                   <label htmlFor="featured-image" className="cursor-pointer">
-                    <ImageIcon className="w-12 h-12 text-amber-400 mx-auto mb-4" />
-                    <p className="text-amber-700 mb-2">Click to upload featured image</p>
+                    <ImageIcon className="w-12 h-12 text-blue-400 mx-auto mb-4" />
+                    <p className="text-blue-200 mb-2">Click to upload featured image</p>
                     <p className="text-sm text-gray-500">PNG, JPG up to 10MB</p>
                   </label>
                 </div>
@@ -250,7 +250,7 @@ export default function BlogForm({ blog }) {
 
             {/* Attachments */}
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-blue-500 mb-2">
                 Attachments (PDFs, Images)
               </label>
 
@@ -263,12 +263,12 @@ export default function BlogForm({ blog }) {
                     >
                       <div className="flex items-center gap-3">
                         {file.type.includes('pdf') ? (
-                          <FileText className="w-5 h-5 text-red-600" />
+                          <FileText className="w-5 h-5 text-blue-600" />
                         ) : (
                           <ImageIcon className="w-5 h-5 text-blue-600" />
                         )}
                         <div>
-                          <p className="text-sm font-medium text-amber-900">
+                          <p className="text-sm font-medium text-blue-900">
                             {file.name}
                           </p>
                           <p className="text-xs text-gray-500">
@@ -279,7 +279,7 @@ export default function BlogForm({ blog }) {
                       <button
                         type="button"
                         onClick={() => removeAttachment(index)}
-                        className="text-red-600 hover:text-red-700"
+                        className="text-blue-600 hover:text-blue-700"
                       >
                         <X className="w-5 h-5" />
                       </button>
@@ -288,7 +288,7 @@ export default function BlogForm({ blog }) {
                 </div>
               )}
 
-              <div className="border-2 border-dashed border-amber-200 rounded-lg p-6 text-center">
+              <div className="border-2 border-dashed border-blue-200 rounded-lg p-6 text-center">
                 <input
                   type="file"
                   accept="image/*,.pdf"
@@ -298,8 +298,8 @@ export default function BlogForm({ blog }) {
                   id="attachments"
                 />
                 <label htmlFor="attachments" className="cursor-pointer">
-                  <Upload className="w-10 h-10 text-amber-400 mx-auto mb-2" />
-                  <p className="text-amber-700 mb-1">Click to upload files</p>
+                  <Upload className="w-10 h-10 text-blue-400 mx-auto mb-2" />
+                  <p className="text-blue-200 mb-1">Click to upload files</p>
                   <p className="text-sm text-gray-500">
                     PDFs, images - up to 50MB each
                   </p>
@@ -313,7 +313,7 @@ export default function BlogForm({ blog }) {
                 type="button"
                 onClick={(e) => handleSubmit(e, true)}
                 disabled={loading}
-                className="flex-1 bg-gray-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-700 transition flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 bg-gray-50 text-blue-950 px-6 py-3 rounded-lg font-medium hover:bg-gray-300 transition flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Save className="w-5 h-5 mr-2" />
                 {loading ? 'Saving...' : 'Save as Draft'}
@@ -322,7 +322,7 @@ export default function BlogForm({ blog }) {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 bg-amber-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-amber-800 transition flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 bg-[#00FFFF] text-primarytext px-6 py-3 rounded-lg font-medium hover:bg-[#04d4d4] transition flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Eye className="w-5 h-5 mr-2" />
                 {loading ? 'Publishing...' : 'Publish Blog'}
@@ -332,7 +332,7 @@ export default function BlogForm({ blog }) {
                 type="button"
                 onClick={() => router.push('/dashboard')}
                 disabled={loading}
-                className="bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-400 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-red-500 text-gray-900 px-6 py-3 rounded-lg font-medium hover:bg-red-600 hover:text-white transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Cancel
               </button>
@@ -341,7 +341,7 @@ export default function BlogForm({ blog }) {
 
           {/* Preview Section */}
           <div className="mt-12 pt-8 border-t border-amber-200">
-            <h2 className="text-2xl font-serif text-amber-900 mb-4">Preview</h2>
+            <h2 className="text-2xl font-serif text-blue-500 mb-4">Preview</h2>
             <div className="bg-amber-50 rounded-lg p-6">
               {featuredImagePreview && (
                 <img
@@ -351,13 +351,13 @@ export default function BlogForm({ blog }) {
                 />
               )}
               <div className="space-y-2">
-                <span className="text-xs font-medium text-amber-700 bg-amber-100 px-3 py-1 rounded-full uppercase">
+                <span className="text-xs font-medium text-blue-700 bg-blue-100 px-3 py-1 rounded-full uppercase">
                   {formData.category}
                 </span>
-                <h3 className="text-2xl font-serif text-amber-900">
+                <h3 className="text-2xl font-serif text-black">
                   {formData.title || 'Your blog title will appear here'}
                 </h3>
-                <p className="text-amber-700 text-sm">
+                <p className="text-gray-700 text-sm">
                   {formData.excerpt || 'Your excerpt will appear here'}
                 </p>
                 {formData.tags && (

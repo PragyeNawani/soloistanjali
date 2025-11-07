@@ -5,8 +5,9 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Music, Menu, X, LogOut, ChevronDown } from 'lucide-react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-
+import { useNavContext } from '@/Context/context';
 export default function Navigation({ user }) {
+  const { navani, setNavani } = useNavContext()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -14,7 +15,6 @@ export default function Navigation({ user }) {
   const router = useRouter();
   const supabase = createClientComponentClient();
   const dropdownRef = useRef(null);
-
   const handleLogout = async () => {
     await supabase.auth.signOut();
     router.push('/');
@@ -72,60 +72,55 @@ export default function Navigation({ user }) {
 
   return (
     <nav
-      className={`shadow-lg fixed top-0 left-0 right-0 z-50 bg-transparent transition-all duration-700 ease-out ${
-        hasAnimated ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
-      }`}
+      className={`${navani ? `fixed top-0 left-0 right-0 z-50 v transition-all duration-300 ease-out translate-y-0 opacity-100 navscroll bg-gradient-to-l from-gray-950 to-blue-950` : `fixed top-0 left-0 right-0 z-50  transition-all duration-700 ease-out ${pathname != "/" ?'bg-gradient-to-l from-gray-950 to-blue-950':'bg-transparent'} ${hasAnimated ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+        }`}`}
       style={{
-        backdropFilter: 'blur(8px)',
+        backdropFilter: 'blur(0px)',
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <Link href="/" className="flex items-center cursor-pointer">
             <Music className="text-blue-400 w-8 h-8 mr-2" />
             <span className="text-2xl font-serif text-white">SOLOISTANJALI</span>
-            <span className="text-sm text-blue-300 ml-1">STUDIO</span>
+            {/* <span className="text-sm text-blue-300 ml-1">STUDIO</span> */}
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-8 md:gap-2">
             <Link
               href="/"
-              className={`text-sm font-medium transition duration-300 ${
-                pathname === '/'
-                  ? 'text-blue-400 border-b-2 border-blue-400'
-                  : 'text-gray-400 hover:text-blue-300'
-              }`}
+              className={`text-sm ${pathname === '/'
+                ? 'text-blue-700 font-bold bg-white bg-opacity-[90%] p-2 px-4 rounded-full'
+                : 'text-gray-50 hover:rounded-full hover:text-blue-700 p-2 px-4 hover:py-2 hover:bg-white hover:bg-opacity-[70%]  font-semibold'
+                }`}
             >
               STUDIO INFO
             </Link>
             <Link
               href="/courses"
-              className={`text-sm font-medium transition duration-300 ${
-                pathname === '/courses'
-                  ? 'text-blue-400 border-b-2 border-blue-400'
-                  : 'text-gray-400 hover:text-blue-300'
-              }`}
+              className={`text-sm ${pathname === '/courses'
+                ? 'text-blue-700 font-bold bg-white bg-opacity-[90%] p-2 px-4 rounded-full'
+                : 'text-gray-50 hover:rounded-full hover:text-blue-700 p-2 px-4 hover:py-2 hover:bg-white hover:bg-opacity-[70%]  font-semibold'
+                }`}
             >
               MARKETPLACE
             </Link>
             <Link
               href="/workshops"
-              className={`text-sm font-medium transition duration-300 ${
-                pathname === '/workshops'
-                  ? 'text-blue-400 border-b-2 border-blue-400'
-                  : 'text-gray-400 hover:text-blue-300'
-              }`}
+              className={`text-sm  ${pathname === '/workshops'
+                ? 'text-blue-700 font-bold bg-white bg-opacity-[90%] p-2 px-4 rounded-full'
+                : 'text-gray-50 hover:rounded-full hover:text-blue-700 p-2 px-4 hover:py-2 hover:bg-white hover:bg-opacity-[70%]  font-semibold'
+                }`}
             >
               WORKSHOPS
             </Link>
             <Link
               href="/blog"
-              className={`text-sm font-medium transition duration-300 ${
-                pathname === '/blog'
-                  ? 'text-blue-400 border-b-2 border-blue-400'
-                  : 'text-gray-400 hover:text-blue-300'
-              }`}
+              className={`text-sm ${pathname === '/blog'
+                ? 'text-blue-700 font-bold bg-white bg-opacity-[90%] p-2 px-4 rounded-full'
+                : 'text-gray-50 hover:rounded-full hover:text-blue-700 p-2 px-4 hover:py-2 hover:bg-white hover:bg-opacity-[70%]  font-semibold'
+                }`}
             >
               BLOGS
             </Link>
@@ -145,9 +140,8 @@ export default function Navigation({ user }) {
                       {getUserDisplayName()}
                     </span>
                     <ChevronDown
-                      className={`w-4 h-4 text-blue-400 transition-transform ${
-                        userDropdownOpen ? 'rotate-180' : ''
-                      }`}
+                      className={`w-4 h-4 text-blue-400 transition-transform ${userDropdownOpen ? 'rotate-180' : ''
+                        }`}
                     />
                   </div>
                 </button>

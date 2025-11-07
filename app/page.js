@@ -1,11 +1,25 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Instagram, Facebook, Youtube, Calendar, BookOpen, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-
+import { useNavContext } from '@/Context/context';
+import Typewriter from "typewriter-effect";
+import Link from 'next/link';
 export default function ChordsStudioPage() {
+  const { navani, setNavani } = useNavContext();
+  const navref = useRef();
+  const [isLaunching, setIsLaunching] = useState(false);
+  const handleScrollTop = () => {
+    setIsLaunching(true); // start animation
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // smooth animation
+    });
+    // After animation ends, reset the state
+    setTimeout(() => setIsLaunching(false), 1000);
+  };
   const router = useRouter();
   const supabase = createClientComponentClient();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,7 +36,6 @@ export default function ChordsStudioPage() {
     goal: '',
     message: ''
   });
-
   const testimonials = [
     { name: "Alex Santos", text: "The lessons are well-structured and easy to follow. I've learned so much in just a few months!", firstname: "Alex" },
     { name: "Sara Jones", text: "Amazing instructors and great community. Highly recommend for anyone wanting to learn music!", firstname: "Sara" },
@@ -53,7 +66,18 @@ export default function ChordsStudioPage() {
     { question: "Do I need a musical ear to start learning piano and music production?", answer: "No, you do not need to have a musical ear to begin with. Ear training is an essential part of any student’s music learning journey, and it will be developed with time and practice." },
     { question: "How can I request sheets to buy for my favourite songs if they are not available here?", answer: "You can send your requests via email" },
   ];
+  //Navbar Animation
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      const entry = entries[0]
+      if (entry.boundingClientRect.y >= 700) setNavani(false)
+      if (entry.boundingClientRect.y <= 700) setNavani(true)
+      else setNavani(false)
+      // else setNavani(true)
+    })
+    observer.observe(navref.current)
 
+  }, [navref])
   // Fetch latest items
   useEffect(() => {
     const fetchLatestItems = async () => {
@@ -242,28 +266,46 @@ export default function ChordsStudioPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      {navani && <>
+        <div className={`bg-blue-50 border-2 border-black h-10 w-10 fixed bottom-8 right-8 rounded-full z-50 flex justify-center items-center cursor-pointer ${isLaunching ? "rocket-launch" : ""
+          }`} onClick={() => { handleScrollTop() }}><img src="/startup.png" alt="" /></div>
+      </>}
       {/* Hero Section */}
       <section className="relative h-screen bg-cover bg-center" style={{
-        backgroundImage: 'linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("p3.jpeg")',
-        backgroundColor: '#1a1a2e'
+        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0,0,0,0.7)), url("/p3.jpeg")',
+        backgroundColor: '#1a1a2e',
       }}>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
-          <h1 className="text-6xl font-bold mb-4">
-            FOLLOW YOUR <span className="text-purple-400">HOBBY</span>
+          <h1 className="text-6xl font-medium mb-4 flex w-full gap-2 justify-center">
+            <div className='w-[50%] text-right'>FOLLOW YOUR</div>
+            <div className="text-hometext font-bold w-[50%] flex justify-start"><Typewriter
+              options={{
+                strings: ["Music Classes", "Guitar Lessons", "Piano Training", "Vocal Coaching"],
+                autoStart: true,
+                loop: true,
+                delay: 75,     // typing speed
+                deleteSpeed: 50, // deleting speed
+                className: "text-black",
+              }}
+            /></div>
           </h1>
-          <p className="text-xl mb-2">Learn Instruments Anytime, Anywhere</p>
-          <p className="text-lg mb-8">In-studio Online Courses available too</p>
-          <button className="bg-gradient-to-r from-blue-500 to-purple-500 px-8 py-3 rounded-full text-white font-semibold hover:from-blue-600 hover:to-purple-600">
-            Enroll with Chords
-          </button>
+          <p className="text-2xl mb-2">Learn Instruments Anytime, Anywhere</p>
+          <div className='flex gap-4 mt-10'>
+            <Link href="/courses" className='border-2 border-white hover:bg-white hover:text-primarytext px-8 py-3 rounded-full text-white font-semibold hover:from-blue-600 hover:to-purple-600'>
+              Explore Marketplace
+            </Link>
+            <Link href="/workshops" className='bg-[#012773] hover:bg-[#03328f] px-8 py-3 rounded-full text-white font-semibold hover:from-blue-600 hover:to-purple-600'>
+              Enroll Workshop
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Trusted by Musicians */}
       <section className="py-20 px-8 overflow-hidden">
-        <h2 className="text-4xl font-bold text-center mb-16">
+        <motion.h2 ref={navref} className="text-4xl font-bold text-center mb-16">
           Trusted by <span className="text-blue-600">Musicians</span>
-        </h2>
+        </motion.h2>
         <div className="relative max-w-6xl mx-auto h-[600px]">
           {/* Fade overlay at top */}
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white to-transparent z-10 pointer-events-none"></div>
@@ -530,7 +572,7 @@ export default function ChordsStudioPage() {
       </div>
 
       {/* Connect With Us + Social Media */}
-      <section className="py-20 px-8 bg-gray-50">
+      <section className="py-24 px-8 bg-white" id="contact">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
           {/* Contact Form */}
           <div className="bg-gray-900 text-white p-8 rounded-lg">

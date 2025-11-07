@@ -4,8 +4,8 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-
 const inter = Inter({ subsets: ['latin'] });
+import { NavProvider } from '@/Context/context';
 
 export const metadata = {
   title: 'SOLOISTANJALI',
@@ -22,9 +22,11 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navigation user={session?.user || null} />
-        {children}
-        <Footer />
+        <NavProvider>
+          <Navigation user={session?.user || null} />
+          {children}
+          <Footer />
+        </NavProvider>
       </body>
     </html>
   );

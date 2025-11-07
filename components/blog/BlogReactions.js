@@ -64,7 +64,7 @@ export default function BlogReactions({ slug, initialReactions, userReaction }) 
             disabled={loading}
             className={`flex items-center gap-2 px-4 py-2 rounded-full border-2 transition-all ${
               isActive
-                ? `${color} bg-opacity-10 border-current scale-110`
+                ? `${color} bg-opacity-10 border-current scale-110 text-blue-800`
                 : 'border-gray-300 hover:border-amber-400 hover:bg-amber-50'
             } disabled:opacity-50 disabled:cursor-not-allowed`}
             title={label}

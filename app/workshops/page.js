@@ -239,10 +239,9 @@ export default function WorkshopsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16 pt-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-serif text-white mb-4">
+    <div className="min-h-screen pb-16">
+        <div className="bg-gradient-to-l from-gray-950 to-blue-950  pt-24 pb-10 mb-10">
+          <h1 className="text-5xl text-center font-serif text-white mb-4">
             Upcoming Workshops
           </h1>
           <p className="text-blue-300 max-w-2xl mx-auto">
@@ -251,7 +250,7 @@ export default function WorkshopsPage() {
             to the next level.
           </p>
         </div>
-
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {workshops.length === 0 ? (
           <div className="bg-gradient-to-br from-[#0B1C3E] to-[#061831] rounded-lg shadow-2xl p-12 text-center border border-blue-900/30">
             <div className="text-6xl mb-4">📅</div>

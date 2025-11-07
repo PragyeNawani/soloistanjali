@@ -99,7 +99,7 @@ export default function SalesChart({ data: initialData }) {
     : 0;
 
   return (
-    <div className="bg-gradient-to-br from-[#0B1C3E] to-[#061831] rounded-lg shadow-2xl p-6 border border-blue-900/30">
+    <div className="bg-gradient-to-r from-gray-950 via-blue-950 to-gray-950 rounded-lg shadow-2xl p-6 border border-blue-900/30">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">

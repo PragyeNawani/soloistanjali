@@ -6,9 +6,45 @@
   body {
     @apply text-gray-900;
   }
+  *{
+    scroll-behavior: smooth;
+  }
 }
 
 @layer components {
+  .navscroll {
+    /* min-height: 132px; */
+    /* background-color: white; */
+    animation: navscrollslide 0.7s ease-in-out forwards;
+  }
+
+  @keyframes navscrollslide {
+    from {
+      opacity: 0;
+      transform: translateY(-112px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+
+  @keyframes rocketLaunch {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-500px);
+      opacity: 0;
+    }
+  }
+
+  .rocket-launch {
+    animation: rocketLaunch 0.8s ease-out forwards;
+  }
+
   .btn-primary {
     @apply bg-amber-900 text-white px-6 py-3 rounded font-medium hover:bg-amber-800 transition;
   }

@@ -102,7 +102,7 @@ export default function BlogComments({ slug, initialComments }) {
 
   return (
     <div className="mt-12">
-      <h3 className="text-2xl font-serif text-amber-900 mb-6 flex items-center gap-2">
+      <h3 className="text-2xl font-serif text-blue-900 mb-6 flex items-center gap-2">
         <MessageCircle className="w-6 h-6" />
         Comments ({comments.length})
       </h3>
@@ -117,7 +117,7 @@ export default function BlogComments({ slug, initialComments }) {
               ? 'Share your thoughts...'
               : 'Login to comment...'
           }
-          className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
+          className="w-full px-4 py-3 border border-blue-200 rounded-lg focus:outline-none bg-gray-100 focus:ring-2 focus:ring-blue-500 resize-none"
           rows="4"
           disabled={loading || !currentUser}
         />
@@ -129,7 +129,7 @@ export default function BlogComments({ slug, initialComments }) {
             <button
               type="button"
               onClick={() => router.push('/login')}
-              className="text-amber-900 text-sm hover:underline"
+              className="text-blue-900 text-sm hover:underline"
             >
               Login to comment
             </button>
@@ -138,7 +138,7 @@ export default function BlogComments({ slug, initialComments }) {
           <button
             type="submit"
             disabled={loading || !newComment.trim() || !currentUser}
-            className="bg-amber-900 text-white px-6 py-2 rounded-lg hover:bg-amber-800 transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-blue-900 text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Send className="w-4 h-4" />
             {loading ? 'Posting...' : 'Post Comment'}
@@ -156,15 +156,15 @@ export default function BlogComments({ slug, initialComments }) {
           comments.map((comment) => (
             <div
               key={comment.id}
-              className="bg-amber-50 rounded-lg p-4 border border-amber-100 relative group"
+              className="bg-gray-50 rounded-lg p-4 border border-blue-100 relative group"
             >
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-amber-200 rounded-full flex items-center justify-center flex-shrink-0">
-                  <User className="w-5 h-5 text-amber-700" />
+                <div className="w-10 h-10 bg-blue-800 rounded-full flex items-center justify-center flex-shrink-0">
+                  <User className="w-5 h-5 text-blue-300" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-medium text-amber-900 flex items-center gap-1">
+                    <span className="font-medium text-blue-900 flex items-center gap-1">
                       {comment.profiles?.name || 'Anonymous'}
                       {isAdmin && comment.user_id === currentUser?.id && (
                         <Shield className="w-4 h-4 text-red-600" title="Admin" />
@@ -180,7 +180,7 @@ export default function BlogComments({ slug, initialComments }) {
                       })}
                     </span>
                   </div>
-                  <p className="text-amber-800 whitespace-pre-wrap">
+                  <p className="text-blue-800 whitespace-pre-wrap">
                     {comment.content}
                   </p>
                 </div>

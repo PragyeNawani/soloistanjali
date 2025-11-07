@@ -60,20 +60,22 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-stone-100 py-16 flex items-center justify-center pt-24">
-      <div className="max-w-md w-full mx-4">
-        <div className="bg-white rounded-lg shadow-xl p-8">
-          <div className="text-center mb-8">
-            <Music className="w-12 h-12 text-amber-900 mx-auto mb-4" />
-            <h1 className="text-3xl font-serif text-amber-900">
+    <div className="min-h-screen justify-center relative">
+      <div className='absolute top-0 left-0 bg-loginbg bg-cover bg-center h-full w-full z-[-10] blur-[2px]'></div>
+      <div className='absolute top-0 left-0 bg-gray-950 opacity-[50%] backdrop-blur-sm h-full w-full z-[-10]'></div>
+      <div className="max-w-3xl md:max-w-lg w-full min-h-screen bg-primarycontainer flex flex-col justify-center z-10">
+        <div className="rounded-lg py-20 px-5">
+          <div className="text-center mb-6">
+            <Music className="w-12 h-12 text-amber-700 mx-auto mb-2" />
+            <h1 className="text-3xl font-serif text-amber-700">
               Create Account
             </h1>
-            <p className="text-amber-700 mt-2">Join CHORDS Studio today</p>
+            <p className="text-amber-500">Join CHORDS Studio today</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-amber-700 mb-2">
                 Full Name
               </label>
               <input
@@ -89,7 +91,7 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-amber-700 mb-2">
                 Email Address
               </label>
               <input
@@ -105,7 +107,7 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-amber-700 mb-2">
                 Password
               </label>
               <input
@@ -121,7 +123,7 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-amber-700 mb-2">
                 Confirm Password
               </label>
               <input
@@ -151,9 +153,9 @@ export default function RegisterPage() {
             </button>
           </form>
 
-          <p className="text-center mt-6 text-amber-700">
+          <p className="text-center mt-6 text-amber-500">
             Already have an account?{' '}
-            <Link href="/login" className="text-amber-900 font-medium hover:underline">
+            <Link href="/login" className="text-amber-700 font-medium hover:underline">
               Sign In
             </Link>
           </p>

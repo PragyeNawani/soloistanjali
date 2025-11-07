@@ -91,13 +91,15 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-stone-100 py-16 flex items-center justify-center pt-24">
-      <div className="max-w-md w-full mx-4">
-        <div className="bg-white rounded-lg shadow-xl p-8">
+    <div className="min-h-screen justify-center relative">
+      <div className='absolute top-0 left-0 bg-loginbg bg-cover bg-center h-full w-full z-[-10] blur-[2px]'></div>
+      <div className='absolute top-0 left-0 bg-gray-950 opacity-[50%] backdrop-blur-sm h-full w-full z-[-10]'></div>
+      <div className="max-w-3xl md:max-w-lg w-full min-h-screen bg-primarycontainer flex flex-col justify-center z-10">
+        <div className="rounded-lg p-8">
           <div className="text-center mb-8">
-            <Music className="w-12 h-12 text-amber-900 mx-auto mb-4" />
-            <h1 className="text-3xl font-serif text-amber-900">Welcome Back</h1>
-            <p className="text-amber-700 mt-2">Sign in to your account</p>
+            <Music className="w-12 h-12 text-amber-700 mx-auto mb-4" />
+            <h1 className="text-3xl font-serif text-amber-700">Welcome Back</h1>
+            <p className="text-amber-500 mt-2">Sign in to your account</p>
           </div>
 
           {successMessage && (
@@ -108,7 +110,7 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-amber-700 mb-2">
                 Email Address
               </label>
               <input
@@ -118,7 +120,7 @@ export default function LoginPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
                 }
-                className="w-full px-4 py-3 border border-amber-200 rounded focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-4 py-3 border border-amber-200 rounded text-amber-900 placeholder:text-amber-950 placeholder:text-opacity-[75%] focus:outline-none focus:ring-2 focus:ring-amber-500"
                 placeholder="Enter your email"
                 disabled={loading}
               />
@@ -126,12 +128,12 @@ export default function LoginPage() {
 
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-sm font-medium text-amber-900">
+                <label className="block text-sm font-medium text-amber-700">
                   Password
                 </label>
                 <Link
                   href="/auth/reset-password"
-                  className="text-sm text-amber-900 hover:text-amber-700 hover:underline"
+                  className="text-sm text-amber-700 hover:text-amber-700 hover:underline"
                 >
                   Forgot Password?
                 </Link>
@@ -143,7 +145,7 @@ export default function LoginPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
-                className="w-full px-4 py-3 border border-amber-200 rounded focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-4 py-3 border border-amber-200 rounded text-amber-900 placeholder:text-amber-950 placeholder:text-opacity-[75%] focus:outline-none focus:ring-2 focus:ring-amber-500"
                 placeholder="Enter your password"
                 disabled={loading}
               />
@@ -164,11 +166,11 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <p className="text-center mt-6 text-amber-700">
+          <p className="text-center mt-6 text-amber-500">
             Don't have an account?{' '}
             <Link
               href="/register"
-              className="text-amber-900 font-medium hover:underline"
+              className="text-amber-700 font-medium hover:underline"
             >
               Sign Up
             </Link>

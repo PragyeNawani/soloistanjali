@@ -6,27 +6,84 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 // GET all blogs
 export async function GET(request) {
   try {
+    console.log('=== GET /api/blogs started ===');
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status') || 'published';
     const category = searchParams.get('category');
+    
+    console.log('Query params:', { status, category });
 
-    let query = supabaseAdmin
-      .from('blog_stats')
-      .select('*')
-      .order('created_at', { ascending: false });
+    // Try blog_stats view first (with proper error handling for RLS issues)
+    try {
+      let query = supabaseAdmin
+        .from('blog_stats')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-    if (category && category !== 'all') {
-      query = query.eq('category', category);
+      if (category && category !== 'all') {
+        query = query.eq('category', category);
+      }
+
+      console.log('Querying blog_stats view...');
+      const { data, error } = await query;
+
+      if (error) {
+        console.warn('blog_stats query failed:', error.message);
+        throw error; // Force fallback
+      }
+
+      console.log('blog_stats query successful:', data?.length, 'blogs');
+      return NextResponse.json({ blogs: data || [] });
+      
+    } catch (viewError) {
+      console.log('Falling back to direct blogs query...');
+      
+      // Fallback: Query blogs table directly with manual aggregation
+      let query = supabaseAdmin
+        .from('blogs')
+        .select(`
+          *,
+          blog_attachments(count),
+          blog_comments(count),
+          blog_reactions(count)
+        `)
+        .eq('status', status)
+        .order('created_at', { ascending: false });
+
+      if (category && category !== 'all') {
+        query = query.eq('category', category);
+      }
+
+      const { data, error } = await query;
+
+      if (error) {
+        console.error('Fallback query failed:', error);
+        throw error;
+      }
+
+      // Transform the data to match blog_stats format
+      const transformedData = data?.map(blog => ({
+        ...blog,
+        attachment_count: blog.blog_attachments?.[0]?.count || 0,
+        comment_count: blog.blog_comments?.[0]?.count || 0,
+        reaction_count: blog.blog_reactions?.[0]?.count || 0
+      }));
+
+      console.log('Fallback successful:', transformedData?.length, 'blogs');
+      return NextResponse.json({ blogs: transformedData || [] });
     }
-
-    const { data, error } = await query;
-
-    if (error) throw error;
-
-    return NextResponse.json({ blogs: data || [] });
+    
   } catch (error) {
-    console.error('Fetch blogs error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('=== GET /api/blogs error ===');
+    console.error('Error:', error.message);
+    
+    return NextResponse.json(
+      { 
+        error: error.message || 'Failed to fetch blogs',
+        details: process.env.NODE_ENV === 'development' ? error.stack : null
+      },
+      { status: 500 }
+    );
   }
 }
 

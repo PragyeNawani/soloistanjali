@@ -119,7 +119,7 @@ export default function CourseForm({ course, onSubmit, onClose }) {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
       <div className="bg-white rounded-lg p-8 max-w-2xl w-full my-8 max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-3xl font-serif text-amber-900">
+          <h2 className="text-3xl font-serif text-blue-950">
             {course ? 'Edit Course' : 'Add New Course'}
           </h2>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
@@ -129,7 +129,7 @@ export default function CourseForm({ course, onSubmit, onClose }) {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-amber-900 mb-2">
+            <label className="block text-sm font-medium text-blue-900 mb-2">
               Course Title *
             </label>
             <input
@@ -137,20 +137,20 @@ export default function CourseForm({ course, onSubmit, onClose }) {
               required
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-4 py-3 border border-amber-200 rounded focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full px-4 py-3 border border-blue-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="e.g., Advanced Guitar Techniques"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-amber-900 mb-2">
+            <label className="block text-sm font-medium text-blue-900 mb-2">
               Description *
             </label>
             <textarea
               required
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-4 py-3 border border-amber-200 rounded focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full px-4 py-3 border border-blue-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               rows="4"
               placeholder="Describe the course content..."
             />
@@ -158,7 +158,7 @@ export default function CourseForm({ course, onSubmit, onClose }) {
 
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-blue-900 mb-2">
                 Price (₹) *
               </label>
               <input
@@ -167,18 +167,18 @@ export default function CourseForm({ course, onSubmit, onClose }) {
                 min="0"
                 value={formData.price}
                 onChange={(e) => setFormData({ ...formData, price: parseInt(e.target.value) })}
-                className="w-full px-4 py-3 border border-amber-200 rounded focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-4 py-3 border border-blue-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-blue-900 mb-2">
                 Instrument *
               </label>
               <select
                 value={formData.instrument}
                 onChange={(e) => setFormData({ ...formData, instrument: e.target.value })}
-                className="w-full px-4 py-3 border border-amber-200 rounded focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-4 py-3 border border-blue-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="Guitar">Guitar</option>
                 <option value="Piano">Piano</option>
@@ -190,13 +190,13 @@ export default function CourseForm({ course, onSubmit, onClose }) {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-blue-900 mb-2">
                 Level *
               </label>
               <select
                 value={formData.level}
                 onChange={(e) => setFormData({ ...formData, level: e.target.value })}
-                className="w-full px-4 py-3 border border-amber-200 rounded focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-4 py-3 border border-blue-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="Beginner">Beginner</option>
                 <option value="Intermediate">Intermediate</option>
@@ -207,12 +207,12 @@ export default function CourseForm({ course, onSubmit, onClose }) {
 
           {/* Course Image Upload */}
           <div>
-            <label className="block text-sm font-medium text-amber-900 mb-2">
+            <label className="block text-sm font-medium text-blue-900 mb-2">
               Course Image {!course && '*'}
             </label>
             {imagePreview ? (
               <div className="relative">
-                <div className="border-2 border-amber-200 rounded-lg overflow-hidden">
+                <div className="border-2 border-blue-200 rounded-lg overflow-hidden">
                   <img
                     src={imagePreview}
                     alt="Course preview"
@@ -226,12 +226,12 @@ export default function CourseForm({ course, onSubmit, onClose }) {
                 >
                   <X className="w-4 h-4" />
                 </button>
-                <p className="text-sm text-amber-600 mt-2">
+                <p className="text-sm text-blue-600 mt-2">
                   {imageFile ? imageFile.name : 'Current course image'}
                 </p>
               </div>
             ) : (
-              <div className="border-2 border-dashed border-amber-200 rounded-lg p-6 text-center">
+              <div className="border-2 border-dashed border-blue-200 rounded-lg p-6 text-center">
                 <input
                   type="file"
                   accept="image/*"
@@ -241,15 +241,15 @@ export default function CourseForm({ course, onSubmit, onClose }) {
                   required={!course}
                 />
                 <label htmlFor="image-upload" className="cursor-pointer">
-                  <ImageIcon className="w-12 h-12 text-amber-400 mx-auto mb-2" />
-                  <p className="text-amber-700">
+                  <ImageIcon className="w-12 h-12 text-blue-400 mx-auto mb-2" />
+                  <p className="text-blue-700">
                     Click to upload course image
                   </p>
-                  <p className="text-sm text-amber-600 mt-1">
+                  <p className="text-sm text-blue-600 mt-1">
                     PNG, JPG, WEBP up to 5MB
                   </p>
                   {course && (
-                    <p className="text-sm text-amber-600 mt-1">
+                    <p className="text-sm text-blue-600 mt-1">
                       Leave empty to keep existing image
                     </p>
                   )}
@@ -260,10 +260,10 @@ export default function CourseForm({ course, onSubmit, onClose }) {
 
           {/* Course PDF Upload */}
           <div>
-            <label className="block text-sm font-medium text-amber-900 mb-2">
+            <label className="block text-sm font-medium text-blue-900 mb-2">
               Course PDF {!course && '*'}
             </label>
-            <div className="border-2 border-dashed border-amber-200 rounded-lg p-6 text-center">
+            <div className="border-2 border-dashed border-blue-200 rounded-lg p-6 text-center">
               <input
                 type="file"
                 accept=".pdf"
@@ -273,11 +273,11 @@ export default function CourseForm({ course, onSubmit, onClose }) {
                 required={!course}
               />
               <label htmlFor="pdf-upload" className="cursor-pointer">
-                <FileText className="w-12 h-12 text-amber-400 mx-auto mb-2" />
-                <p className="text-amber-700">
+                <FileText className="w-12 h-12 text-blue-400 mx-auto mb-2" />
+                <p className="text-blue-700">
                   {pdfFile ? pdfFile.name : 'Click to upload PDF'}
                 </p>
-                <p className="text-sm text-amber-600 mt-1">
+                <p className="text-sm text-blue-600 mt-1">
                   {course && 'Leave empty to keep existing PDF'}
                 </p>
               </label>
@@ -288,14 +288,14 @@ export default function CourseForm({ course, onSubmit, onClose }) {
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-amber-900 text-white px-6 py-3 rounded font-medium hover:bg-amber-800 transition disabled:opacity-50"
+              className="flex-1 bg-blue-900 text-white px-6 py-3 rounded font-medium hover:bg-blue-800 transition disabled:opacity-50"
             >
               {loading ? 'Saving...' : course ? 'Update Course' : 'Create Course'}
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 bg-gray-300 text-gray-700 px-6 py-3 rounded font-medium hover:bg-gray-400 transition"
+              className="flex-1 bg-red-500 text-gray-700 hover:text-white px-6 py-3 rounded font-medium hover:bg-red-600 transition"
             >
               Cancel
             </button>

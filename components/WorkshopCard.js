@@ -23,7 +23,7 @@ export default function WorkshopCard({ workshop, onRegister, isRegistered }) {
   const spotsLeft = workshop.max_participants - workshop.current_participants;
 
   return (
-    <div className="bg-gradient-to-br from-[#0B1C3E] to-[#061831] rounded-lg shadow-2xl overflow-hidden hover:shadow-blue-900/50 hover:scale-105 transition-all duration-300 border border-blue-900/30">
+    <div className="rounded-lg hover:shadow-2xl overflow-hidden hover:shadow-blue-900/50  transition-all duration-300 border border-primarycontainer">
       <div className="bg-gradient-to-br from-[#11244A] to-[#0B1C3E] h-48 flex items-center justify-center border-b border-blue-900/30">
         <div className="text-center">
           <div className="text-6xl mb-2">🎼</div>
@@ -33,29 +33,29 @@ export default function WorkshopCard({ workshop, onRegister, isRegistered }) {
 
       <div className="p-6 space-y-4">
         <div>
-          <h3 className="text-2xl font-serif text-white mb-2">
+          <h3 className="text-2xl font-serif text-primarytext mb-2">
             {workshop.title}
           </h3>
-          <p className="text-blue-200 text-sm">{workshop.description}</p>
+          <p className="text-blue-900 text-sm">{workshop.description}</p>
         </div>
 
         <div className="space-y-2 text-sm">
-          <div className="flex items-center text-blue-300">
-            <Calendar className="w-4 h-4 mr-2 text-blue-400" />
+          <div className="flex items-center text-blue-800">
+            <Calendar className="w-4 h-4 mr-2 text-blue-800" />
             <span>{formatDate(workshop.date)}</span>
           </div>
-          <div className="flex items-center text-blue-300">
-            <Clock className="w-4 h-4 mr-2 text-blue-400" />
+          <div className="flex items-center text-blue-800">
+            <Clock className="w-4 h-4 mr-2 text-blue-800" />
             <span>
               {formatTime(workshop.date)} • {workshop.duration} minutes
             </span>
           </div>
-          <div className="flex items-center text-blue-300">
-            <User className="w-4 h-4 mr-2 text-blue-400" />
+          <div className="flex items-center text-blue-800">
+            <User className="w-4 h-4 mr-2 text-blue-800" />
             <span>Instructor: {workshop.instructor}</span>
           </div>
-          <div className="flex items-center text-blue-300">
-            <Users className="w-4 h-4 mr-2 text-blue-400" />
+          <div className="flex items-center text-blue-800">
+            <Users className="w-4 h-4 mr-2 text-blue-800" />
             <span>
               {workshop.current_participants} / {workshop.max_participants}{' '}
               participants
@@ -69,7 +69,7 @@ export default function WorkshopCard({ workshop, onRegister, isRegistered }) {
         </div>
 
         <div className="flex items-center justify-between pt-4 border-t border-blue-900/30">
-          <span className="text-2xl font-bold text-white">
+          <span className="text-2xl font-bold text-blue-800">
             ₹{workshop.price}
           </span>
           {isRegistered ? (
@@ -83,7 +83,7 @@ export default function WorkshopCard({ workshop, onRegister, isRegistered }) {
           ) : (
             <button
               onClick={() => onRegister(workshop)}
-              className="bg-blue-600 text-white px-6 py-2 text-sm font-medium rounded hover:bg-blue-700 transition shadow-lg shadow-blue-600/30 border border-blue-500"
+              className="bg-primarycontainer text-white px-6 py-2 text-sm font-medium rounded hover:bg-blue-800 transition border border-blue-500"
             >
               Register Now
             </button>

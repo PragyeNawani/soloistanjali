@@ -371,7 +371,7 @@ export default function AdminDashboard({ admin }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-950 to-blue-950 py-8 pt-24">
+    <div className="min-h-screen bg-gradient-to-l from-gray-950 to-blue-950 py-8 pt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Notification Banner */}
         {notificationMessage && typeof notificationMessage === 'object' && (
@@ -407,7 +407,7 @@ export default function AdminDashboard({ admin }) {
         )}
 
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-6 mb-8 border border-blue-800/50">
+        <div className="bg-gradient-to-r from-gray-950  to-blue-950 rounded-lg shadow-lg p-6 mb-8 border border-blue-800/50">
           <div className="flex items-center gap-3 mb-2">
             <h1 className="text-4xl font-serif text-white">
               Admin Dashboard
@@ -421,13 +421,13 @@ export default function AdminDashboard({ admin }) {
         </div>
 
         {/* Tabs */}
-        <div className="bg-gradient-to-r from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg mb-8 border border-blue-800/50">
+        <div className="bg-gray-950 rounded-lg shadow-lg mb-8 border border-blue-800/50">
           <div className="flex border-b border-blue-800/30">
             <button
               onClick={() => setActiveTab('overview')}
               className={`flex-1 px-6 py-4 text-sm font-medium transition ${activeTab === 'overview'
-                ? 'border-b-2 border-blue-400 text-blue-400'
-                : 'text-gray-400 hover:text-blue-300'
+                ? 'border-b-2 border-blue-400 text-blue-200 bg-blue-950'
+                : 'text-gray-300 hover:text-blue-300 bg-gray-950'
                 }`}
             >
               <TrendingUp className="w-5 h-5 inline mr-2" />
@@ -436,8 +436,8 @@ export default function AdminDashboard({ admin }) {
             <button
               onClick={() => setActiveTab('courses')}
               className={`flex-1 px-6 py-4 text-sm font-medium transition ${activeTab === 'courses'
-                ? 'border-b-2 border-blue-400 text-blue-400'
-                : 'text-gray-400 hover:text-blue-300'
+                ? 'border-b-2 border-blue-400 text-blue-200 bg-blue-950'
+                : 'text-gray-300 hover:text-blue-300 bg-gray-950'
                 }`}
             >
               <BookOpen className="w-5 h-5 inline mr-2" />
@@ -446,8 +446,8 @@ export default function AdminDashboard({ admin }) {
             <button
               onClick={() => setActiveTab('workshops')}
               className={`flex-1 px-6 py-4 text-sm font-medium transition ${activeTab === 'workshops'
-                ? 'border-b-2 border-blue-400 text-blue-400'
-                : 'text-gray-400 hover:text-blue-300'
+                ? 'border-b-2 border-blue-400 text-blue-200 bg-blue-950'
+                : 'text-gray-300 hover:text-blue-300 bg-gray-950'
                 }`}
             >
               <Calendar className="w-5 h-5 inline mr-2" />
@@ -456,8 +456,8 @@ export default function AdminDashboard({ admin }) {
             <button
               onClick={() => setActiveTab('blogs')}
               className={`flex-1 px-6 py-4 text-sm font-medium transition ${activeTab === 'blogs'
-                ? 'border-b-2 border-blue-400 text-blue-400'
-                : 'text-gray-400 hover:text-blue-300'
+                ? 'border-b-2 border-blue-400 text-blue-200 bg-blue-950'
+                : 'text-gray-300 hover:text-blue-300 bg-gray-950'
                 }`}
             >
               <FileText className="w-5 h-5 inline mr-2" />
@@ -470,22 +470,22 @@ export default function AdminDashboard({ admin }) {
         {activeTab === 'overview' && (
           <div className="space-y-8">
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-6 border border-blue-800/50">
-                <h3 className="text-sm font-medium text-blue-300 mb-2">Today's Sales</h3>
-                <p className="text-3xl font-bold text-blue-400">₹{stats.today.toLocaleString()}</p>
+              <div className="bg-gradient-to-r from-gray-950 to-blue-950 rounded-lg shadow-lg p-6 border border-blue-800/50">
+                <h3 className="text-sm font-medium text-blue-100 mb-2">Today's Sales</h3>
+                <p className="text-3xl font-bold text-blue-300">₹{stats.today.toLocaleString()}</p>
               </div>
-              <div className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-6 border border-blue-800/50">
-                <h3 className="text-sm font-medium text-blue-300 mb-2">This Week</h3>
-                <p className="text-3xl font-bold text-blue-400">₹{stats.week.toLocaleString()}</p>
+              <div className="bg-blue-950 rounded-lg shadow-lg p-6 border border-blue-800/50">
+                <h3 className="text-sm font-medium text-blue-100 mb-2">This Week</h3>
+                <p className="text-3xl font-bold text-blue-300">₹{stats.week.toLocaleString()}</p>
               </div>
-              <div className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-6 border border-blue-800/50">
-                <h3 className="text-sm font-medium text-blue-300 mb-2">This Month</h3>
-                <p className="text-3xl font-bold text-blue-400">₹{stats.month.toLocaleString()}</p>
+              <div className="bg-gradient-to-l from-gray-950 to-blue-950 rounded-lg shadow-lg p-6 border border-blue-800/50">
+                <h3 className="text-sm font-medium text-blue-100 mb-2">This Month</h3>
+                <p className="text-3xl font-bold text-blue-300">₹{stats.month.toLocaleString()}</p>
               </div>
             </div>
 
             {/* Sales Breakdown Section */}
-            <div className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-6 border border-blue-800/50">
+            <div className="bg-gradient-to-r from-gray-950 via-blue-950 to-gray-950 rounded-lg shadow-lg p-6 border border-blue-800/50">
               <h3 className="text-xl font-serif text-white mb-6 flex items-center gap-2">
                 <TrendingUp className="w-6 h-6 text-blue-400" />
                 Sales Breakdown (All Time)
@@ -583,7 +583,7 @@ export default function AdminDashboard({ admin }) {
             <SalesChart data={salesData} />
 
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-6 border border-blue-800/50">
+              <div className="bg-gradient-to-r from-gray-950 to-blue-950 rounded-lg shadow-lg p-6 border border-blue-800/50">
                 <h3 className="text-xl font-serif text-white mb-4">Quick Stats</h3>
                 <div className="space-y-3">
                   <div className="flex justify-between">
@@ -603,7 +603,7 @@ export default function AdminDashboard({ admin }) {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-6 border border-blue-800/50">
+              <div className="bg-gradient-to-l from-gray-950  to-blue-950 rounded-lg shadow-lg p-6 border border-blue-800/50">
                 <h3 className="text-xl font-serif text-white mb-4">Recent Activity</h3>
                 <p className="text-gray-400 text-sm">
                   Last updated: {new Date().toLocaleString()}

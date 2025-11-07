@@ -35,15 +35,15 @@ export default function WorkshopForm({ workshop, onSubmit, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[9999] p-4 sm:p-6">
-      <div className="bg-gradient-to-br from-gray-900 to-blue-950 rounded-lg shadow-2xl border border-blue-800/50 w-full max-w-4xl max-h-[90vh] flex flex-col">
+      <div className="bg-gray-100 rounded-lg shadow-2xl border border-blue-800/50 w-full max-w-4xl max-h-[90vh] flex flex-col">
         {/* Header - Fixed at top */}
-        <div className="flex-shrink-0 bg-gradient-to-r from-blue-900/95 to-gray-900/95 backdrop-blur-sm rounded-t-lg px-4 sm:px-6 md:px-8 py-4 sm:py-6 border-b border-blue-800/50 flex justify-between items-center">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-serif text-white">
+        <div className="flex-shrink-0 bg-gray-100 backdrop-blur-sm rounded-t-lg px-4 sm:px-6 md:px-8 py-4 sm:py-6 border-b border-blue-800/50 flex justify-between items-center">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-serif text-primarytext">
             {workshop ? 'Edit Workshop' : 'Add New Workshop'}
           </h2>
           <button 
             onClick={onClose} 
-            className="text-gray-400 hover:text-white transition p-1 hover:bg-blue-900/50 rounded"
+            className="text-gray-800 hover:text-white transition p-1 hover:bg-blue-900 rounded"
             aria-label="Close modal"
           >
             <X className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -57,7 +57,7 @@ export default function WorkshopForm({ workshop, onSubmit, onClose }) {
               {/* Title and Instructor */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-blue-300 mb-2">
+                  <label className="block text-sm font-medium text-blue-950 mb-2">
                     Workshop Title *
                   </label>
                   <input
@@ -65,13 +65,13 @@ export default function WorkshopForm({ workshop, onSubmit, onClose }) {
                     required
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-900/50 border border-blue-800/50 rounded text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-blue-900/20 border border-blue-800/50 rounded text-gray-950 placeholder-gray-950/40 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
                     placeholder="Enter workshop title"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-blue-300 mb-2">
+                  <label className="block text-sm font-medium text-blue-950 mb-2">
                     Instructor Name *
                   </label>
                   <input
@@ -79,7 +79,7 @@ export default function WorkshopForm({ workshop, onSubmit, onClose }) {
                     required
                     value={formData.instructor}
                     onChange={(e) => setFormData({ ...formData, instructor: e.target.value })}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-900/50 border border-blue-800/50 rounded text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-blue-900/20 border border-blue-800/50 rounded text-gray-950 placeholder-gray-950/40 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
                     placeholder="Enter instructor name"
                   />
                 </div>
@@ -87,14 +87,14 @@ export default function WorkshopForm({ workshop, onSubmit, onClose }) {
 
               {/* Description */}
               <div>
-                <label className="block text-sm font-medium text-blue-300 mb-2">
+                <label className="block text-sm font-medium text-blue-950 mb-2">
                   Description *
                 </label>
                 <textarea
                   required
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-900/50 border border-blue-800/50 rounded text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-blue-900/20 border border-blue-800/50 rounded text-gray-950 placeholder-gray-950/40 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
                   rows="3"
                   placeholder="Enter workshop description"
                 />
@@ -103,7 +103,7 @@ export default function WorkshopForm({ workshop, onSubmit, onClose }) {
               {/* Date, Duration, Price */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-blue-300 mb-2">
+                  <label className="block text-sm font-medium text-blue-950 mb-2">
                     Date & Time *
                   </label>
                   <input
@@ -111,12 +111,12 @@ export default function WorkshopForm({ workshop, onSubmit, onClose }) {
                     required
                     value={formData.date}
                     onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-900/50 border border-blue-800/50 rounded text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-blue-900/20 border border-blue-800/50 rounded text-gray-950 placeholder-gray-950/40 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-blue-300 mb-2">
+                  <label className="block text-sm font-medium text-blue-950 mb-2">
                     Duration (min) *
                   </label>
                   <input
@@ -125,13 +125,13 @@ export default function WorkshopForm({ workshop, onSubmit, onClose }) {
                     min="30"
                     value={formData.duration}
                     onChange={(e) => setFormData({ ...formData, duration: parseInt(e.target.value) })}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-900/50 border border-blue-800/50 rounded text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-blue-900/20 border border-blue-800/50 rounded text-gray-950 placeholder-gray-950/40 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
                     placeholder="120"
                   />
                 </div>
 
                 <div className="sm:col-span-2 lg:col-span-1">
-                  <label className="block text-sm font-medium text-blue-300 mb-2">
+                  <label className="block text-sm font-medium text-blue-950 mb-2">
                     Price (₹) *
                   </label>
                   <input
@@ -140,7 +140,7 @@ export default function WorkshopForm({ workshop, onSubmit, onClose }) {
                     min="0"
                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: parseInt(e.target.value) })}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-900/50 border border-blue-800/50 rounded text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-blue-900/20 border border-blue-800/50 rounded text-gray-950 placeholder-gray-950/40 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
                     placeholder="0"
                   />
                 </div>
@@ -149,7 +149,7 @@ export default function WorkshopForm({ workshop, onSubmit, onClose }) {
               {/* Max Participants and Workshop Link */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-blue-300 mb-2">
+                  <label className="block text-sm font-medium text-blue-950 mb-2">
                     Max Participants *
                   </label>
                   <input
@@ -158,13 +158,13 @@ export default function WorkshopForm({ workshop, onSubmit, onClose }) {
                     min="1"
                     value={formData.maxParticipants}
                     onChange={(e) => setFormData({ ...formData, maxParticipants: parseInt(e.target.value) })}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-900/50 border border-blue-800/50 rounded text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-blue-900/20 border border-blue-800/50 rounded text-gray-950 placeholder-gray-950/40 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
                     placeholder="30"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-blue-300 mb-2">
+                  <label className="block text-sm font-medium text-blue-950 mb-2">
                     Workshop Link *
                   </label>
                   <input
@@ -172,7 +172,7 @@ export default function WorkshopForm({ workshop, onSubmit, onClose }) {
                     required
                     value={formData.workshopLink}
                     onChange={(e) => setFormData({ ...formData, workshopLink: e.target.value })}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-900/50 border border-blue-800/50 rounded text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-blue-900/20 border border-blue-800/50 rounded text-gray-950 placeholder-gray-950/40 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
                     placeholder="https://zoom.us/j/..."
                   />
                 </div>
@@ -180,14 +180,14 @@ export default function WorkshopForm({ workshop, onSubmit, onClose }) {
 
               {/* Email Configuration Section */}
               <div className="border-t border-blue-800/50 pt-4 sm:pt-6 mt-4 sm:mt-6">
-                <h3 className="text-lg sm:text-xl font-serif text-white mb-3 sm:mb-4 flex items-center gap-2">
-                  <span className="text-blue-400">📧</span>
+                <h3 className="text-lg sm:text-xl font-serif text-primarytext mb-3 sm:mb-4 flex items-center gap-2">
+                  <span className="text-primraytext">📧</span>
                   Email Configuration
                 </h3>
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-blue-300 mb-2">
+                    <label className="block text-sm font-medium text-blue-950 mb-2">
                       Email Subject *
                     </label>
                     <input
@@ -195,24 +195,24 @@ export default function WorkshopForm({ workshop, onSubmit, onClose }) {
                       required
                       value={formData.emailSubject}
                       onChange={(e) => setFormData({ ...formData, emailSubject: e.target.value })}
-                      className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-900/50 border border-blue-800/50 rounded text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-blue-900/20 border border-blue-800/50 rounded text-gray-950 placeholder-gray-950/40 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
                       placeholder="Workshop Registration Confirmation"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-blue-300 mb-2">
+                    <label className="block text-sm font-medium text-blue-950 mb-2">
                       Email Message *
                     </label>
                     <textarea
                       required
                       value={formData.emailMessage}
                       onChange={(e) => setFormData({ ...formData, emailMessage: e.target.value })}
-                      className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-900/50 border border-blue-800/50 rounded text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                      className="resize-none w-full px-3 sm:px-4 py-2 sm:py-3 bg-blue-900/20 border border-blue-800/50 rounded text-gray-950 placeholder-gray-950/40 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
                       rows="6"
                       placeholder="Custom message to be included in the confirmation email..."
                     />
-                    <p className="text-xs sm:text-sm text-blue-400 mt-2 bg-blue-950/30 p-2 sm:p-3 rounded border border-blue-800/30">
+                    <p className="text-xs sm:text-sm text-blue-200 mt-2 bg-blue-950 p-2 sm:p-3 rounded border border-blue-800/30">
                       <strong>Available variables:</strong> {'{{userName}}'}, {'{{workshopTitle}}'}, {'{{date}}'}, {'{{time}}'}, {'{{link}}'}
                     </p>
                   </div>
@@ -222,11 +222,11 @@ export default function WorkshopForm({ workshop, onSubmit, onClose }) {
           </div>
 
           {/* Footer - Fixed at bottom, inside form */}
-          <div className="flex-shrink-0 bg-gradient-to-r from-blue-900/95 to-gray-900/95 backdrop-blur-sm rounded-b-lg px-4 sm:px-6 md:px-8 py-4 sm:py-6 border-t border-blue-800/50 flex flex-col sm:flex-row gap-3 sm:gap-4">
+          <div className="flex-shrink-0 bg-gradient-to-r from-blue-gray-950 to-blue-950 backdrop-blur-sm rounded-b-lg px-4 sm:px-6 md:px-8 py-4 sm:py-6 border-t border-blue-800/50 flex flex-col sm:flex-row gap-3 sm:gap-4">
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-blue-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded font-medium hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed border border-blue-500 text-sm sm:text-base"
+              className="flex-1 bg-blue-600 text-white hover:bg-white hover:text-blue-700 px-4 sm:px-6 py-2.5 sm:py-3 rounded font-medium transition disabled:opacity-50 disabled:cursor-not-allowed border border-blue-500 text-sm sm:text-base"
             >
               {loading ? 'Saving...' : workshop ? 'Update Workshop' : 'Create Workshop'}
             </button>
@@ -234,7 +234,7 @@ export default function WorkshopForm({ workshop, onSubmit, onClose }) {
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="flex-1 bg-gray-700 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded font-medium hover:bg-gray-600 transition disabled:opacity-50 border border-gray-600 text-sm sm:text-base"
+              className="flex-1 bg-red-500 text-gray-950 px-4 sm:px-6 py-2.5 sm:py-3 rounded font-medium hover:bg-red-600 hover:text-gray-100 transition disabled:opacity-50 border border-gray-600 text-sm sm:text-base"
             >
               Cancel
             </button>

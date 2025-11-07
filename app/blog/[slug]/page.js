@@ -80,7 +80,7 @@ export default function BlogDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-l from-gray-950 to-blue-950 py-16 flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4">📝</div>
           <div className="text-blue-300 text-xl">Loading blog...</div>
@@ -91,7 +91,7 @@ export default function BlogDetailPage() {
 
   if (error || !blog) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-l from-gray-950 to-blue-950 py-16 flex items-center justify-center">
         <div className="text-center max-w-md">
           <div className="text-6xl mb-4">😕</div>
           <h2 className="text-2xl font-serif text-white mb-4">Blog Not Found</h2>
@@ -108,19 +108,19 @@ export default function BlogDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#030A1C] via-[#051024] to-[#061831] py-16 pt-24">
+    <div className="min-h-screen bg-gradient-to-l from-gray-950 to-blue-950 py-16 pt-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <button
           onClick={() => router.push('/blog')}
-          className="flex items-center gap-2 text-blue-400 hover:text-blue-300 mb-8 transition"
+          className="flex items-center gap-2 text-blue-200 hover:text-blue-300 mb-8 transition"
         >
           <ArrowLeft className="w-5 h-5" />
           Back to Blogs
         </button>
 
         {/* Blog Content */}
-        <article className="bg-gradient-to-br from-[#0B1C3E] to-[#061831] rounded-lg shadow-2xl overflow-hidden border border-blue-900/30">
+        <article className="bg-blue-50 rounded-lg shadow-2xl overflow-hidden border border-blue-900/30">
           {/* Featured Image */}
           {blog.featured_image ? (
             <div className="h-96 overflow-hidden border-b border-blue-900/30">
@@ -139,10 +139,10 @@ export default function BlogDetailPage() {
           <div className="p-8 md:p-12">
             {/* Category Badge */}
             <div className="flex items-center justify-between mb-6">
-              <span className="text-sm font-medium text-blue-300 bg-blue-900/40 px-4 py-2 rounded-full uppercase border border-blue-800/50">
+              <span className="text-sm font-medium text-blue-100 bg-blue-900 px-4 py-2 rounded-full uppercase border border-blue-800/50">
                 {blog.category}
               </span>
-              <div className="flex items-center gap-4 text-sm text-blue-400">
+              <div className="flex items-center gap-4 text-sm text-blue-800">
                 <div className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
                   {new Date(blog.published_at || blog.created_at).toLocaleDateString('en-US', {
@@ -159,7 +159,7 @@ export default function BlogDetailPage() {
             </div>
 
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl font-serif text-white mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-serif text-black mb-6 leading-tight">
               {blog.title}
             </h1>
 
@@ -169,7 +169,7 @@ export default function BlogDetailPage() {
                 {blog.tags.map((tag, index) => (
                   <span
                     key={index}
-                    className="text-xs bg-blue-900/30 text-blue-300 px-3 py-1 rounded-full border border-blue-800/50"
+                    className="text-xs bg-blue-900 text-blue-100 px-3 py-1 rounded-full border border-blue-800/50"
                   >
                     #{tag}
                   </span>
@@ -179,7 +179,7 @@ export default function BlogDetailPage() {
 
             {/* Excerpt */}
             {blog.excerpt && (
-              <div className="text-lg text-blue-200 italic mb-8 pb-8 border-b border-blue-900/30">
+              <div className="text-lg text-gray-800 italic mb-8 pb-8 border-b border-blue-900/30">
                 {blog.excerpt}
               </div>
             )}
@@ -188,7 +188,7 @@ export default function BlogDetailPage() {
             <div className="prose prose-lg max-w-none mb-8">
               {blog.content.split('\n').map((paragraph, index) => (
                 paragraph.trim() && (
-                  <p key={index} className="mb-4 text-blue-100 leading-relaxed">
+                  <p key={index} className="mb-4 text-gray-700 leading-relaxed">
                     {paragraph}
                   </p>
                 )
@@ -233,7 +233,7 @@ export default function BlogDetailPage() {
 
             {/* Reactions */}
             <div className="border-t border-blue-900/30 pt-8 mb-8">
-              <h3 className="text-xl font-serif text-white mb-4">
+              <h3 className="text-xl font-serif text-gray-800 mb-4">
                 How do you feel about this?
               </h3>
               <BlogReactions
@@ -250,16 +250,16 @@ export default function BlogDetailPage() {
         </article>
 
         {/* Related Blogs CTA */}
-        <div className="mt-8 bg-gradient-to-br from-blue-900/40 to-blue-950/40 rounded-lg p-6 text-center border border-blue-800/50">
-          <h3 className="text-xl font-serif text-white mb-2">
+        <div className="mt-8 bg-blue-100 rounded-lg p-6 text-center border border-blue-800/50">
+          <h3 className="text-xl font-serif text-gray-800 mb-2">
             Enjoyed this article?
           </h3>
-          <p className="text-blue-300 mb-4">
+          <p className="text-gray-600 mb-4">
             Check out more blogs from CHORDS Studio
           </p>
           <button
             onClick={() => router.push('/blog')}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition shadow-lg shadow-blue-600/30 border border-blue-500"
+            className="bg-primarycontainer text-white px-6 py-3 rounded-lg hover:bg-blue-800 transition "
           >
             Browse All Blogs
           </button>
