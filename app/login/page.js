@@ -94,12 +94,12 @@ export default function LoginPage() {
     <div className="min-h-screen justify-center relative">
       <div className='absolute top-0 left-0 bg-loginbg bg-cover bg-center h-full w-full z-[-10] blur-[2px]'></div>
       <div className='absolute top-0 left-0 bg-gray-950 opacity-[50%] backdrop-blur-sm h-full w-full z-[-10]'></div>
-      <div className="max-w-3xl md:max-w-lg w-full min-h-screen bg-primarycontainer flex flex-col justify-center z-10">
+      <div className="max-w-3xl md:max-w-lg w-full min-h-screen bg-gradient-to-r from-[#172554] to-[#101B3D] flex flex-col justify-center z-10">
         <div className="rounded-lg p-8">
           <div className="text-center mb-8">
-            <Music className="w-12 h-12 text-amber-700 mx-auto mb-4" />
-            <h1 className="text-3xl font-serif text-amber-700">Welcome Back</h1>
-            <p className="text-amber-500 mt-2">Sign in to your account</p>
+            <Music className="w-12 h-12 text-blue-200 mx-auto mb-4" />
+            <h1 className="text-3xl font-serif text-blue-100">Welcome Back</h1>
+            <p className="text-blue-300 mt-2">Sign in to your account</p>
           </div>
 
           {successMessage && (
@@ -110,7 +110,7 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-amber-700 mb-2">
+              <label className="block text-sm font-medium text-blue-400 mb-2">
                 Email Address
               </label>
               <input
@@ -120,7 +120,7 @@ export default function LoginPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
                 }
-                className="w-full px-4 py-3 border border-amber-200 rounded text-amber-900 placeholder:text-amber-950 placeholder:text-opacity-[75%] focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-4 py-3 border border-blue-200 rounded text-blue-900 placeholder:text-blue-950 placeholder:text-opacity-[75%] focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your email"
                 disabled={loading}
               />
@@ -128,12 +128,12 @@ export default function LoginPage() {
 
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-sm font-medium text-amber-700">
+                <label className="block text-sm font-medium text-blue-400">
                   Password
                 </label>
                 <Link
                   href="/auth/reset-password"
-                  className="text-sm text-amber-700 hover:text-amber-700 hover:underline"
+                  className="text-sm text-blue-400 hover:underline"
                 >
                   Forgot Password?
                 </Link>
@@ -145,7 +145,7 @@ export default function LoginPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
-                className="w-full px-4 py-3 border border-amber-200 rounded text-amber-900 placeholder:text-amber-950 placeholder:text-opacity-[75%] focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-4 py-3 border border-blue-200 rounded text-blue-900 placeholder:text-blue-950 placeholder:text-opacity-[75%] focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your password"
                 disabled={loading}
               />
@@ -160,17 +160,17 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-amber-900 text-white py-3 rounded font-medium hover:bg-amber-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-blue-900 text-white py-3 rounded font-medium hover:bg-blue-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Signing In...' : 'Sign In'}
             </button>
           </form>
 
-          <p className="text-center mt-6 text-amber-500">
+          <p className="text-center mt-6 text-blue-100">
             Don't have an account?{' '}
             <Link
               href="/register"
-              className="text-amber-700 font-medium hover:underline"
+              className="text-blue-400 font-medium hover:underline"
             >
               Sign Up
             </Link>

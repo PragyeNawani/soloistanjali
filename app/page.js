@@ -294,8 +294,10 @@ export default function ChordsStudioPage() {
             <Link href="/courses" className='border-2 border-white hover:bg-white hover:text-primarytext px-8 py-3 rounded-full text-white font-semibold hover:from-blue-600 hover:to-purple-600'>
               Explore Marketplace
             </Link>
-            <Link href="/workshops" className='bg-[#012773] hover:bg-[#03328f] px-8 py-3 rounded-full text-white font-semibold hover:from-blue-600 hover:to-purple-600'>
-              Enroll Workshop
+            <Link href="/workshops" className='bg-[#012773] hover:bg-[#03328f] px-8 flex item-center justify-center rounded-full text-white font-semibold hover:from-blue-600 hover:to-purple-600'>
+              <span className='my-auto'>
+                Enroll Workshop
+              </span>
             </Link>
           </div>
         </div>
@@ -322,10 +324,10 @@ export default function ChordsStudioPage() {
                   initial={{ y: 0, opacity: 1 }}
                   animate={{
                     y: [-10, -1200],
-                    opacity: [1, 1, 1, 0]
+                    opacity: [1, 1, 1, 1]
                   }}
                   transition={{
-                    duration: 20,
+                    duration: 10,
                     repeat: Infinity,
                     delay: 0,
                     ease: "linear"
@@ -346,7 +348,7 @@ export default function ChordsStudioPage() {
                   initial={{ y: 0, opacity: 1 }}
                   animate={{
                     y: [0, -1200],
-                    opacity: [1, 1, 1, 0]
+                    opacity: [1, 1, 1, 1]
                   }}
                   transition={{
                     duration: 20,
@@ -370,10 +372,10 @@ export default function ChordsStudioPage() {
                   initial={{ y: 0, opacity: 1 }}
                   animate={{
                     y: [10, -1200],
-                    opacity: [1, 1, 1, 0]
+                    opacity: [1, 1, 1, 1]
                   }}
                   transition={{
-                    duration: 20,
+                    duration: 15,
                     repeat: Infinity,
                     delay: 0,
                     ease: "linear"
@@ -457,7 +459,7 @@ export default function ChordsStudioPage() {
                     return (
                       <div
                         key={`${item.type}-${index}`}
-                        className="absolute bg-gradient-to-br from-blue-900 to-blue-950 rounded-2xl p-6 w-96 duration-500 cursor-pointer border-2 border-blue-700 hover:border-blue-500 min-h-[400px]"
+                        className={`${isActive ? "bg-blue-100/80" : "bg-blue-100/30 blur-[6px]"} absolute rounded-2xl p-6 w-96 duration-500 cursor-pointer border-2 border-blue-700 hover:border-blue-500 min-h-[400px]`}
                         style={{
                           transform: transformStyle,
                           zIndex: zIndex,
@@ -498,11 +500,11 @@ export default function ChordsStudioPage() {
 
                         {/* Content */}
                         <div className="space-y-3">
-                          <h3 className="text-xl font-semibold text-white line-clamp-2 min-h-[3.5rem]">
+                          <h3 className="text-xl font-semibold text-black line-clamp-2 min-h-[3.5rem]">
                             {item.title}
                           </h3>
 
-                          <p className="text-blue-200 text-sm line-clamp-2">
+                          <p className="text-blue-800 text-sm line-clamp-2">
                             {item.excerpt || item.description}
                           </p>
 
@@ -510,13 +512,13 @@ export default function ChordsStudioPage() {
                           <div className="flex items-center justify-between pt-3 border-t border-blue-800">
                             {item.type === 'course' && (
                               <>
-                                <span className="text-blue-300 text-sm">{item.instrument}</span>
+                                <span className="text-blue-800 text-sm">{item.instrument}</span>
                                 {/* <span className="text-white font-bold text-lg">₹{item.price}</span> */}
                               </>
                             )}
                             {item.type === 'workshop' && (
                               <>
-                                <span className="text-blue-300 text-sm flex items-center gap-1">
+                                <span className="text-blue-800 text-sm flex items-center gap-1">
                                   <Calendar size={14} />
                                   {formatDate(item.date)}
                                 </span>
@@ -524,7 +526,7 @@ export default function ChordsStudioPage() {
                               </>
                             )}
                             {item.type === 'blog' && (
-                              <span className="text-blue-300 text-sm">Read more →</span>
+                              <span className="text-blue-800 text-sm">Read more →</span>
                             )}
                           </div>
                         </div>
@@ -676,10 +678,10 @@ export default function ChordsStudioPage() {
         <h2 className="text-4xl font-bold text-center mb-16">Frequently Asked Questions</h2>
         <div className="max-w-4xl mx-auto space-y-4">
           {faqs.map((faq, index) => (
-            <div key={index} className="bg-blue-900 bg-opacity-30 rounded-lg border border-blue-800">
+            <div key={index} className={`bg-blue-900 bg-opacity-30 rounded-lg border border-blue-800`}>
               <button
                 onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-blue-800 hover:bg-opacity-30 rounded-lg"
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-blue-900 hover:bg-opacity-30 rounded-lg"
               >
                 <span className="flex items-center gap-3">
                   <span className="text-blue-400">Q.</span>
@@ -688,7 +690,7 @@ export default function ChordsStudioPage() {
                 <span className="text-2xl">{expandedFaq === index ? '−' : '+'}</span>
               </button>
               {expandedFaq === index && faq.answer && (
-                <div className="px-6 pb-6 text-gray-300">
+                <div className="px-6 py-6 text-gray-300 border-t border-blue-300/50">
                   {faq.answer}
                 </div>
               )}
@@ -710,8 +712,8 @@ export default function ChordsStudioPage() {
           </div>
 
           <div>
-            <h3 className="text-blue-600 font-semibold mb-2">About Us</h3>
-            <h2 className="text-4xl font-bold mb-6">
+            <h3 className="text-blue-700 font-semibold mb-2 text-lg">About Us</h3>
+            <h2 className="text-4xl text-blue-950 font-bold mb-6">
               Chords Studio:<br />
               A Legacy of Music
             </h2>
@@ -719,14 +721,14 @@ export default function ChordsStudioPage() {
             <div className="space-y-6">
               <div className='flex flex-col gap-5'>
                 <div className='flex'>
-                  <span className='text-7xl'>U</span>
-                  <span className='mt-1'>
-                    nlock your Piano voice. Learn to play the piano confidently, fluently and
+                  {/* <span className='text-7xl text-blue-800'>U</span> */}
+                  <span className='mt-1 text-blue-700'>
+                    Unlock your Piano voice. Learn to play the piano confidently, fluently and
                     creatively. From first key-press to expressive performance — take your
                     piano journey one chord at a time.
                   </span>
                 </div>
-                <span>
+                <span className='text-blue-700'>
                   Whether you’re just beginning on the piano or ready to take your tracks to
                   streaming-ready quality, you’re in the right place. Learn the craft of piano
                   playing and music production in one place so that you can create those divine
@@ -735,8 +737,8 @@ export default function ChordsStudioPage() {
                 </span>
               </div>
               <div>
-                <h4 className="font-bold text-lg mb-2">Our Vision / Mission</h4>
-                <p className="text-gray-600">
+                <h4 className="font-bold text-lg mb-2 text-blue-950">Our Vision / Mission</h4>
+                <p className="text-blue-700">
                   To empower you to play the piano confidently — whether you want to perform for yourself,
                   your family, or on stage; to interpret songs, to record beautiful performances at your home,
                   compose new ideas, or simply enjoy every moment at the keyboard.

@@ -1,10 +1,12 @@
+"use client"
 import React from 'react';
 import Link from 'next/link';
 import { Music } from 'lucide-react';
-
+import { usePathname } from 'next/navigation';
 export default function Footer() {
+  const pathname = usePathname()
   return (
-    <footer className="bg-gradient-to-r from-gray-950 to-blue-950 text-white border-t border-blue-900/50">
+    <footer className={`${pathname == '/register' || pathname == '/login' ? 'bg-gradient-to-l from-gray-950 to-blue-950':'bg-gradient-to-r from-gray-950 to-blue-950'} text-white border-t border-blue-900/50`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
         <div className="grid md:grid-cols-3 gap-12 py-16">
