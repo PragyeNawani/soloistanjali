@@ -11,6 +11,7 @@
   "dependencies": {
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.74.0",
+    "@vercel/speed-insights": "^1.2.0",
     "framer-motion": "^12.23.24",
     "hugeicons-react": "^0.3.0",
     "lucide-react": "^0.545.0",

@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import BlogReactions from '@/components/blog/BlogReactions';
 import BlogComments from '@/components/blog/BlogComments';
-
+import { Progressbar } from '@/components/ProgressBar';
 export default function BlogDetailPage() {
   const params = useParams();
   const router = useRouter();
@@ -80,12 +80,9 @@ export default function BlogDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-l from-gray-950 to-blue-950 py-16 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">📝</div>
-          <div className="text-blue-300 text-xl">Loading blog...</div>
-        </div>
-      </div>
+      <>
+        <Progressbar />
+      </>
     );
   }
 

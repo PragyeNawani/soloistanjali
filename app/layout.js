@@ -4,9 +4,9 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-const inter = Inter({ subsets: ['latin'] });
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { NavProvider } from '@/Context/context';
-
+const inter = Inter({ subsets: ['latin'] });
 export const metadata = {
   title: 'SOLOISTANJALI',
   description: 'Professional music lessons for guitar, piano, cello, and more',
@@ -23,6 +23,7 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <NavProvider>
+          <SpeedInsights/>
           <Navigation user={session?.user || null} />
           {children}
           <Footer />
