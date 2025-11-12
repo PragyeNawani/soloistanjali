@@ -78,8 +78,8 @@ export default function Navigation({ user }) {
         backdropFilter: 'blur(0px)',
       }}
     >
-      <div className="mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+      <div className="mx-auto sm:px-2 lg:px-4 xl:px-6 w-[100vw]">
+        <div className="w-full flex px-2 pr-10 sm:pr-10 justify-between sm:px-0 sm:justify-between items-center h-20">
           <Link href="/" className="flex items-center cursor-pointer">
             <Music className="text-blue-400 w-8 h-8 mr-2" />
             <span className="text-2xl font-serif text-white">SOLOISTANJALI</span>
@@ -87,12 +87,12 @@ export default function Navigation({ user }) {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8 md:gap-2">
+          <div className="hidden md:flex items-center lg:space-x-8 gap-1 lg:gap-2">
             <Link
               href="/"
               className={`text-sm ${pathname === '/'
-                ? 'text-blue-700 font-bold bg-white bg-opacity-[90%] p-2 px-4 rounded-full'
-                : 'text-gray-50 hover:rounded-full hover:text-blue-700 p-2 px-4 hover:py-2 hover:bg-white hover:bg-opacity-[70%]  font-semibold'
+                ? 'text-blue-700 font-bold bg-white bg-opacity-[90%] p-1 px-2 lg:p-2 lg:px-4 rounded-full'
+                : 'text-gray-50 hover:rounded-full hover:text-blue-700 p-1 px-2 lg:p-2 lg:px-4 hover:py-1 lg:hover:py-2 hover:bg-white hover:bg-opacity-[70%]  font-semibold'
                 }`}
             >
               HOME
@@ -100,8 +100,8 @@ export default function Navigation({ user }) {
             <Link
               href="/courses"
               className={`text-sm ${pathname === '/courses'
-                ? 'text-blue-700 font-bold bg-white bg-opacity-[90%] p-2 px-4 rounded-full'
-                : 'text-gray-50 hover:rounded-full hover:text-blue-700 p-2 px-4 hover:py-2 hover:bg-white hover:bg-opacity-[70%]  font-semibold'
+                ? 'text-blue-700 font-bold bg-white bg-opacity-[90%] p-1 px-2 lg:p-2 lg:px-4 rounded-full'
+                : 'text-gray-50 hover:rounded-full hover:text-blue-700 p-1 px-2 lg:p-2 lg:px-4 hover:py-1 lg:hover:py-2 hover:bg-white hover:bg-opacity-[70%]  font-semibold'
                 }`}
             >
               MARKETPLACE
@@ -109,8 +109,8 @@ export default function Navigation({ user }) {
             <Link
               href="/workshops"
               className={`text-sm  ${pathname === '/workshops'
-                ? 'text-blue-700 font-bold bg-white bg-opacity-[90%] p-2 px-4 rounded-full'
-                : 'text-gray-50 hover:rounded-full hover:text-blue-700 p-2 px-4 hover:py-2 hover:bg-white hover:bg-opacity-[70%]  font-semibold'
+                ? 'text-blue-700 font-bold bg-white bg-opacity-[90%] p-1 px-2 lg:p-2 lg:px-4 rounded-full'
+                : 'text-gray-50 hover:rounded-full hover:text-blue-700 p-1 px-2 lg:p-2 lg:px-4 hover:py-1 lg:hover:py-2 hover:bg-white hover:bg-opacity-[70%]  font-semibold'
                 }`}
             >
               WORKSHOPS
@@ -118,8 +118,8 @@ export default function Navigation({ user }) {
             <Link
               href="/blog"
               className={`text-sm ${pathname === '/blog'
-                ? 'text-blue-700 font-bold bg-white bg-opacity-[90%] p-2 px-4 rounded-full'
-                : 'text-gray-50 hover:rounded-full hover:text-blue-700 p-2 px-4 hover:py-2 hover:bg-white hover:bg-opacity-[70%]  font-semibold'
+                ? 'text-blue-700 font-bold bg-white bg-opacity-[90%] p-1 px-2 lg:p-2 lg:px-4 rounded-full'
+                : 'text-gray-50 hover:rounded-full hover:text-blue-700 p-1 px-2 lg:p-2 lg:px-4 hover:py-1 lg:hover:py-2 hover:bg-white hover:bg-opacity-[70%]  font-semibold'
                 }`}
             >
               BLOGS
@@ -130,7 +130,7 @@ export default function Navigation({ user }) {
                 {/* User Avatar with Dropdown Trigger */}
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-blue-900/30 transition duration-300 border border-blue-800/50"
+                  className="flex items-center space-x-2 px-2 py-1 lg:px-3 lg:py-2 rounded-lg hover:bg-blue-900/30 transition duration-300 border border-blue-800/50"
                 >
                   <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-full flex items-center justify-center font-bold text-sm">
                     {getUserInitials()}
@@ -181,7 +181,7 @@ export default function Navigation({ user }) {
               <>
                 <Link
                   href="/login"
-                  className="bg-blue-600 text-white px-6 py-2 text-sm font-medium hover:bg-blue-700 transition duration-300 rounded border border-blue-500"
+                  className="bg-blue-600 text-white px-3 py-1 lg:px-6 lg:py-2 text-sm font-medium hover:bg-blue-700 transition duration-300 rounded border border-blue-500"
                 >
                   LOGIN
                 </Link>
@@ -206,7 +206,7 @@ export default function Navigation({ user }) {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden pb-4 space-y-2 bg-gradient-to-b from-gray-900 to-blue-950 border-t border-blue-800 animate-slideDown">
+          <div className="md:hidden space-y-2 bg-gradient-to-b from-gray-900 to-blue-950 border-t border-blue-800 animate-slideDown">
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}

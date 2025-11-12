@@ -279,9 +279,9 @@ export default function ChordsStudioPage() {
         backgroundColor: '#1a1a2e',
       }}>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
-          <h1 className="text-6xl font-medium mb-4 flex flex-col lg:flex-row items-center w-full gap-2 justify-center">
-            <div className='w-[50%] text-4xl lg:text-6xl text-left lg:text-right'>FOLLOW YOUR</div>
-            <div className="text-hometext font-bold w-[50%] flex justify-start text-4xl lg:text-6xl"><Typewriter
+          <h1 className="text-6xl font-medium mb-4 flex flex-col md:flex-row items-center w-full gap-2 justify-center">
+            <div className='w-[100%] text-center md:w-[50%] text-4xl md:text-4xl lg:text-6xl text-left md:text-right'>FOLLOW YOUR</div>
+            <div className="text-hometext font-bold w-[100%]  md:w-[50%] flex justify-center md:justify-start text-4xl md:text-4xl lg:text-6xl"><Typewriter
               options={{
                 strings: ["Music Classes", "Guitar Lessons", "Piano Training", "Vocal Coaching"],
                 autoStart: true,
@@ -291,12 +291,12 @@ export default function ChordsStudioPage() {
               }}
             /></div>
           </h1>
-          <div className="text-lg text-left lg:text-center lg:text-2xl mb-2 w-[50%]">Learn Instruments Anytime, Anywhere</div>
-          <div className='flex gap-4 mt-10 w-[50%] lg:w-auto'>
-            <Link href="/courses" className='border-2 border-white hover:bg-white hover:text-primarytext px-8 py-3 rounded-full text-white font-semibold hover:from-blue-600 hover:to-purple-600'>
+          <div className="text-xs text-center md:text-lg text-left lg:text-2xl mb-2 w-[50%]">Learn Instruments Anytime, Anywhere</div>
+          <div className='flex gap-4 mt-10 w-[100%] justify-center md:w-[50%] lg:w-auto'>
+            <Link href="/courses" className='border-2 border-white hover:bg-white hover:text-primarytext px-2 py-2 md:px-8 md:py-3 rounded-full text-white font-semibold hover:from-blue-600 hover:to-purple-600 text-xs md:text-sm lg:text-lg'>
               Explore Marketplace
             </Link>
-            <Link href="/workshops" className='bg-[#012773] hover:bg-[#03328f] px-8 flex item-center justify-center rounded-full text-white font-semibold hover:from-blue-600 hover:to-purple-600'>
+            <Link href="/workshops" className='bg-[#012773] hover:bg-[#03328f] px-2 py-2 md:px-8 md:py-3 flex item-center justify-center rounded-full text-white font-semibold hover:from-blue-600 hover:to-purple-600 text-xs md:text-sm lg:text-lg'>
               <span className='my-auto'>
                 Enroll Workshop
               </span>
@@ -317,7 +317,7 @@ export default function ChordsStudioPage() {
           {/* Fade overlay at bottom */}
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none"></div>
 
-          <div className="flex flex-col md:flex-row gap-8 h-full">
+          <div className="flex flex-col md:flex-row gap-8 h-full w-[80%] mx-auto">
             {/* Column 1 */}
             <div className="flex-1 overflow-hidden relative">
               {column1.map((testimonial, index) => (
@@ -408,7 +408,7 @@ export default function ChordsStudioPage() {
           </h2>
         </div>
 
-        <div className="max-w-6xl mx-auto mt-16 relative">
+        <div className="max-w-6xl mx-auto mt-16 relative w-[80%]">
           {loading ? (
             <div className="flex items-center justify-center h-80">
               <div className="text-blue-300 text-xl">Loading latest updates...</div>
@@ -425,7 +425,7 @@ export default function ChordsStudioPage() {
               <div className="flex items-center justify-center gap-8">
                 <button
                   onClick={prevItem}
-                  className="p-2 hover:bg-blue-800 rounded-full z-20 transition-colors"
+                  className="p-2 hover:bg-blue-800 rounded-full z-20 transition-colors hidden sm:block"
                   disabled={carouselItems.length <= 1}
                 >
                   <ChevronLeft size={32} />
@@ -461,7 +461,7 @@ export default function ChordsStudioPage() {
                     return (
                       <div
                         key={`${item.type}-${index}`}
-                        className={`${isActive ? "bg-blue-100/80" : "bg-blue-100/30 blur-[6px]"} absolute rounded-2xl p-6 w-96 duration-500 cursor-pointer border-2 border-blue-700 hover:border-blue-500 min-h-[400px]`}
+                        className={`${isActive ? "bg-blue-100/80" : "bg-blue-100/30 blur-[6px]"} absolute rounded-2xl p-6 w-[300px] sm:w-96 duration-500 cursor-pointer border-2 border-blue-700 hover:border-blue-500 min-h-[400px]`}
                         style={{
                           transform: transformStyle,
                           zIndex: zIndex,
@@ -563,7 +563,7 @@ export default function ChordsStudioPage() {
 
                 <button
                   onClick={nextItem}
-                  className="p-2 hover:bg-blue-800 rounded-full z-20 transition-colors"
+                  className="p-2 hover:bg-blue-800 rounded-full z-20 transition-colors hidden sm:block"
                   disabled={carouselItems.length <= 1}
                 >
                   <ChevronRight size={32} />
