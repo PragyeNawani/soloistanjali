@@ -78,20 +78,23 @@ export default function ChordsStudioPage() {
     observer.observe(navref.current)
 
   }, [navref])
+  const [WorkshopInstructor, setWorkshopInstructor] = useState('')
   // Fetch latest items
   useEffect(() => {
     const fetchLatestItems = async () => {
       try {
         const response = await fetch('/api/latest');
         const data = await response.json();
-
         if (response.ok) {
           // Filter out past workshops and mark if there are no upcoming ones
           if (data.workshop) {
             const workshopDate = new Date(data.workshop.date);
             const today = new Date();
             today.setHours(0, 0, 0, 0); // Reset time to start of day
-
+            if(data.workshop.instructor){
+              setWorkshopInstructor(data.workshop.instructor)
+            } 
+              
             // Only include workshop if it's today or in the future
             if (workshopDate < today) {
               // Create a placeholder for "no upcoming workshops"
@@ -276,21 +279,20 @@ export default function ChordsStudioPage() {
         backgroundColor: '#1a1a2e',
       }}>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
-          <h1 className="text-6xl font-medium mb-4 flex w-full gap-2 justify-center">
-            <div className='w-[50%] text-right'>FOLLOW YOUR</div>
-            <div className="text-hometext font-bold w-[50%] flex justify-start"><Typewriter
+          <h1 className="text-6xl font-medium mb-4 flex flex-col lg:flex-row items-center w-full gap-2 justify-center">
+            <div className='w-[50%] text-4xl lg:text-6xl text-left lg:text-right'>FOLLOW YOUR</div>
+            <div className="text-hometext font-bold w-[50%] flex justify-start text-4xl lg:text-6xl"><Typewriter
               options={{
                 strings: ["Music Classes", "Guitar Lessons", "Piano Training", "Vocal Coaching"],
                 autoStart: true,
                 loop: true,
                 delay: 75,     // typing speed
                 deleteSpeed: 50, // deleting speed
-                className: "text-black",
               }}
             /></div>
           </h1>
-          <p className="text-2xl mb-2">Learn Instruments Anytime, Anywhere</p>
-          <div className='flex gap-4 mt-10'>
+          <div className="text-lg text-left lg:text-center lg:text-2xl mb-2 w-[50%]">Learn Instruments Anytime, Anywhere</div>
+          <div className='flex gap-4 mt-10 w-[50%]'>
             <Link href="/courses" className='border-2 border-white hover:bg-white hover:text-primarytext px-8 py-3 rounded-full text-white font-semibold hover:from-blue-600 hover:to-purple-600'>
               Explore Marketplace
             </Link>
@@ -494,6 +496,30 @@ export default function ChordsStudioPage() {
                               }`}
                           >
                             {item.instrument ? getInstrumentEmoji(item.instrument) : '🎵'}
+                          </div>
+                        </div>}
+                        {/* Workshop Image */}
+                        {item.type == "workshop" && <div className="relative h-48 mb-4 rounded-lg overflow-hidden bg-blue-950">
+                          {item.image ? (
+                            <img
+                              src={item.image}
+                              alt={item.title}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                // Fallback to emoji if image fails to load
+                                e.target.style.display = 'none';
+                                if (e.target.nextElementSibling) {
+                                  e.target.nextElementSibling.style.display = 'flex';
+                                }
+                              }}
+                            />
+                          ) : null}
+                          <div
+                            className={`absolute inset-0 flex items-center justify-center ${WorkshopInstructor.length > 1 ? `text-2xl text-center text-blue-100` : 'text-6xl'}  ${item.image ? 'hidden' : 'flex'
+                              }`}
+                          >
+                            {WorkshopInstructor.length > 1 ? `🎼 By ${WorkshopInstructor}` : '🎼'}
+                            
                           </div>
                         </div>}
 

@@ -33,14 +33,14 @@ export async function GET() {
       .from('workshops')
       .select('*')
       .eq('status', 'upcoming')
-      .order('date', { ascending: true })
+      .order('date', { ascending: false })
       .limit(1)
       .single();
 
     if (workshopError && workshopError.code !== 'PGRST116') {
       console.error('Workshop fetch error:', workshopError);
     }
-
+    console.log(latestWorkshop)
     return NextResponse.json({
       blog: latestBlog || null,
       course: latestCourse || null,
