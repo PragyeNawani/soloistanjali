@@ -95,7 +95,7 @@ export default function Navigation({ user }) {
                 : 'text-gray-50 hover:rounded-full hover:text-blue-700 p-2 px-4 hover:py-2 hover:bg-white hover:bg-opacity-[70%]  font-semibold'
                 }`}
             >
-              STUDIO INFO
+              HOME
             </Link>
             <Link
               href="/courses"
@@ -212,14 +212,14 @@ export default function Navigation({ user }) {
               onClick={() => setMobileMenuOpen(false)}
               className="block w-full text-left px-4 py-2 text-sm font-medium text-gray-400 hover:text-blue-300 hover:bg-blue-900/30"
             >
-              STUDIO INFO
+              HOME
             </Link>
             <Link
               href="/courses"
               onClick={() => setMobileMenuOpen(false)}
               className="block w-full text-left px-4 py-2 text-sm font-medium text-gray-400 hover:text-blue-300 hover:bg-blue-900/30"
             >
-              COURSES
+              MARKETPLACE
             </Link>
             <Link
               href="/workshops"
@@ -233,7 +233,7 @@ export default function Navigation({ user }) {
               onClick={() => setMobileMenuOpen(false)}
               className="block w-full text-left px-4 py-2 text-sm font-medium text-gray-400 hover:text-blue-300 hover:bg-blue-900/30"
             >
-              BLOG
+              BLOGS
             </Link>
             {user ? (
               <>
