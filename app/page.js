@@ -292,7 +292,7 @@ export default function ChordsStudioPage() {
             /></div>
           </h1>
           <div className="text-lg text-left lg:text-center lg:text-2xl mb-2 w-[50%]">Learn Instruments Anytime, Anywhere</div>
-          <div className='flex gap-4 mt-10 w-[50%]'>
+          <div className='flex gap-4 mt-10 w-[50%] lg:w-auto'>
             <Link href="/courses" className='border-2 border-white hover:bg-white hover:text-primarytext px-8 py-3 rounded-full text-white font-semibold hover:from-blue-600 hover:to-purple-600'>
               Explore Marketplace
             </Link>
