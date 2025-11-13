@@ -239,30 +239,31 @@ export default function WorkshopsPage() {
   }
 
   return (
-    <div className="min-h-screen pb-16">
-        <div className="bg-gradient-to-l from-gray-950 to-blue-950  pt-24 pb-10 mb-10">
-          <h1 className="text-5xl text-center font-serif text-white mb-4">
-            Upcoming Workshops
-          </h1>
-          <p className="text-blue-300 max-w-2xl mx-auto">
-            Join our expert instructors for intensive hands-on workshops. Learn
-            new techniques, connect with fellow musicians, and take your skills
-            to the next level.
-          </p>
-        </div>
+    <div className="min-h-screen pb-8 sm:pb-12 lg:pb-16">
+      <div className="bg-gradient-to-l from-gray-950 to-blue-950 pt-16 sm:pt-20 lg:pt-24 pb-6 sm:pb-8 lg:pb-10 mb-6 sm:mb-8 lg:mb-10 px-4">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl text-center font-serif text-white mb-3 sm:mb-4">
+          Upcoming Workshops
+        </h1>
+        <p className="text-sm sm:text-base text-blue-300 text-center max-w-2xl mx-auto px-4">
+          Join our expert instructors for intensive hands-on workshops. Learn
+          new techniques, connect with fellow musicians, and take your skills
+          to the next level.
+        </p>
+      </div>
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {workshops.length === 0 ? (
-          <div className="bg-gradient-to-br from-[#0B1C3E] to-[#061831] rounded-lg shadow-2xl p-12 text-center border border-blue-900/30">
-            <div className="text-6xl mb-4">📅</div>
-            <h3 className="text-2xl font-serif text-white mb-4">
+          <div className="bg-gradient-to-br from-[#0B1C3E] to-[#061831] rounded-lg shadow-2xl p-6 sm:p-8 lg:p-12 text-center border border-blue-900/30">
+            <div className="text-4xl sm:text-5xl lg:text-6xl mb-3 sm:mb-4">📅</div>
+            <h3 className="text-xl sm:text-2xl font-serif text-white mb-3 sm:mb-4">
               No Upcoming Workshops
             </h3>
-            <p className="text-blue-300">
+            <p className="text-sm sm:text-base text-blue-300">
               Check back soon for new workshop announcements!
             </p>
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {workshops.map((workshop) => (
               <WorkshopCard
                 key={workshop.id}
