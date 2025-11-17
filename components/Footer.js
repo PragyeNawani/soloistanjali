@@ -18,7 +18,7 @@ export default function Footer() {
               {/* <span className="text-sm text-blue-300 ml-1">STUDIO</span> */}
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Expert music instruction for all ages. Learn guitar, piano, cello, and more with professional instructors.
+              Expert music instruction for all ages. Learn Music theory, Ear training, Piano, Music production and much more at your own pace and place . Unleash your creativity with the help of right knowledge and pursue your dream of becoming a musician. Start Today 🎵
             </p>
           </div>
 

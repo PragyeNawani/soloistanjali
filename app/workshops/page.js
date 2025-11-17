@@ -277,7 +277,7 @@ export default function WorkshopsPage() {
 
         {showRegistrationModal && selectedWorkshop && (
           <WorkshopRegistrationModal
-            workshop={selectedWorkshop}
+            workshop={selectedWorkshop} 
             onClose={() => setShowRegistrationModal(false)}
             onSubmit={handleRegistrationSubmit}
           />

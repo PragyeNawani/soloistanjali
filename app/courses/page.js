@@ -187,11 +187,10 @@ export default function CoursesPage() {
     <div className="min-h-screen pb-8 sm:pb-12 lg:pb-16 ">
       <div className='bg-gradient-to-l from-gray-950 to-blue-950 pt-24 pb-6 sm:pb-8 lg:pb-10 mb-6 sm:mb-8 lg:mb-10 px-4'>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-white text-center mb-3 sm:mb-4">
-          Available Course PDFs
+          Available Learning Resources
         </h1>
         <p className="text-sm sm:text-base text-blue-300 text-center max-w-2xl mx-auto px-4">
-          Explore our comprehensive collection of music courses. Purchase and
-          download course materials instantly.
+          Explore and buy from our comprehensive collection of music and song learning resources from songs’ pdfs to courses to help on your music journey
         </p>
       </div>
 

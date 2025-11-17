@@ -283,7 +283,7 @@ export default function ChordsStudioPage() {
             <div className='w-[100%] text-center md:w-[50%] text-4xl md:text-4xl lg:text-6xl text-left md:text-right'>FOLLOW YOUR</div>
             <div className="text-hometext font-bold w-[100%]  md:w-[50%] flex justify-center md:justify-start text-4xl md:text-4xl lg:text-6xl"><Typewriter
               options={{
-                strings: ["Music Classes", "Guitar Lessons", "Piano Training", "Vocal Coaching"],
+                strings: ["Passion", "Music Learning", "Piano Training"],
                 autoStart: true,
                 loop: true,
                 delay: 75,     // typing speed
