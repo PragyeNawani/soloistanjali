@@ -5,8 +5,9 @@ import { Music } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 export default function Footer() {
   const pathname = usePathname()
+  const year = new Date().getFullYear();
   return (
-    <footer className={`${pathname == '/register' || pathname == '/login' ? 'bg-gradient-to-l from-gray-950 to-blue-950':'bg-gradient-to-r from-gray-950 to-blue-950'} text-white border-t border-blue-900/50`}>
+    <footer className={`${pathname == '/register' || pathname == '/login' ? 'bg-gradient-to-l from-gray-950 to-blue-950' : 'bg-gradient-to-r from-gray-950 to-blue-950'} text-white border-t border-blue-900/50`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
         <div className="grid md:grid-cols-3 gap-12 py-16">
@@ -103,7 +104,7 @@ export default function Footer() {
               CONTACT
             </a>
           </div>
-          <p>© 2025 CHORDS STUDIO. All rights reserved.</p>
+          <p>© {year} Soloistanjali. All rights reserved.</p>
           <p className="text-xs text-gray-500">
             Designed with <span className="text-blue-400">♪</span> for music lovers everywhere
           </p>

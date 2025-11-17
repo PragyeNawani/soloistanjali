@@ -371,33 +371,33 @@ export default function AdminDashboard({ admin }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-l from-gray-950 to-blue-950 py-8 pt-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Notification Banner */}
+    <div className="min-h-screen bg-gradient-to-l from-gray-950 to-blue-950 py-16 sm:py-16 lg:py-24">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+        {/* Notification Banner - Made responsive */}
         {notificationMessage && typeof notificationMessage === 'object' && (
-          <div className="fixed top-4 right-4 z-50 max-w-md animate-slide-in">
-            <div className="bg-gray-900 rounded-lg shadow-2xl border-l-4 border-green-500 p-4 border border-blue-800">
+          <div className="fixed top-4 right-2 sm:right-4 left-2 sm:left-auto z-50 max-w-md animate-slide-in">
+            <div className="bg-gray-900 rounded-lg shadow-2xl border-l-4 border-green-500 p-3 sm:p-4 border border-blue-800">
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <CheckCircle className="h-6 w-6 text-green-500" />
+                  <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-500" />
                 </div>
-                <div className="ml-3 flex-1">
-                  <h3 className="text-sm font-medium text-white flex items-center gap-2">
-                    {notificationMessage.title}
-                    <Mail className="h-4 w-4 text-green-500" />
+                <div className="ml-2 sm:ml-3 flex-1 min-w-0">
+                  <h3 className="text-xs sm:text-sm font-medium text-white flex items-center gap-2 flex-wrap">
+                    <span className="break-words">{notificationMessage.title}</span>
+                    <Mail className="h-3 w-3 sm:h-4 sm:w-4 text-green-500 flex-shrink-0" />
                   </h3>
-                  <p className="mt-1 text-sm text-gray-300">
+                  <p className="mt-1 text-xs sm:text-sm text-gray-300 break-words">
                     {notificationMessage.description}
                   </p>
                   {notificationMessage.changedFields && notificationMessage.changedFields.length > 0 && (
-                    <div className="mt-2 text-xs text-gray-400">
+                    <div className="mt-2 text-xs text-gray-400 break-words">
                       <span className="font-medium">Fields updated:</span> {notificationMessage.changedFields.join(', ')}
                     </div>
                   )}
                 </div>
                 <button
                   onClick={() => setNotificationMessage(null)}
-                  className="ml-4 text-gray-500 hover:text-gray-300"
+                  className="ml-2 sm:ml-4 text-gray-500 hover:text-gray-300 flex-shrink-0 text-xl"
                 >
                   ×
                 </button>
@@ -406,112 +406,112 @@ export default function AdminDashboard({ admin }) {
           </div>
         )}
 
-        {/* Header */}
-        <div className="bg-gradient-to-r from-gray-950  to-blue-950 rounded-lg shadow-lg p-6 mb-8 border border-blue-800/50">
-          <div className="flex items-center gap-3 mb-2">
-            <h1 className="text-4xl font-serif text-white">
+        {/* Header - Made responsive */}
+        <div className="bg-gradient-to-r from-gray-950 to-blue-950 rounded-lg shadow-lg p-4 sm:p-6 mb-6 sm:mb-8 border border-blue-800/50">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-white">
               Admin Dashboard
             </h1>
-            <span className="bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center">
+            <span className="bg-red-600 text-white px-2 sm:px-3 py-1 rounded-full text-xs font-bold flex items-center w-fit">
               <Shield className="w-3 h-3 mr-1" />
               ADMIN
             </span>
           </div>
-          <p className="text-blue-300">Welcome, {admin.email}</p>
+          <p className="text-sm sm:text-base text-blue-300 break-all">Welcome, {admin.email}</p>
         </div>
 
-        {/* Tabs */}
-        <div className="bg-gray-950 rounded-lg shadow-lg mb-8 border border-blue-800/50">
-          <div className="flex border-b border-blue-800/30">
+        {/* Tabs - Made responsive with horizontal scroll on mobile */}
+        <div className="bg-gray-950 rounded-lg shadow-lg mb-6 sm:mb-8 border border-blue-800/50 overflow-x-auto">
+          <div className="flex border-b border-blue-800/30 min-w-max sm:min-w-0">
             <button
               onClick={() => setActiveTab('overview')}
-              className={`flex-1 px-6 py-4 text-sm font-medium transition ${activeTab === 'overview'
+              className={`flex-1 min-w-[120px] px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-medium transition whitespace-nowrap ${activeTab === 'overview'
                 ? 'border-b-2 border-blue-400 text-blue-200 bg-blue-950'
                 : 'text-gray-300 hover:text-blue-300 bg-gray-950'
                 }`}
             >
-              <TrendingUp className="w-5 h-5 inline mr-2" />
+              <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 inline mr-1 sm:mr-2" />
               Overview
             </button>
             <button
               onClick={() => setActiveTab('courses')}
-              className={`flex-1 px-6 py-4 text-sm font-medium transition ${activeTab === 'courses'
+              className={`flex-1 min-w-[120px] px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-medium transition whitespace-nowrap ${activeTab === 'courses'
                 ? 'border-b-2 border-blue-400 text-blue-200 bg-blue-950'
                 : 'text-gray-300 hover:text-blue-300 bg-gray-950'
                 }`}
             >
-              <BookOpen className="w-5 h-5 inline mr-2" />
+              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 inline mr-1 sm:mr-2" />
               Courses
             </button>
             <button
               onClick={() => setActiveTab('workshops')}
-              className={`flex-1 px-6 py-4 text-sm font-medium transition ${activeTab === 'workshops'
+              className={`flex-1 min-w-[120px] px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-medium transition whitespace-nowrap ${activeTab === 'workshops'
                 ? 'border-b-2 border-blue-400 text-blue-200 bg-blue-950'
                 : 'text-gray-300 hover:text-blue-300 bg-gray-950'
                 }`}
             >
-              <Calendar className="w-5 h-5 inline mr-2" />
+              <Calendar className="w-4 h-4 sm:w-5 sm:h-5 inline mr-1 sm:mr-2" />
               Workshops
             </button>
             <button
               onClick={() => setActiveTab('blogs')}
-              className={`flex-1 px-6 py-4 text-sm font-medium transition ${activeTab === 'blogs'
+              className={`flex-1 min-w-[120px] px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-medium transition whitespace-nowrap ${activeTab === 'blogs'
                 ? 'border-b-2 border-blue-400 text-blue-200 bg-blue-950'
                 : 'text-gray-300 hover:text-blue-300 bg-gray-950'
                 }`}
             >
-              <FileText className="w-5 h-5 inline mr-2" />
+              <FileText className="w-4 h-4 sm:w-5 sm:h-5 inline mr-1 sm:mr-2" />
               Blogs
             </button>
           </div>
         </div>
 
-        {/* Overview Tab */}
+        {/* Overview Tab - Made responsive */}
         {activeTab === 'overview' && (
-          <div className="space-y-8">
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-gradient-to-r from-gray-950 to-blue-950 rounded-lg shadow-lg p-6 border border-blue-800/50">
-                <h3 className="text-sm font-medium text-blue-100 mb-2">Today's Sales</h3>
-                <p className="text-3xl font-bold text-blue-300">₹{stats.today.toLocaleString()}</p>
+          <div className="space-y-6 sm:space-y-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              <div className="bg-gradient-to-r from-gray-950 to-blue-950 rounded-lg shadow-lg p-4 sm:p-6 border border-blue-800/50">
+                <h3 className="text-xs sm:text-sm font-medium text-blue-100 mb-2">Today's Sales</h3>
+                <p className="text-2xl sm:text-3xl font-bold text-blue-300">₹{stats.today.toLocaleString()}</p>
               </div>
-              <div className="bg-blue-950 rounded-lg shadow-lg p-6 border border-blue-800/50">
-                <h3 className="text-sm font-medium text-blue-100 mb-2">This Week</h3>
-                <p className="text-3xl font-bold text-blue-300">₹{stats.week.toLocaleString()}</p>
+              <div className="bg-blue-950 rounded-lg shadow-lg p-4 sm:p-6 border border-blue-800/50">
+                <h3 className="text-xs sm:text-sm font-medium text-blue-100 mb-2">This Week</h3>
+                <p className="text-2xl sm:text-3xl font-bold text-blue-300">₹{stats.week.toLocaleString()}</p>
               </div>
-              <div className="bg-gradient-to-l from-gray-950 to-blue-950 rounded-lg shadow-lg p-6 border border-blue-800/50">
-                <h3 className="text-sm font-medium text-blue-100 mb-2">This Month</h3>
-                <p className="text-3xl font-bold text-blue-300">₹{stats.month.toLocaleString()}</p>
+              <div className="bg-gradient-to-l from-gray-950 to-blue-950 rounded-lg shadow-lg p-4 sm:p-6 border border-blue-800/50 sm:col-span-2 lg:col-span-1">
+                <h3 className="text-xs sm:text-sm font-medium text-blue-100 mb-2">This Month</h3>
+                <p className="text-2xl sm:text-3xl font-bold text-blue-300">₹{stats.month.toLocaleString()}</p>
               </div>
             </div>
 
-            {/* Sales Breakdown Section */}
-            <div className="bg-gradient-to-r from-gray-950 via-blue-950 to-gray-950 rounded-lg shadow-lg p-6 border border-blue-800/50">
-              <h3 className="text-xl font-serif text-white mb-6 flex items-center gap-2">
-                <TrendingUp className="w-6 h-6 text-blue-400" />
-                Sales Breakdown (All Time)
+            {/* Sales Breakdown Section - Made responsive */}
+            <div className="bg-gradient-to-r from-gray-950 via-blue-950 to-gray-950 rounded-lg shadow-lg p-4 sm:p-6 border border-blue-800/50">
+              <h3 className="text-lg sm:text-xl font-serif text-white mb-4 sm:mb-6 flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
+                <span className="break-words">Sales Breakdown (All Time)</span>
               </h3>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="bg-gradient-to-br from-blue-800/30 to-blue-900/30 rounded-lg p-6 border border-blue-700/50">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                <div className="bg-gradient-to-br from-blue-800/30 to-blue-900/30 rounded-lg p-4 sm:p-6 border border-blue-700/50">
                   <div className="flex items-center justify-between mb-3">
-                    <h4 className="text-sm font-medium text-blue-300">Total Sales</h4>
+                    <h4 className="text-xs sm:text-sm font-medium text-blue-300">Total Sales</h4>
                     <div className="bg-blue-600/30 p-2 rounded-lg">
-                      <TrendingUp className="w-5 h-5 text-blue-400" />
+                      <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
                     </div>
                   </div>
-                  <p className="text-3xl font-bold text-white mb-1">
+                  <p className="text-2xl sm:text-3xl font-bold text-white mb-1 break-all">
                     ₹{salesBreakdown.total.toLocaleString()}
                   </p>
                   <p className="text-xs text-blue-300">100% of revenue</p>
                 </div>
 
-                <div className="bg-gradient-to-br from-purple-800/30 to-purple-900/30 rounded-lg p-6 border border-purple-700/50">
+                <div className="bg-gradient-to-br from-purple-800/30 to-purple-900/30 rounded-lg p-4 sm:p-6 border border-purple-700/50">
                   <div className="flex items-center justify-between mb-3">
-                    <h4 className="text-sm font-medium text-purple-300">Course Sales</h4>
+                    <h4 className="text-xs sm:text-sm font-medium text-purple-300">Course Sales</h4>
                     <div className="bg-purple-600/30 p-2 rounded-lg">
-                      <BookOpen className="w-5 h-5 text-purple-400" />
+                      <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
                     </div>
                   </div>
-                  <p className="text-3xl font-bold text-white mb-1">
+                  <p className="text-2xl sm:text-3xl font-bold text-white mb-1 break-all">
                     ₹{salesBreakdown.courses.toLocaleString()}
                   </p>
                   <p className="text-xs text-purple-300">
@@ -521,14 +521,14 @@ export default function AdminDashboard({ admin }) {
                   </p>
                 </div>
 
-                <div className="bg-gradient-to-br from-green-800/30 to-green-900/30 rounded-lg p-6 border border-green-700/50">
+                <div className="bg-gradient-to-br from-green-800/30 to-green-900/30 rounded-lg p-4 sm:p-6 border border-green-700/50 sm:col-span-2 lg:col-span-1">
                   <div className="flex items-center justify-between mb-3">
-                    <h4 className="text-sm font-medium text-green-300">Workshop Sales</h4>
+                    <h4 className="text-xs sm:text-sm font-medium text-green-300">Workshop Sales</h4>
                     <div className="bg-green-600/30 p-2 rounded-lg">
-                      <Calendar className="w-5 h-5 text-green-400" />
+                      <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
                     </div>
                   </div>
-                  <p className="text-3xl font-bold text-white mb-1">
+                  <p className="text-2xl sm:text-3xl font-bold text-white mb-1 break-all">
                     ₹{salesBreakdown.workshops.toLocaleString()}
                   </p>
                   <p className="text-xs text-green-300">
@@ -539,20 +539,20 @@ export default function AdminDashboard({ admin }) {
                 </div>
               </div>
 
-              {/* Visual Progress Bar */}
-              <div className="mt-6">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-gray-400">Revenue Distribution</span>
-                  <span className="text-sm text-gray-400">Total: ₹{salesBreakdown.total.toLocaleString()}</span>
+              {/* Visual Progress Bar - Made responsive */}
+              <div className="mt-4 sm:mt-6">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-0 mb-2">
+                  <span className="text-xs sm:text-sm text-gray-400">Revenue Distribution</span>
+                  <span className="text-xs sm:text-sm text-gray-400">Total: ₹{salesBreakdown.total.toLocaleString()}</span>
                 </div>
-                <div className="h-4 bg-gray-800/50 rounded-full overflow-hidden flex border border-gray-700/50">
+                <div className="h-3 sm:h-4 bg-gray-800/50 rounded-full overflow-hidden flex border border-gray-700/50">
                   {salesBreakdown.total > 0 && (
                     <>
                       <div 
                         className="bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center text-xs font-bold text-white transition-all duration-500"
                         style={{ width: `${(salesBreakdown.courses / salesBreakdown.total) * 100}%` }}
                       >
-                        {((salesBreakdown.courses / salesBreakdown.total) * 100) > 10 && 
+                        {((salesBreakdown.courses / salesBreakdown.total) * 100) > 15 && 
                           `${((salesBreakdown.courses / salesBreakdown.total) * 100).toFixed(0)}%`
                         }
                       </div>
@@ -560,14 +560,14 @@ export default function AdminDashboard({ admin }) {
                         className="bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center text-xs font-bold text-white transition-all duration-500"
                         style={{ width: `${(salesBreakdown.workshops / salesBreakdown.total) * 100}%` }}
                       >
-                        {((salesBreakdown.workshops / salesBreakdown.total) * 100) > 10 && 
+                        {((salesBreakdown.workshops / salesBreakdown.total) * 100) > 15 && 
                           `${((salesBreakdown.workshops / salesBreakdown.total) * 100).toFixed(0)}%`
                         }
                       </div>
                     </>
                   )}
                 </div>
-                <div className="flex items-center justify-between mt-2">
+                <div className="flex items-center justify-between sm:justify-start sm:gap-8 mt-2">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 bg-purple-500 rounded"></div>
                     <span className="text-xs text-gray-400">Courses</span>
@@ -582,30 +582,30 @@ export default function AdminDashboard({ admin }) {
 
             <SalesChart data={salesData} />
 
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-gradient-to-r from-gray-950 to-blue-950 rounded-lg shadow-lg p-6 border border-blue-800/50">
-                <h3 className="text-xl font-serif text-white mb-4">Quick Stats</h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+              <div className="bg-gradient-to-r from-gray-950 to-blue-950 rounded-lg shadow-lg p-4 sm:p-6 border border-blue-800/50">
+                <h3 className="text-lg sm:text-xl font-serif text-white mb-4">Quick Stats</h3>
                 <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Total Courses:</span>
-                    <span className="font-bold text-blue-300">{courses.length}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm sm:text-base text-gray-400">Total Courses:</span>
+                    <span className="font-bold text-blue-300 text-sm sm:text-base">{courses.length}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Total Workshops:</span>
-                    <span className="font-bold text-blue-300">{workshops.length}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm sm:text-base text-gray-400">Total Workshops:</span>
+                    <span className="font-bold text-blue-300 text-sm sm:text-base">{workshops.length}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Active Workshops:</span>
-                    <span className="font-bold text-green-400">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm sm:text-base text-gray-400">Active Workshops:</span>
+                    <span className="font-bold text-green-400 text-sm sm:text-base">
                       {getActiveWorkshopsCount()}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-gradient-to-l from-gray-950  to-blue-950 rounded-lg shadow-lg p-6 border border-blue-800/50">
-                <h3 className="text-xl font-serif text-white mb-4">Recent Activity</h3>
-                <p className="text-gray-400 text-sm">
+              <div className="bg-gradient-to-l from-gray-950 to-blue-950 rounded-lg shadow-lg p-4 sm:p-6 border border-blue-800/50">
+                <h3 className="text-lg sm:text-xl font-serif text-white mb-4">Recent Activity</h3>
+                <p className="text-gray-400 text-xs sm:text-sm break-words">
                   Last updated: {new Date().toLocaleString()}
                 </p>
               </div>
@@ -613,28 +613,28 @@ export default function AdminDashboard({ admin }) {
           </div>
         )}
 
-        {/* Courses Tab */}
+        {/* Courses Tab - Made responsive */}
         {activeTab === 'courses' && (
           <div>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-serif text-white">Manage Courses</h2>
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+              <h2 className="text-xl sm:text-2xl font-serif text-white">Manage Courses</h2>
               <button
                 onClick={() => {
                   setEditingCourse(null);
                   setShowCourseForm(true);
                 }}
-                className="bg-blue-600 text-white px-6 py-3 rounded font-medium hover:bg-blue-700 transition flex items-center border border-blue-500"
+                className="w-full sm:w-auto bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded font-medium hover:bg-blue-700 transition flex items-center justify-center border border-blue-500"
               >
-                <Plus className="w-5 h-5 mr-2" />
+                <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 Add New Course
               </button>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {courses.map((course) => (
                 <div key={course.id} className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg overflow-hidden border border-blue-800/50 hover:border-blue-600/50 transition">
                   {/* Course Image or Emoji */}
-                  <div className="relative h-32 overflow-hidden border-b border-blue-700">
+                  <div className="relative h-32 sm:h-40 overflow-hidden border-b border-blue-700">
                     {course.imageUrl ? (
                       <img
                         src={course.imageUrl}
@@ -648,7 +648,7 @@ export default function AdminDashboard({ admin }) {
                       />
                     ) : null}
                     <div
-                      className={`absolute inset-0 bg-gradient-to-br from-blue-900 to-blue-800 flex items-center justify-center text-5xl ${course.imageUrl ? 'hidden' : 'flex'
+                      className={`absolute inset-0 bg-gradient-to-br from-blue-900 to-blue-800 flex items-center justify-center text-4xl sm:text-5xl ${course.imageUrl ? 'hidden' : 'flex'
                         }`}
                     >
                       {getInstrumentEmoji(course.instrument)}
@@ -656,38 +656,38 @@ export default function AdminDashboard({ admin }) {
                   </div>
 
                   <div className="p-4">
-                    <h3 className="text-xl font-serif text-white mb-2">{course.title}</h3>
-                    <p className="text-sm text-gray-400 mb-4 line-clamp-2">{course.description}</p>
-                    <div className="space-y-2 text-sm mb-4">
-                      <div className="flex justify-between">
+                    <h3 className="text-lg sm:text-xl font-serif text-white mb-2 break-words">{course.title}</h3>
+                    <p className="text-xs sm:text-sm text-gray-400 mb-4 line-clamp-2">{course.description}</p>
+                    <div className="space-y-2 text-xs sm:text-sm mb-4">
+                      <div className="flex justify-between items-center">
                         <span className="text-gray-500">Price:</span>
                         <span className="font-bold text-blue-300">₹{course.price}</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between items-center">
                         <span className="text-gray-500">Level:</span>
                         <span className="text-gray-300">{course.level}</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between items-center">
                         <span className="text-gray-500">Instrument:</span>
-                        <span className="text-gray-300">{course.instrument}</span>
+                        <span className="text-gray-300 truncate ml-2">{course.instrument}</span>
                       </div>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex flex-col sm:flex-row gap-2">
                       <button
                         onClick={() => {
                           setEditingCourse(course);
                           setShowCourseForm(true);
                         }}
-                        className="flex-1 bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700 transition flex items-center justify-center border border-blue-500"
+                        className="flex-1 bg-blue-600 text-white px-3 sm:px-4 py-2 rounded text-xs sm:text-sm hover:bg-blue-700 transition flex items-center justify-center border border-blue-500"
                       >
-                        <Edit className="w-4 h-4 mr-1" />
+                        <Edit className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                         Edit
                       </button>
                       <button
                         onClick={() => handleDeleteCourse(course.id)}
-                        className="flex-1 bg-red-600 text-white px-4 py-2 rounded text-sm hover:bg-red-700 transition flex items-center justify-center border border-red-500"
+                        className="flex-1 bg-red-600 text-white px-3 sm:px-4 py-2 rounded text-xs sm:text-sm hover:bg-red-700 transition flex items-center justify-center border border-red-500"
                       >
-                        <Trash2 className="w-4 h-4 mr-1" />
+                        <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                         Delete
                       </button>
                     </div>
@@ -698,29 +698,29 @@ export default function AdminDashboard({ admin }) {
           </div>
         )}
 
-        {/* Workshops Tab */}
+        {/* Workshops Tab - Made responsive */}
         {activeTab === 'workshops' && (
           <div>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-serif text-white">Manage Workshops</h2>
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+              <h2 className="text-xl sm:text-2xl font-serif text-white">Manage Workshops</h2>
               <button
                 onClick={() => {
                   setEditingWorkshop(null);
                   setShowWorkshopForm(true);
                 }}
-                className="bg-blue-600 text-white px-6 py-3 rounded font-medium hover:bg-blue-700 transition flex items-center border border-blue-500"
+                className="w-full sm:w-auto bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded font-medium hover:bg-blue-700 transition flex items-center justify-center border border-blue-500"
               >
-                <Plus className="w-5 h-5 mr-2" />
+                <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 Add New Workshop
               </button>
             </div>
 
-            {/* Sub-tabs for Upcoming and Past */}
-            <div className="bg-gradient-to-r from-blue-900/40 to-gray-900/40 rounded-lg shadow mb-6 border border-blue-800/50">
-              <div className="flex border-b border-blue-800/30">
+            {/* Sub-tabs for Upcoming and Past - Made responsive */}
+            <div className="bg-gradient-to-r from-blue-900/40 to-gray-900/40 rounded-lg shadow mb-6 border border-blue-800/50 overflow-x-auto">
+              <div className="flex border-b border-blue-800/30 min-w-max sm:min-w-0">
                 <button
                   onClick={() => setActiveTab('workshops')}
-                  className="flex-1 px-6 py-3 text-sm font-medium border-b-2 border-blue-400 text-blue-400"
+                  className="flex-1 min-w-[180px] px-4 sm:px-6 py-3 text-xs sm:text-sm font-medium border-b-2 border-blue-400 text-blue-400 whitespace-nowrap"
                 >
                   Upcoming Workshops
                   <span className="ml-2 bg-green-900/30 text-green-400 px-2 py-1 rounded-full text-xs border border-green-700/50">
@@ -729,7 +729,7 @@ export default function AdminDashboard({ admin }) {
                 </button>
                 <button
                   onClick={() => setActiveTab('workshops-past')}
-                  className="flex-1 px-6 py-3 text-sm font-medium text-gray-400 hover:text-blue-300"
+                  className="flex-1 min-w-[180px] px-4 sm:px-6 py-3 text-xs sm:text-sm font-medium text-gray-400 hover:text-blue-300 whitespace-nowrap"
                 >
                   Past Workshops
                   <span className="ml-2 bg-gray-900/30 text-gray-400 px-2 py-1 rounded-full text-xs border border-gray-700/50">
@@ -739,37 +739,37 @@ export default function AdminDashboard({ admin }) {
               </div>
             </div>
 
-            {/* Upcoming Workshops */}
+            {/* Upcoming Workshops - Made responsive */}
             <div className="space-y-4">
               {workshops
                 .filter(w => new Date(w.date) >= new Date())
                 .sort((a, b) => new Date(a.date) - new Date(b.date))
                 .map((workshop) => (
-                  <div key={workshop.id} className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-6 border border-blue-800/50">
+                  <div key={workshop.id} className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-4 sm:p-6 border border-blue-800/50">
                     <div className="flex flex-col">
-                      <div className="flex justify-between items-start mb-4">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
-                            <h3 className="text-2xl font-serif text-white">{workshop.title}</h3>
-                            <span className="px-3 py-1 rounded text-xs font-medium bg-green-900/30 text-green-400 border border-green-700/50">
+                      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-4 gap-4">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                            <h3 className="text-lg sm:text-xl lg:text-2xl font-serif text-white break-words">{workshop.title}</h3>
+                            <span className="px-2 sm:px-3 py-1 rounded text-xs font-medium bg-green-900/30 text-green-400 border border-green-700/50 whitespace-nowrap">
                               Upcoming
                             </span>
-                            <span className="px-3 py-1 rounded text-xs font-medium bg-blue-900/30 text-blue-300 flex items-center gap-1 border border-blue-700/50">
+                            <span className="px-2 sm:px-3 py-1 rounded text-xs font-medium bg-blue-900/30 text-blue-300 flex items-center gap-1 border border-blue-700/50 whitespace-nowrap">
                               <Users className="w-3 h-3" />
                               {workshop.current_participants || 0} registered
                             </span>
                           </div>
                         </div>
 
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-col sm:flex-row gap-2 w-full lg:w-auto">
                           <button
                             onClick={() => {
                               setSelectedWorkshop(workshop);
                               setShowRegistrationsModal(true);
                             }}
-                            className="bg-green-600 text-white px-4 py-2 rounded text-sm hover:bg-green-700 transition flex items-center whitespace-nowrap border border-green-500"
+                            className="bg-green-600 text-white px-3 sm:px-4 py-2 rounded text-xs sm:text-sm hover:bg-green-700 transition flex items-center justify-center whitespace-nowrap border border-green-500"
                           >
-                            <Users className="w-4 h-4 mr-1" />
+                            <Users className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                             View Registrations
                           </button>
                           <button
@@ -777,68 +777,68 @@ export default function AdminDashboard({ admin }) {
                               setEditingWorkshop(workshop);
                               setShowWorkshopForm(true);
                             }}
-                            className="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700 transition flex items-center whitespace-nowrap border border-blue-500"
+                            className="bg-blue-600 text-white px-3 sm:px-4 py-2 rounded text-xs sm:text-sm hover:bg-blue-700 transition flex items-center justify-center whitespace-nowrap border border-blue-500"
                           >
-                            <Edit className="w-4 h-4 mr-1" />
+                            <Edit className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                             Edit
                           </button>
                           <button
                             onClick={() => handleDeleteWorkshop(workshop.id)}
-                            className="bg-red-600 text-white px-4 py-2 rounded text-sm hover:bg-red-700 transition flex items-center whitespace-nowrap border border-red-500"
+                            className="bg-red-600 text-white px-3 sm:px-4 py-2 rounded text-xs sm:text-sm hover:bg-red-700 transition flex items-center justify-center whitespace-nowrap border border-red-500"
                           >
-                            <Trash2 className="w-4 h-4 mr-1" />
+                            <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                             Delete
                           </button>
                         </div>
                       </div>
 
-                      <p className="text-gray-300 mb-4">{workshop.description}</p>
+                      <p className="text-sm sm:text-base text-gray-300 mb-4 break-words">{workshop.description}</p>
 
-                      <div className="grid md:grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <p className="text-gray-500">Instructor: <span className="text-gray-300 font-medium">{workshop.instructor}</span></p>
-                          <p className="text-gray-500">Date: <span className="text-gray-300 font-medium">{new Date(workshop.date).toLocaleString()}</span></p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
+                        <div className="space-y-2">
+                          <p className="text-gray-500">Instructor: <span className="text-gray-300 font-medium break-words">{workshop.instructor}</span></p>
+                          <p className="text-gray-500">Date: <span className="text-gray-300 font-medium break-words">{new Date(workshop.date).toLocaleString()}</span></p>
                           <p className="text-gray-500">Duration: <span className="text-gray-300 font-medium">{workshop.duration} minutes</span></p>
                         </div>
-                        <div>
+                        <div className="space-y-2">
                           <p className="text-gray-500">Price: <span className="text-gray-300 font-medium">₹{workshop.price}</span></p>
                           <p className="text-gray-500">Capacity: <span className="text-gray-300 font-medium">{workshop.current_participants || 0}/{workshop.max_participants}</span></p>
-                          <p className="text-gray-500">Link: <a href={workshop.workshop_link} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">View Link</a></p>
+                          <p className="text-gray-500">Link: <a href={workshop.workshop_link} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 break-all">View Link</a></p>
                         </div>
                       </div>
                     </div>
                   </div>
                 ))}
               {workshops.filter(w => new Date(w.date) >= new Date()).length === 0 && (
-                <div className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-12 text-center border border-blue-800/50">
-                  <Calendar className="w-16 h-16 mx-auto mb-4 text-blue-700" />
-                  <h3 className="text-xl font-serif text-white mb-2">No Upcoming Workshops</h3>
-                  <p className="text-gray-400">Create a new workshop to get started!</p>
+                <div className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-8 sm:p-12 text-center border border-blue-800/50">
+                  <Calendar className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 text-blue-700" />
+                  <h3 className="text-lg sm:text-xl font-serif text-white mb-2">No Upcoming Workshops</h3>
+                  <p className="text-sm sm:text-base text-gray-400">Create a new workshop to get started!</p>
                 </div>
               )}
             </div>
           </div>
         )}
 
-        {/* Past Workshops Tab */}
+        {/* Past Workshops Tab - Made responsive */}
         {activeTab === 'workshops-past' && (
           <div>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-serif text-white">Past Workshops</h2>
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+              <h2 className="text-xl sm:text-2xl font-serif text-white">Past Workshops</h2>
               <button
                 onClick={() => setActiveTab('workshops')}
-                className="bg-blue-900/30 text-blue-300 px-6 py-3 rounded font-medium hover:bg-blue-900/50 transition flex items-center border border-blue-800/50"
+                className="w-full sm:w-auto bg-blue-900/30 text-blue-300 px-4 sm:px-6 py-2 sm:py-3 rounded font-medium hover:bg-blue-900/50 transition flex items-center justify-center border border-blue-800/50"
               >
                 Back to Upcoming
               </button>
             </div>
 
-            {/* Sub-tabs for Upcoming and Past */}
-            <div className="bg-gradient-to-r from-blue-900/40 to-gray-900/40 rounded-lg shadow mb-6 border border-blue-800/50">
-              <div className="flex border-b border-blue-800/30">
+            {/* Sub-tabs for Upcoming and Past - Made responsive */}
+            <div className="bg-gradient-to-r from-blue-900/40 to-gray-900/40 rounded-lg shadow mb-6 border border-blue-800/50 overflow-x-auto">
+              <div className="flex border-b border-blue-800/30 min-w-max sm:min-w-0">
                 <button
                   onClick={() => setActiveTab('workshops')}
-                  className="flex-1 px-6 py-3 text-sm font-medium text-gray-400 hover:text-blue-300"
+                  className="flex-1 min-w-[180px] px-4 sm:px-6 py-3 text-xs sm:text-sm font-medium text-gray-400 hover:text-blue-300 whitespace-nowrap"
                 >
                   Upcoming Workshops
                   <span className="ml-2 bg-green-900/30 text-green-400 px-2 py-1 rounded-full text-xs border border-green-700/50">
@@ -847,7 +847,7 @@ export default function AdminDashboard({ admin }) {
                 </button>
                 <button
                   onClick={() => setActiveTab('workshops-past')}
-                  className="flex-1 px-6 py-3 text-sm font-medium border-b-2 border-blue-400 text-blue-400"
+                  className="flex-1 min-w-[180px] px-4 sm:px-6 py-3 text-xs sm:text-sm font-medium border-b-2 border-blue-400 text-blue-400 whitespace-nowrap"
                 >
                   Past Workshops
                   <span className="ml-2 bg-gray-900/30 text-gray-400 px-2 py-1 rounded-full text-xs border border-gray-700/50">
@@ -857,58 +857,58 @@ export default function AdminDashboard({ admin }) {
               </div>
             </div>
 
-            {/* Past Workshops */}
+            {/* Past Workshops - Made responsive */}
             <div className="space-y-4">
               {workshops
                 .filter(w => new Date(w.date) < new Date())
                 .sort((a, b) => new Date(b.date) - new Date(a.date))
                 .map((workshop) => (
-                  <div key={workshop.id} className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-6 border border-blue-800/50 opacity-90">
+                  <div key={workshop.id} className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-4 sm:p-6 border border-blue-800/50 opacity-90">
                     <div className="flex flex-col">
-                      <div className="flex justify-between items-start mb-4">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
-                            <h3 className="text-2xl font-serif text-white">{workshop.title}</h3>
-                            <span className="px-3 py-1 rounded text-xs font-medium bg-gray-900/30 text-gray-400 border border-gray-700/50">
+                      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-4 gap-4">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                            <h3 className="text-lg sm:text-xl lg:text-2xl font-serif text-white break-words">{workshop.title}</h3>
+                            <span className="px-2 sm:px-3 py-1 rounded text-xs font-medium bg-gray-900/30 text-gray-400 border border-gray-700/50 whitespace-nowrap">
                               Completed
                             </span>
-                            <span className="px-3 py-1 rounded text-xs font-medium bg-blue-900/30 text-blue-300 flex items-center gap-1 border border-blue-700/50">
+                            <span className="px-2 sm:px-3 py-1 rounded text-xs font-medium bg-blue-900/30 text-blue-300 flex items-center gap-1 border border-blue-700/50 whitespace-nowrap">
                               <Users className="w-3 h-3" />
                               {workshop.current_participants || 0} attended
                             </span>
                           </div>
                         </div>
 
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-col sm:flex-row gap-2 w-full lg:w-auto">
                           <button
                             onClick={() => {
                               setSelectedWorkshop(workshop);
                               setShowRegistrationsModal(true);
                             }}
-                            className="bg-green-600 text-white px-4 py-2 rounded text-sm hover:bg-green-700 transition flex items-center whitespace-nowrap border border-green-500"
+                            className="bg-green-600 text-white px-3 sm:px-4 py-2 rounded text-xs sm:text-sm hover:bg-green-700 transition flex items-center justify-center whitespace-nowrap border border-green-500"
                           >
-                            <Users className="w-4 h-4 mr-1" />
+                            <Users className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                             View Attendees
                           </button>
                           <button
                             onClick={() => handleDeleteWorkshop(workshop.id)}
-                            className="bg-red-600 text-white px-4 py-2 rounded text-sm hover:bg-red-700 transition flex items-center whitespace-nowrap border border-red-500"
+                            className="bg-red-600 text-white px-3 sm:px-4 py-2 rounded text-xs sm:text-sm hover:bg-red-700 transition flex items-center justify-center whitespace-nowrap border border-red-500"
                           >
-                            <Trash2 className="w-4 h-4 mr-1" />
+                            <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                             Delete
                           </button>
                         </div>
                       </div>
 
-                      <p className="text-gray-300 mb-4">{workshop.description}</p>
+                      <p className="text-sm sm:text-base text-gray-300 mb-4 break-words">{workshop.description}</p>
 
-                      <div className="grid md:grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <p className="text-gray-500">Instructor: <span className="text-gray-300 font-medium">{workshop.instructor}</span></p>
-                          <p className="text-gray-500">Date: <span className="text-gray-300 font-medium">{new Date(workshop.date).toLocaleString()}</span></p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
+                        <div className="space-y-2">
+                          <p className="text-gray-500">Instructor: <span className="text-gray-300 font-medium break-words">{workshop.instructor}</span></p>
+                          <p className="text-gray-500">Date: <span className="text-gray-300 font-medium break-words">{new Date(workshop.date).toLocaleString()}</span></p>
                           <p className="text-gray-500">Duration: <span className="text-gray-300 font-medium">{workshop.duration} minutes</span></p>
                         </div>
-                        <div>
+                        <div className="space-y-2">
                           <p className="text-gray-500">Price: <span className="text-gray-300 font-medium">₹{workshop.price}</span></p>
                           <p className="text-gray-500">Attendance: <span className="text-gray-300 font-medium">{workshop.current_participants || 0}/{workshop.max_participants}</span></p>
                           <p className="text-gray-500">Revenue: <span className="text-green-400 font-medium">₹{(workshop.current_participants || 0) * workshop.price}</span></p>
@@ -918,83 +918,83 @@ export default function AdminDashboard({ admin }) {
                   </div>
                 ))}
               {workshops.filter(w => new Date(w.date) < new Date()).length === 0 && (
-                <div className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-12 text-center border border-blue-800/50">
-                  <Calendar className="w-16 h-16 mx-auto mb-4 text-blue-700" />
-                  <h3 className="text-xl font-serif text-white mb-2">No Past Workshops</h3>
-                  <p className="text-gray-400">Past workshops will appear here after they're completed.</p>
+                <div className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-8 sm:p-12 text-center border border-blue-800/50">
+                  <Calendar className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 text-blue-700" />
+                  <h3 className="text-lg sm:text-xl font-serif text-white mb-2">No Past Workshops</h3>
+                  <p className="text-sm sm:text-base text-gray-400">Past workshops will appear here after they're completed.</p>
                 </div>
               )}
             </div>
           </div>
         )}
 
-        {/* Blogs Tab */}
+        {/* Blogs Tab - Made responsive */}
         {activeTab === 'blogs' && (
           <div>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-serif text-white">Manage Blogs</h2>
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+              <h2 className="text-xl sm:text-2xl font-serif text-white">Manage Blogs</h2>
               <button
                 onClick={() => router.push('/admin/blogs/new')}
-                className="bg-blue-600 text-white px-6 py-3 rounded font-medium hover:bg-blue-700 transition flex items-center border border-blue-500"
+                className="w-full sm:w-auto bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded font-medium hover:bg-blue-700 transition flex items-center justify-center border border-blue-500"
               >
-                <Plus className="w-5 h-5 mr-2" />
+                <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 Create New Blog
               </button>
             </div>
 
             <div className="space-y-4">
               {blogs.map((blog) => (
-                <div key={blog.id} className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-6 border border-blue-800/50">
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-2xl font-serif text-white">{blog.title}</h3>
-                        <span className={`px-3 py-1 rounded text-xs font-medium border ${blog.status === 'published'
+                <div key={blog.id} className="bg-gradient-to-br from-blue-900/40 to-gray-900/40 rounded-lg shadow-lg p-4 sm:p-6 border border-blue-800/50">
+                  <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                        <h3 className="text-lg sm:text-xl lg:text-2xl font-serif text-white break-words">{blog.title}</h3>
+                        <span className={`px-2 sm:px-3 py-1 rounded text-xs font-medium border whitespace-nowrap ${blog.status === 'published'
                           ? 'bg-green-900/30 text-green-400 border-green-700/50'
                           : 'bg-gray-900/30 text-gray-400 border-gray-700/50'
                           }`}>
                           {blog.status}
                         </span>
                       </div>
-                      <p className="text-gray-400 mb-4 line-clamp-2">{blog.excerpt}</p>
+                      <p className="text-sm sm:text-base text-gray-400 mb-4 line-clamp-2 break-words">{blog.excerpt}</p>
 
-                      <div className="grid md:grid-cols-3 gap-4 text-sm">
-                        <div>
-                          <p className="text-gray-500">Category: <span className="text-gray-300 font-medium">{blog.category}</span></p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm">
+                        <div className="space-y-1">
+                          <p className="text-gray-500">Category: <span className="text-gray-300 font-medium break-words">{blog.category}</span></p>
                           <p className="text-gray-500">Views: <span className="text-gray-300 font-medium">{blog.views || 0}</span></p>
                         </div>
-                        <div>
+                        <div className="space-y-1">
                           <p className="text-gray-500">Reactions: <span className="text-gray-300 font-medium">{blog.total_reactions || 0}</span></p>
                           <p className="text-gray-500">Comments: <span className="text-gray-300 font-medium">{blog.total_comments || 0}</span></p>
                         </div>
-                        <div>
+                        <div className="space-y-1 sm:col-span-2 lg:col-span-1">
                           <p className="text-gray-500">Created: <span className="text-gray-300 font-medium">{new Date(blog.created_at).toLocaleDateString()}</span></p>
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex gap-2 ml-4">
+                    <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-2 w-full lg:w-auto">
                       <a
                         href={`/blog/${blog.slug}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700 transition flex items-center border border-blue-500"
+                        className="bg-blue-600 text-white px-3 sm:px-4 py-2 rounded text-xs sm:text-sm hover:bg-blue-700 transition flex items-center justify-center border border-blue-500 whitespace-nowrap"
                       >
-                        <Eye className="w-4 h-4 mr-1" />
+                        <Eye className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                         View
                       </a>
                       <button
                         onClick={() => router.push(`/admin/blogs/${blog.slug}/edit`)}
-                        className="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700 transition flex items-center border border-blue-500"
+                        className="bg-blue-600 text-white px-3 sm:px-4 py-2 rounded text-xs sm:text-sm hover:bg-blue-700 transition flex items-center justify-center border border-blue-500 whitespace-nowrap"
                       >
-                        <Edit className="w-4 h-4 mr-1" />
+                        <Edit className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                         Edit
                       </button>
                       <button
                         onClick={() => handleDeleteBlog(blog.slug)}
-                        className="bg-red-600 text-white px-4 py-2 rounded text-sm hover:bg-red-700 transition flex items-center border border-red-500"
+                        className="bg-red-600 text-white px-3 sm:px-4 py-2 rounded text-xs sm:text-sm hover:bg-red-700 transition flex items-center justify-center border border-red-500 whitespace-nowrap"
                       >
-                        <Trash2 className="w-4 h-4 mr-1" />
+                        <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                         Delete
                       </button>
                     </div>

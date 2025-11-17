@@ -147,7 +147,7 @@ export default function WorkshopsPage() {
         amount: data.amount,
         currency: data.currency,
         order_id: data.orderId,
-        name: 'CHORDS Studio',
+        name: 'Soloistanjali',
         description: `Workshop: ${selectedWorkshop.title}`,
         handler: async function (response) {
           console.log('Payment successful:', response);

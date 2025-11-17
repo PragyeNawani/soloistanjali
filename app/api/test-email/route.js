@@ -10,7 +10,7 @@ export async function GET() {
       from: process.env.RESEND_FROM_EMAIL,
       to: 'coderpragye@gmail.com',
       subject: 'Test Email',
-      html: '<h1>Test Email from CHORDS Studio</h1>',
+      html: '<h1>Test Email from Soloistanjali</h1>',
     });
 
     return NextResponse.json({ success: true, data, error });

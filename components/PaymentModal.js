@@ -68,7 +68,7 @@ export default function PaymentModal({ course, onClose, onSuccess }) {
         amount: data.amount,
         currency: data.currency,
         order_id: data.orderId,
-        name: 'CHORDS Studio',
+        name: 'Soloistanjali',
         description: course.title,
         handler: async function (response) {
           try {

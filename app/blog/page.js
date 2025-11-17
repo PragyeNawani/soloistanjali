@@ -78,7 +78,7 @@ export default function BlogPage() {
             Blog & Updates
           </h1>
           <p className="text-blue-300 text-lg max-w-2xl mx-auto">
-            Stay updated with the latest news, events, and insights from CHORDS Studio
+            Stay updated with the latest news, events, and insights from Soloistanjali
           </p>
         </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

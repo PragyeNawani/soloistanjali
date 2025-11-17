@@ -70,7 +70,7 @@ export default function RegisterPage() {
             <h1 className="text-3xl font-serif text-blue-100">
               Create Account
             </h1>
-            <p className="text-blue-300">Join CHORDS Studio today</p>
+            <p className="text-blue-300">Join Soloistanjali today</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">

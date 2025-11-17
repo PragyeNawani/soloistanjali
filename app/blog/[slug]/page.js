@@ -252,7 +252,7 @@ export default function BlogDetailPage() {
             Enjoyed this article?
           </h3>
           <p className="text-gray-600 mb-4">
-            Check out more blogs from CHORDS Studio
+            Check out more blogs from Soloistanjali
           </p>
           <button
             onClick={() => router.push('/blog')}

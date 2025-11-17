@@ -64,7 +64,7 @@ export async function POST(request) {
                 </div>
                 ` : ''}
                 <div class="footer">
-                  <p>This email was sent from Chords Studio contact form</p>
+                  <p>This email was sent from Soloistanjali contact form</p>
                   <p>Timestamp: ${new Date().toLocaleString()}</p>
                 </div>
               </div>
@@ -81,7 +81,7 @@ export async function POST(request) {
       const userEmailPromise = resend.emails.send({
         from: process.env.RESEND_FROM_EMAIL, // Replace with your verified domain
         to: userEmail,
-        subject: 'Thank you for contacting Chords Studio! 🎵',
+        subject: 'Thank you for contacting Soloistanjali! 🎵',
         html: `
           <!DOCTYPE html>
           <html>
@@ -111,7 +111,7 @@ export async function POST(request) {
                     Hi <strong>${name}</strong>,
                   </div>
                   <div class="message">
-                    <p>Thank you for contacting <strong>Chords Studio</strong>! We've received your message and are excited to help you on your musical journey.</p>
+                    <p>Thank you for contacting <strong>Soloistanjali</strong>! We've received your message and are excited to help you on your musical journey.</p>
                     <p>Our team will review your inquiry and get back to you within 24-48 hours. We're looking forward to discussing how we can help you achieve your goal: <strong>${goal}</strong></p>
                   </div>
                   <div class="cta">
@@ -125,7 +125,7 @@ export async function POST(request) {
                     <a href="#">YouTube</a>
                   </div>
                   <div class="footer">
-                    <p><strong>Chords Studio</strong></p>
+                    <p><strong>Soloistanjali</strong></p>
                     <p>Learn Instruments Anytime, Anywhere</p>
                     <p style="font-size: 12px; color: #9ca3af; margin-top: 10px;">
                       If you didn't submit this form, please ignore this email.
