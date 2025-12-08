@@ -94,15 +94,16 @@ export default function ChordsStudioPage() {
         const response = await fetch('/api/latest');
         const data = await response.json();
         if (response.ok) {
+          console.log('Fetched latest items:', data); // Debug log
           // Filter out past workshops and mark if there are no upcoming ones
           if (data.workshop) {
             const workshopDate = new Date(data.workshop.date);
             const today = new Date();
             today.setHours(0, 0, 0, 0); // Reset time to start of day
-            if(data.workshop.instructor){
+            if (data.workshop.instructor) {
               setWorkshopInstructor(data.workshop.instructor)
-            } 
-              
+            }
+
             // Only include workshop if it's today or in the future
             if (workshopDate < today) {
               // Create a placeholder for "no upcoming workshops"
@@ -134,8 +135,15 @@ export default function ChordsStudioPage() {
               .getPublicUrl(data.course.image_url);
             data.course.imageUrl = publicUrl;
           }
-
+          // Check if blog exists and has required fields
+          if (!data.blog || !data.blog.title) {
+            console.log('No valid blog found');
+            data.blog = null;
+          }
           setLatestItems(data);
+        }
+        else {
+          console.error('Failed to fetch latest items:', data);
         }
       } catch (error) {
         console.error('Error fetching latest items:', error);
@@ -149,7 +157,7 @@ export default function ChordsStudioPage() {
 
   // Create carousel items array
   const carouselItems = [];
-  if (latestItems.blog) {
+  if (latestItems.blog && latestItems.blog.title) {
     carouselItems.push({
       type: 'blog',
       title: latestItems.blog.title,
@@ -182,6 +190,7 @@ export default function ChordsStudioPage() {
       date: latestItems.workshop.date,
       price: latestItems.workshop.price,
       id: latestItems.workshop.id,
+      isPlaceholder: latestItems.workshop.isPlaceholder || false,
       icon: Calendar,
       color: 'from-green-600 to-green-800'
     });
@@ -527,7 +536,7 @@ export default function ChordsStudioPage() {
                               }`}
                           >
                             {WorkshopInstructor.length > 1 ? `🎼 By ${WorkshopInstructor}` : '🎼'}
-                            
+
                           </div>
                         </div>}
 
@@ -709,137 +718,132 @@ export default function ChordsStudioPage() {
 
       {/* FAQ Section */}
       <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 bg-primarycontainer text-white relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute top-[120px] left-3/4 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-blue-600 rounded-full blur-3xl opacity-20"></div>
-      <div className="absolute bottom-0 right-3/4 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-blue-500 rounded-full blur-3xl opacity-15"></div>
-      
-      <div className="relative z-10">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-3 sm:mb-4 bg-gradient-to-r from-blue-200 to-white bg-clip-text text-transparent">
-          Frequently Asked Questions
-        </h2>
-        <p className="text-center text-blue-200 mb-8 sm:mb-12 md:mb-16 text-base sm:text-lg px-4">
-          Find answers to common questions about our piano lessons
-        </p>
-        
-        <div className="max-w-4xl mx-auto space-y-3 sm:space-y-4">
-          {faqs.map((faq, index) => (
-            <div 
-              key={index} 
-              className={`bg-blue-950 rounded-xl sm:rounded-2xl border transition-all duration-500 ${
-                expandedFaq === index 
-                  ? 'border-blue-400 shadow-lg shadow-blue-500/20' 
+        {/* Decorative background elements */}
+        <div className="absolute top-[120px] left-3/4 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-blue-600 rounded-full blur-3xl opacity-20"></div>
+        <div className="absolute bottom-0 right-3/4 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-blue-500 rounded-full blur-3xl opacity-15"></div>
+
+        <div className="relative z-10">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-3 sm:mb-4 bg-gradient-to-r from-blue-200 to-white bg-clip-text text-transparent">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-center text-blue-200 mb-8 sm:mb-12 md:mb-16 text-base sm:text-lg px-4">
+            Find answers to common questions about our piano lessons
+          </p>
+
+          <div className="max-w-4xl mx-auto space-y-3 sm:space-y-4">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className={`bg-blue-950 rounded-xl sm:rounded-2xl border transition-all duration-500 ${expandedFaq === index
+                  ? 'border-blue-400 shadow-lg shadow-blue-500/20'
                   : 'border-blue-700/50 hover:border-blue-600'
-              }`}
-            >
-              <button
-                onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                className="w-full flex items-center justify-between p-4 sm:p-5 md:p-6 text-left hover:bg-blue-800/30 rounded-xl sm:rounded-2xl transition-all duration-300"
+                  }`}
               >
-                <span className="flex items-center gap-2 sm:gap-3 md:gap-4 flex-1 min-w-0">
-                  <span className={`text-xl sm:text-2xl font-bold transition-colors duration-300 flex-shrink-0 ${
-                    expandedFaq === index ? 'text-blue-300' : 'text-blue-500'
-                  }`}>
-                    Q.
+                <button
+                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
+                  className="w-full flex items-center justify-between p-4 sm:p-5 md:p-6 text-left hover:bg-blue-800/30 rounded-xl sm:rounded-2xl transition-all duration-300"
+                >
+                  <span className="flex items-center gap-2 sm:gap-3 md:gap-4 flex-1 min-w-0">
+                    <span className={`text-xl sm:text-2xl font-bold transition-colors duration-300 flex-shrink-0 ${expandedFaq === index ? 'text-blue-300' : 'text-blue-500'
+                      }`}>
+                      Q.
+                    </span>
+                    <span className={`text-sm sm:text-base md:text-lg transition-colors duration-300 ${expandedFaq === index ? 'text-white font-semibold' : 'text-blue-100'
+                      }`}>
+                      {faq.question}
+                    </span>
                   </span>
-                  <span className={`text-sm sm:text-base md:text-lg transition-colors duration-300 ${
-                    expandedFaq === index ? 'text-white font-semibold' : 'text-blue-100'
-                  }`}>
-                    {faq.question}
+                  <span className={`text-2xl sm:text-3xl font-light transition-all duration-300 flex-shrink-0 ml-2 ${expandedFaq === index ? 'text-blue-300 rotate-180' : 'text-blue-400'
+                    }`}>
+                    {expandedFaq === index ? '−' : '+'}
                   </span>
-                </span>
-                <span className={`text-2xl sm:text-3xl font-light transition-all duration-300 flex-shrink-0 ml-2 ${
-                  expandedFaq === index ? 'text-blue-300 rotate-180' : 'text-blue-400'
-                }`}>
-                  {expandedFaq === index ? '−' : '+'}
-                </span>
-              </button>
-              
-              <div className={`overflow-hidden transition-all duration-500 ${
-                expandedFaq === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-              }`}>
-                {faq.answer && (
-                  <div className="px-4 sm:px-5 md:px-6 pb-4 sm:pb-5 md:pb-6 pt-2">
-                    <div className="pl-6 sm:pl-10 md:pl-12 pr-3 sm:pr-4 py-3 sm:py-4 text-sm sm:text-base text-blue-100 leading-relaxed bg-blue-900/30 rounded-lg sm:rounded-xl border-l-2 sm:border-l-4 border-blue-400">
-                      {faq.answer}
+                </button>
+
+                <div className={`overflow-hidden transition-all duration-500 ${expandedFaq === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                  {faq.answer && (
+                    <div className="px-4 sm:px-5 md:px-6 pb-4 sm:pb-5 md:pb-6 pt-2">
+                      <div className="pl-6 sm:pl-10 md:pl-12 pr-3 sm:pr-4 py-3 sm:py-4 text-sm sm:text-base text-blue-100 leading-relaxed bg-blue-900/30 rounded-lg sm:rounded-xl border-l-2 sm:border-l-4 border-blue-400">
+                        {faq.answer}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-        
-        {/* <div className="text-center mt-8 sm:mt-10 md:mt-12 px-4">
+            ))}
+          </div>
+
+          {/* <div className="text-center mt-8 sm:mt-10 md:mt-12 px-4">
           <p className="text-blue-300 text-xs sm:text-sm">
             Questions auto-rotate every 10 seconds • Click any question to expand
           </p>
         </div> */}
-      </div>
-    </section>
+        </div>
+      </section>
 
       {/* About Us */}
-       <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 min-h-[70vh] sm:min-h-[80vh] md:min-h-[90vh] relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute top-0 right-0 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full blur-3xl opacity-30"></div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full blur-3xl opacity-20"></div>
-      
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center relative z-10">
-        <div className="relative order-1 md:order-1">
-          <div className="absolute rounded-3xl transform rotate-6"></div>
-          <div className="relative z-10 p-4 sm:p-6 md:p-8 rounded-3xl">
-            <img
-              src="AboutUs.png"
-              alt="Guitar"
-              className="w-full max-w-sm sm:max-w-md mx-auto rounded-xl sm:rounded-2xl"
-            />
-          </div>
-        </div>
-        
-        <div className="space-y-6 sm:space-y-7 md:space-y-8 order-1 md:order-2">
-          <div>
-            <h3 className="text-blue-600 font-bold mb-2 sm:mb-3 text-sm sm:text-base md:text-lg tracking-wide uppercase">About Us</h3>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl text-blue-950 font-bold mb-4 sm:mb-5 md:mb-6 leading-tight">
-              SoloistAnjali:<br />
-              <span className="text-blue-700">A Legacy of Music</span>
-            </h2>
-          </div>
-          
-          <div className="space-y-4 sm:space-y-5 md:space-y-6">
-            <div className='flex flex-col gap-4 sm:gap-5 md:gap-6'>
-              <div className='bg-gradient-to-r from-blue-50 to-transparent p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border-l-2 sm:border-l-4 border-blue-500 shadow-sm hover:shadow-md transition-shadow duration-300'>
-                <span className='text-sm sm:text-base text-blue-800 leading-relaxed'>
-                  Unlock your Piano voice. Learn to play the piano confidently, fluently and
-                  creatively. From first key-press to expressive performance — take your
-                  piano journey one chord at a time.
-                </span>
-              </div>
-              
-              <div className='bg-gradient-to-r from-blue-50 to-transparent p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border-l-2 sm:border-l-4 border-blue-400 shadow-sm hover:shadow-md transition-shadow duration-300'>
-                <span className='text-sm sm:text-base text-blue-800 leading-relaxed'>
-                  Whether you're just beginning on the piano or ready to take your tracks to
-                  streaming-ready quality, you're in the right place. Learn the craft of piano
-                  playing and music production in one place so that you can create those divine
-                  sounding piano covers/pieces easily in your home studio with the right
-                  knowledge and guidance.
-                </span>
-              </div>
-            </div>
-            
-            <div className='bg-gradient-to-br from-blue-100 via-blue-50 to-white p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl shadow-lg border border-blue-200'>
-              <h4 className="font-bold text-lg sm:text-xl mb-3 sm:mb-4 text-blue-950 flex items-center gap-2">
-                <span className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></span>
-                <span>Our Vision / Mission</span>
-              </h4>
-              <p className="text-sm sm:text-base text-blue-800 leading-relaxed">
-                To empower you to play the piano confidently — whether you want to perform for yourself,
-                your family, or on stage; to interpret songs, to record beautiful performances at your home,
-                compose new ideas, or simply enjoy every moment at the keyboard.
-              </p>
+      <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 min-h-[70vh] sm:min-h-[80vh] md:min-h-[90vh] relative overflow-hidden">
+        {/* Decorative background elements */}
+        <div className="absolute top-0 right-0 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full blur-3xl opacity-30"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full blur-3xl opacity-20"></div>
+
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center relative z-10">
+          <div className="relative order-1 md:order-1">
+            <div className="absolute rounded-3xl transform rotate-6"></div>
+            <div className="relative z-10 p-4 sm:p-6 md:p-8 rounded-3xl">
+              <img
+                src="AboutUs.png"
+                alt="Guitar"
+                className="w-full max-w-sm sm:max-w-md mx-auto rounded-xl sm:rounded-2xl"
+              />
             </div>
           </div>
+
+          <div className="space-y-6 sm:space-y-7 md:space-y-8 order-1 md:order-2">
+            <div>
+              <h3 className="text-blue-600 font-bold mb-2 sm:mb-3 text-sm sm:text-base md:text-lg tracking-wide uppercase">About Us</h3>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl text-blue-950 font-bold mb-4 sm:mb-5 md:mb-6 leading-tight">
+                SoloistAnjali:<br />
+                <span className="text-blue-700">A Legacy of Music</span>
+              </h2>
+            </div>
+
+            <div className="space-y-4 sm:space-y-5 md:space-y-6">
+              <div className='flex flex-col gap-4 sm:gap-5 md:gap-6'>
+                <div className='bg-gradient-to-r from-blue-50 to-transparent p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border-l-2 sm:border-l-4 border-blue-500 shadow-sm hover:shadow-md transition-shadow duration-300'>
+                  <span className='text-sm sm:text-base text-blue-800 leading-relaxed'>
+                    Unlock your Piano voice. Learn to play the piano confidently, fluently and
+                    creatively. From first key-press to expressive performance — take your
+                    piano journey one chord at a time.
+                  </span>
+                </div>
+
+                <div className='bg-gradient-to-r from-blue-50 to-transparent p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border-l-2 sm:border-l-4 border-blue-400 shadow-sm hover:shadow-md transition-shadow duration-300'>
+                  <span className='text-sm sm:text-base text-blue-800 leading-relaxed'>
+                    Whether you're just beginning on the piano or ready to take your tracks to
+                    streaming-ready quality, you're in the right place. Learn the craft of piano
+                    playing and music production in one place so that you can create those divine
+                    sounding piano covers/pieces easily in your home studio with the right
+                    knowledge and guidance.
+                  </span>
+                </div>
+              </div>
+
+              <div className='bg-gradient-to-br from-blue-100 via-blue-50 to-white p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl shadow-lg border border-blue-200'>
+                <h4 className="font-bold text-lg sm:text-xl mb-3 sm:mb-4 text-blue-950 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></span>
+                  <span>Our Vision / Mission</span>
+                </h4>
+                <p className="text-sm sm:text-base text-blue-800 leading-relaxed">
+                  To empower you to play the piano confidently — whether you want to perform for yourself,
+                  your family, or on stage; to interpret songs, to record beautiful performances at your home,
+                  compose new ideas, or simply enjoy every moment at the keyboard.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
     </div>
   );
 }
