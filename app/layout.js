@@ -6,6 +6,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { NavProvider } from '@/Context/context';
+import AIAssistant from '@/components/AIAssistant';
 const inter = Inter({ subsets: ['latin'] });
 export const metadata = {
   title: 'SOLOISTANJALI',
@@ -27,6 +28,7 @@ export default async function RootLayout({ children }) {
           <Navigation user={session?.user || null} />
           {children}
           <Footer />
+          <AIAssistant/>
         </NavProvider>
       </body>
     </html>
