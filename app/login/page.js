@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { Music } from 'lucide-react';
+import { Music, Eye, EyeOff } from 'lucide-react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 export default function LoginPage() {
@@ -11,6 +11,7 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const supabase = createClientComponentClient();
@@ -138,17 +139,31 @@ export default function LoginPage() {
                   Forgot Password?
                 </Link>
               </div>
-              <input
-                type="password"
-                required
-                value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
-                className="w-full px-4 py-3 border border-blue-200 rounded text-blue-900 placeholder:text-blue-950 placeholder:text-opacity-[75%] focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your password"
-                disabled={loading}
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                  className="w-full px-4 py-3 pr-12 border border-blue-200 rounded text-blue-900 placeholder:text-blue-950 placeholder:text-opacity-[75%] focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter your password"
+                  disabled={loading}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-600 hover:text-blue-800 focus:outline-none"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
             </div>
 
             {error && (

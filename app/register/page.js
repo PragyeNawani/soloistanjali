@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Music } from 'lucide-react';
+import { Music, Eye, EyeOff } from 'lucide-react';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -14,6 +14,8 @@ export default function RegisterPage() {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -110,32 +112,61 @@ export default function RegisterPage() {
               <label className="block text-sm font-medium text-blue-400 mb-2">
                 Password
               </label>
-              <input
-                type="password"
-                required
-                value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
-                className="w-full px-4 py-3 border border-blue-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Create a password"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                  className="w-full px-4 py-3 pr-12 border border-blue-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Create a password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-600 hover:text-blue-800 focus:outline-none"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
+              <p className="text-xs text-blue-300 mt-1">Minimum 6 characters</p>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-blue-400 mb-2">
                 Confirm Password
               </label>
-              <input
-                type="password"
-                required
-                value={formData.confirmPassword}
-                onChange={(e) =>
-                  setFormData({ ...formData, confirmPassword: e.target.value })
-                }
-                className="w-full px-4 py-3 border border-blue-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Confirm your password"
-              />
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  required
+                  value={formData.confirmPassword}
+                  onChange={(e) =>
+                    setFormData({ ...formData, confirmPassword: e.target.value })
+                  }
+                  className="w-full px-4 py-3 pr-12 border border-blue-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Confirm your password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-600 hover:text-blue-800 focus:outline-none"
+                  aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
             </div>
 
             {error && (
