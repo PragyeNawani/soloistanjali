@@ -154,7 +154,42 @@ export default function ChordsStudioPage() {
 
     fetchLatestItems();
   }, []);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const [isSwiping, setIsSwiping] = useState(false);
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX);
+    setIsSwiping(false);
+  };
 
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+    setIsSwiping(true);
+  };
+
+  const handleTouchEnd = () => {
+    if (!isSwiping || carouselItems.length <= 1) {
+      setIsSwiping(false);
+      return;
+    }
+
+    const swipeThreshold = 50; // Minimum swipe distance in pixels
+    const diff = touchStart - touchEnd;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        // Swiped left - go to next
+        nextItem();
+      } else {
+        // Swiped right - go to previous  
+        prevItem();
+      }
+    }
+
+    setIsSwiping(false);
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
   // Create carousel items array
   const carouselItems = [];
   if (latestItems.blog && latestItems.blog.title) {
@@ -448,7 +483,12 @@ export default function ChordsStudioPage() {
                   <ChevronLeft size={32} />
                 </button>
 
-                <div className="relative h-96 w-full max-w-4xl flex items-center justify-center">
+                <div
+                  className="relative h-96 w-full max-w-4xl flex items-center justify-center"
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                >
                   {carouselItems.map((item, index) => {
                     const position = (index - currentIndex + carouselItems.length) % carouselItems.length;
                     const isActive = position === 0;
@@ -478,14 +518,16 @@ export default function ChordsStudioPage() {
                     return (
                       <div
                         key={`${item.type}-${index}`}
-                        className={`${isActive ? "bg-blue-100/80" : "bg-blue-100/30 blur-[6px]"} absolute rounded-2xl p-6 w-[300px] sm:w-96 duration-500 cursor-pointer border-2 border-blue-700 hover:border-blue-500 min-h-[400px]`}
+                        className={`${isActive ? "bg-blue-100/80" : "bg-blue-100/30 blur-[6px]"} absolute rounded-2xl p-6 w-[300px] sm:w-96 duration-500 cursor-pointer border-2 border-blue-700 hover:border-blue-500 min-h-[400px] touch-pan-y`}
                         style={{
                           transform: transformStyle,
                           zIndex: zIndex,
                           opacity: opacity,
+                          transition: 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out',
                         }}
                         onClick={() => isActive && handleCardClick(item)}
                       >
+                        {/* Rest of your card content remains the same */}
                         {/* Type Badge */}
                         <div className={`absolute top-4 right-4 bg-gradient-to-r ${item.color} px-3 py-1 rounded-full flex items-center gap-2 z-30`}>
                           <Icon size={16} />
@@ -500,7 +542,6 @@ export default function ChordsStudioPage() {
                               alt={item.title}
                               className="w-full h-full object-cover"
                               onError={(e) => {
-                                // Fallback to emoji if image fails to load
                                 e.target.style.display = 'none';
                                 if (e.target.nextElementSibling) {
                                   e.target.nextElementSibling.style.display = 'flex';
@@ -515,6 +556,7 @@ export default function ChordsStudioPage() {
                             {item.instrument ? getInstrumentEmoji(item.instrument) : '🎵'}
                           </div>
                         </div>}
+
                         {/* Workshop Image */}
                         {item.type == "workshop" && <div className="relative h-48 mb-4 rounded-lg overflow-hidden bg-blue-950">
                           {item.image ? (
@@ -523,7 +565,6 @@ export default function ChordsStudioPage() {
                               alt={item.title}
                               className="w-full h-full object-cover"
                               onError={(e) => {
-                                // Fallback to emoji if image fails to load
                                 e.target.style.display = 'none';
                                 if (e.target.nextElementSibling) {
                                   e.target.nextElementSibling.style.display = 'flex';
@@ -536,10 +577,8 @@ export default function ChordsStudioPage() {
                               }`}
                           >
                             {WorkshopInstructor.length > 1 ? `🎼 By ${WorkshopInstructor}` : '🎼'}
-
                           </div>
                         </div>}
-
 
                         {/* Content */}
                         <div className="space-y-3">
@@ -556,7 +595,6 @@ export default function ChordsStudioPage() {
                             {item.type === 'course' && (
                               <>
                                 <span className="text-blue-800 text-sm">{item.instrument}</span>
-                                {/* <span className="text-white font-bold text-lg">₹{item.price}</span> */}
                               </>
                             )}
                             {item.type === 'workshop' && (
@@ -565,7 +603,6 @@ export default function ChordsStudioPage() {
                                   <Calendar size={14} />
                                   {formatDate(item.date)}
                                 </span>
-                                {/* <span className="text-white font-bold text-lg">₹{item.price}</span> */}
                               </>
                             )}
                             {item.type === 'blog' && (
