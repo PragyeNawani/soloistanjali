@@ -322,7 +322,7 @@ export default function ChordsStudioPage() {
   return (
     <div className="min-h-screen bg-white">
       {navani && <>
-        <div className={`bg-blue-50 border-2 border-black h-10 w-10 fixed bottom-24 right-8 rounded-full z-50 flex justify-center items-center cursor-pointer ${isLaunching ? "rocket-launch" : ""
+        <div className={`bg-blue-50 border-2 border-black h-10 w-10 fixed bottom-24 right-6 sm:bottom-24 sm:right-8 z-50 rounded-full z-50 flex justify-center items-center cursor-pointer ${isLaunching ? "rocket-launch" : ""
           }`} onClick={() => { handleScrollTop() }}><img src="/startup.png" alt="" /></div>
       </>}
       {/* Hero Section */}
