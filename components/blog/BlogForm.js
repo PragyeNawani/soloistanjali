@@ -308,7 +308,7 @@ export default function BlogForm({ blog }) {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-4 pt-6 border-t border-amber-200">
+            <div className="flex gap-4 pt-6 border-t border-amber-200 flex-wrap">
               <button
                 type="button"
                 onClick={(e) => handleSubmit(e, true)}

@@ -101,7 +101,7 @@ export default function SalesChart({ data: initialData }) {
   return (
     <div className="bg-gradient-to-r from-gray-950 via-blue-950 to-gray-950 rounded-lg shadow-2xl p-6 border border-blue-900/30">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center flex-wrap justify-between mb-6">
         <div className="flex items-center gap-3">
           <TrendingUp className="w-6 h-6 text-blue-400" />
           <h3 className="text-2xl font-serif text-white">Sales History</h3>
@@ -112,7 +112,7 @@ export default function SalesChart({ data: initialData }) {
         
         <div className="flex items-center gap-4">
           {/* View Mode Toggle */}
-          <div className="flex items-center gap-2 text-sm">
+          <div className="flex items-center gap-2 text-sm flex-wrap">
             <span className="text-blue-300">By:</span>
             <label className="flex items-center gap-1 cursor-pointer">
               <input
@@ -172,7 +172,7 @@ export default function SalesChart({ data: initialData }) {
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 ">
         <div className="bg-gradient-to-br from-blue-900/40 to-blue-950/40 rounded-lg p-4 border border-blue-800/50">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-blue-300 font-medium">Total Sales</span>
