@@ -871,9 +871,7 @@ export default function ChordsStudioPage() {
                   <span>Our Vision / Mission</span>
                 </h4>
                 <p className="text-sm sm:text-base text-blue-800 leading-relaxed">
-                  To empower you to play the piano confidently — whether you want to perform for yourself,
-                  your family, or on stage; to interpret songs, to record beautiful performances at your home,
-                  compose new ideas, or simply enjoy every moment at the keyboard.
+                    “Empowering people of all ages to discover, learn and create music through accessible education, creativity and genuine artistic expression “
                 </p>
               </div>
             </div>
